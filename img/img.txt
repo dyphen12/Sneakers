@@ -1,1 +1,7 @@
-This is for folder adding
+This is for folder adding.
+
+Just for functionality.
+
+Do not delete.
+
+It deletes itself after the first run.
