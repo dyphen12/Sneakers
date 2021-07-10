@@ -15,6 +15,8 @@ from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
 
+from sneakers.api import processing
+
 
 # Status: Check
 def load_shoes_dataset():
@@ -225,52 +227,9 @@ def build_big_xlsx(df, ver):
 
     ws = wb.active
 
-    progsc = progressbar
+    processing.processing_xlsx(df, ws)
 
-    for i in progsc.progressbar(range(0, len(df.index))):
-
-        url = df['image'][i]
-
-        j = i + 2
-
-        cellName = 'S{fnum}'.format(fnum=j)
-
-        try:
-
-            im = Image.open(requests.get(url, stream=True).raw)
-
-            im_100 = im.resize((78, 100))
-
-            loc = "img/Sneaker{}.png".format(j)
-
-            im_100.save(loc, format="png")
-
-            img = Image.open(loc)
-
-            xImg = pyImage(img)
-
-            ws[cellName] = ''
-
-            ws.add_image(xImg, cellName)
-
-            wb.save(path)
-
-            del cellName
-            del url
-            del im_100
-            del im
-
-            gc.collect()
-
-        except requests.exceptions.MissingSchema:
-
-            pass
-
-        except requests.exceptions.ConnectionError:
-
-            time.sleep(10)
-
-            pass
+    wb.save(path)
 
     print('Images downloaded succesfully...')
     print('XLSX large builded...')
