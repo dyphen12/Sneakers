@@ -19,7 +19,7 @@ nowstr = now.strftime("%d-%m-%Y %H-%M-%S")
 
 shuset = skutils.load_shoes_dataset()
 
-sample = shuset.iloc[:100]
+sample = shuset.iloc[:5000]
 
 #sample = shuset
 

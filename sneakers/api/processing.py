@@ -26,21 +26,24 @@ def processing_xlsx(df, path):
     process_list = img_pre_multiprocess(df, ws, path)
 
     with Pool(5) as p:
+
         #print(p.map(img_multiprocess, process_list))
         print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
         images=(p.map(img_multiprocess, process_list))
 
     # print(images[0][0][2]) # This the Path
 
-    print('MULTI-THREADING PROCESS ENDED')
     img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
 
     return True
 
 
 def img_pre_multiprocess(df, ws, path):
 
-    print('Loading Multi-threading processing...')
+    print('Initiating Multi-threading processing...')
 
     time.sleep(4)
 
@@ -59,7 +62,6 @@ def img_pre_multiprocess(df, ws, path):
 
         cellprocess.append([cellname, url, ws, path])
 
-    print('Multi-threading loaded!')
 
     return cellprocess
 
