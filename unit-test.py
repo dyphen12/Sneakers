@@ -19,13 +19,13 @@ nowstr = now.strftime("%d-%m-%Y %H-%M-%S")
 
 shuset = skutils.load_shoes_dataset()
 
-sample = shuset.iloc[:50]
+sample = shuset.iloc[:100]
 
 #sample = shuset
 
 slen = len(sample)
 
-ver = 'DEBUGv2(building-big)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
+ver = 'Multiprocessingv2(building-big)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
 
 if __name__ == '__main__':
-    skutils.build_large_xlsx(sample, ver)
+    skutils.build_big_xlsx(sample, ver)

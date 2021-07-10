@@ -19,26 +19,37 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
 
 
-def processing_xlsx(df, ws):
+def processing_xlsx(df, path):
 
-    process_list = img_pre_multiprocess(df, ws)
+    ws = 0
+
+    process_list = img_pre_multiprocess(df, ws, path)
 
     with Pool(5) as p:
-        print(p.map(img_multiprocess, process_list))
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        images=(p.map(img_multiprocess, process_list))
+
+    # print(images[0][0][2]) # This the Path
+
+    print('MULTI-THREADING PROCESS ENDED')
+    img_post_multiprocess(images)
 
     return True
 
 
-def img_pre_multiprocess(df, ws):
+def img_pre_multiprocess(df, ws, path):
+
+    print('Loading Multi-threading processing...')
 
     time.sleep(4)
 
     # Progress Bar Object
-    progsc = progressbar
+    #progsc = progressbar
 
     cellprocess = []
 
-    for i in progsc.progressbar(range(0, len(df.index))):
+    for i in (range(0, len(df.index))):
 
         url = df['image'][i]
 
@@ -46,7 +57,9 @@ def img_pre_multiprocess(df, ws):
 
         cellname = 'S{fnum}'.format(fnum=j)
 
-        cellprocess.append([cellname, url, ws])
+        cellprocess.append([cellname, url, ws, path])
+
+    print('Multi-threading loaded!')
 
     return cellprocess
 
@@ -108,11 +121,47 @@ def img_process(df, path):
 
 # DEV
 
+def img_post_multiprocess(images):
+
+    #time.sleep(4)
+
+    path = images[0][0][2]
+
+    wb = load_workbook(filename=path)
+
+    # Progress Bar Object
+    progsq = progressbar
+
+    for i in progsq.progressbar(range(0, len(images))):
+
+        loc = images[i][0][0]
+
+        try:
+            cellname = images[i][0][1]
+        except IndexError:
+            continue
+
+        imgd = Image.open(loc)
+
+        xImg = pyImage(imgd)
+
+        ws = wb.active
+
+        ws[cellname] = ''
+
+        ws.add_image(xImg, cellname)
+
+        wb.save(path)
+
+    return True
+
 def img_multiprocess(processes):
 
     cellName = processes[0]
     url = processes[1]
-    ws = processes[2]
+    path = processes[3]
+
+    post_process_list = []
 
     try:
 
@@ -124,15 +173,17 @@ def img_multiprocess(processes):
 
         im_100.save(loc, format="png")
 
-        img = Image.open(loc)
+        #img = Image.open(loc)
 
-        xImg = pyImage(img)
+        #xImg = pyImage(img)
 
-        ws[cellName] = ''
+        #ws[cellName] = ''
 
-        ws.add_image(xImg, cellName)
+        #ws.add_image(xImg, cellName)
 
-        return 'Image added to {fimg} succesfully!'.format(fimg=cellName)
+        post_process_list.append([loc, cellName, path])
+
+        return post_process_list
 
     except requests.exceptions.MissingSchema:
 

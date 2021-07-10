@@ -223,13 +223,11 @@ def build_big_xlsx(df, ver):
     df.to_excel(writer)
     writer.close()
 
-    wb = load_workbook(filename=path)
+    #wb = load_workbook(filename=path)
 
-    ws = wb.active
+    #ws = wb.active
 
-    processing.processing_xlsx(df, ws)
-
-    wb.save(path)
+    processing.processing_xlsx(df, path)
 
     print('Images downloaded succesfully...')
     print('XLSX large builded...')
