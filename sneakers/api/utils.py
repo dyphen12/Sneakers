@@ -247,8 +247,6 @@ def build_big_xlsx(df, ver, local=False):
 
 
 # DEVELOPMENT SECTION
-
-
 def build_xlxs_injector(df, ver, size, local=True):
 
     # MULTI-PROCESSING MODULE
@@ -272,7 +270,7 @@ def build_xlxs_injector(df, ver, size, local=True):
         processing.processing_xlsx_local_inj(df, path, size)
         print('DEV: BUILD BY INJECTION PROCESS ENDED')
     else:
-        processing.processing_xlsx(df, path)
+        processing.processing_xlsx_inj(df, path)
 
     print('XLSX large build...')
     print('Check /sheets folder for {ffile}'.format(ffile=path))

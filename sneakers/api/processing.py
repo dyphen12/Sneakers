@@ -376,3 +376,28 @@ def img_post_multiprocess_inj(images, size=50):
     """
     return True
 
+
+def processing_xlsx_inj(df, path, size):
+
+    print('Initiating Multi-threading processing...')
+    print('Running Locally!')
+
+    ws = 0
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images=(p.map(img_multiprocess, process_list))
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess_inj(images, size)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
+
