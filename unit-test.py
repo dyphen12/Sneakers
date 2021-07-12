@@ -25,9 +25,10 @@ sample = shuset.iloc[:50000]
 
 slen = len(sample)
 
-ver = 'TESTING(Injection-cylinder-system)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
+ver = 'CLOUD(computing-perfomance)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
 
 if __name__ == '__main__':
+    skutils.download_img(sample)
     #skutils.build_big_xlsx(sample, ver, local=True)
     skutils.build_xlxs_injector(sample, ver, size=100, local=True)
-    #skutils.download_img(sample)
+
