@@ -1,0 +1,9 @@
+xlsxwriter
+pydrive
+openpyxl
+pillow
+progressbar
+progressbar2
+requests
+pandas
+requests
