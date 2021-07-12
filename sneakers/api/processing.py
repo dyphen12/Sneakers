@@ -380,7 +380,7 @@ def img_post_multiprocess_inj(images, size=50):
 def processing_xlsx_inj(df, path, size):
 
     print('Initiating Multi-threading processing...')
-    print('Running Locally!')
+    print('Downloading images!')
 
     ws = 0
 
