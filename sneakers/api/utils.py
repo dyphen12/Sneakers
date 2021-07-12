@@ -270,7 +270,7 @@ def build_xlxs_injector(df, ver, size, local=True):
         processing.processing_xlsx_local_inj(df, path, size)
         print('DEV: BUILD BY INJECTION PROCESS ENDED')
     else:
-        processing.processing_xlsx_inj(df, path)
+        processing.processing_xlsx_inj(df, path, size)
 
     print('XLSX large build...')
     print('Check /sheets folder for {ffile}'.format(ffile=path))
