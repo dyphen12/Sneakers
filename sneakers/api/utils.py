@@ -190,28 +190,41 @@ def build_large_xlsx(df, ver):
     return True
 
 
-# These functions are Jupyter Compilant Only
-def get_images(df):
-    for index, row in df.iterrows():
-        TestUrl = row['image']
-        # im = Image.open(requests.get(TestUrl, stream=True).raw)
-        row['image'] = TestUrl
-
-    return df
-
-
-def get_images_to(df):
-    for index, row in df.iterrows():
-        TestUrl = row['image']
-        im = Image.open(requests.get(TestUrl, stream=True))
-        print(im)
-
-    return df
-
-
 # FUNCTION DEVELOPMENT
 
-def build_big_xlsx(df, ver):
+"""
+
+Multi Processing System
+
+Status: UNDER DEVELOPMENT 
+
+Notes:
+        download_images(df):
+        Works but uses the multiprocessing system so, under dev.
+        
+        
+"""
+
+
+# Status: Checked
+def download_img(df):
+
+    ver = 'image-download-dummy-file-delete-this'
+
+    title = "{fver}.xlsx".format(fver=ver)
+
+    path = 'sheets/{ftit}'.format(ftit=title)
+
+    #df.to_excel(path)
+
+    processing.img_download_processing(df, path)
+
+    print('Images downloaded succesfully')
+
+
+def build_big_xlsx(df, ver, local=False):
+
+    # MULTI-PROCESSING MODULE
 
     title = "sneakers-{fver}.xlsx".format(fver=ver)
 
@@ -227,7 +240,10 @@ def build_big_xlsx(df, ver):
 
     #ws = wb.active
 
-    processing.processing_xlsx(df, path)
+    if local is True:
+        processing.processing_xlsx_local(df, path)
+    else:
+        processing.processing_xlsx(df, path)
 
     print('Images downloaded succesfully...')
     print('XLSX large builded...')
