@@ -3,6 +3,14 @@
 Made by Alexis Wong.
 Prisma Inc.
 
+utils.py
+
+Status: UNDER DEVELOPMENT for Multiprocessing Implementation
+
+Notes:
+        download_images(df):
+        Works but uses the multiprocessing system so, under dev.
+
 """
 
 import pandas as pd
@@ -190,22 +198,6 @@ def build_large_xlsx(df, ver):
     return True
 
 
-# FUNCTION DEVELOPMENT
-
-"""
-
-Multi Processing System
-
-Status: UNDER DEVELOPMENT 
-
-Notes:
-        download_images(df):
-        Works but uses the multiprocessing system so, under dev.
-        
-        
-"""
-
-
 # Status: Checked
 def download_img(df):
 
@@ -222,6 +214,7 @@ def download_img(df):
     print('Images downloaded succesfully')
 
 
+# Status: For Revision
 def build_big_xlsx(df, ver, local=False):
 
     # MULTI-PROCESSING MODULE
@@ -245,8 +238,45 @@ def build_big_xlsx(df, ver, local=False):
     else:
         processing.processing_xlsx(df, path)
 
+
     print('Images downloaded succesfully...')
     print('XLSX large builded...')
     print('Check /sheets folder for {ffile}'.format(ffile=path))
 
     return True
+
+
+# DEVELOPMENT SECTION
+
+
+def build_xlxs_injector(df, ver, size, local=True):
+
+    # MULTI-PROCESSING MODULE
+
+    title = "sneakers-{fver}.xlsx".format(fver=ver)
+
+    path = 'sheets/{ftit}'.format(ftit=title)
+
+    df['pic'] = ''
+
+    # Creates the Excel Worksheet for working
+    writer = pd.ExcelWriter(path, engine='xlsxwriter', options={'strings_to_urls': False})
+    df.to_excel(writer)
+    writer.close()
+    # Excel Worksheet created in the specified 'path'
+
+
+    # Sends 'worksheet' and 'dataframe' to processing
+    if local is True:
+        # This is the process we are going to work for the injection
+        processing.processing_xlsx_local_inj(df, path, size)
+        print('DEV: BUILD BY INJECTION PROCESS ENDED')
+    else:
+        processing.processing_xlsx(df, path)
+
+    print('XLSX large build...')
+    print('Check /sheets folder for {ffile}'.format(ffile=path))
+
+    return True
+
+

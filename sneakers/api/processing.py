@@ -8,6 +8,8 @@ import multiprocessing
 from multiprocessing import Pool
 from multiprocessing import Process
 
+from sneakers.api import injector
+
 import pandas as pd
 import os
 import requests
@@ -118,6 +120,30 @@ def img_process(df, path):
             time.sleep(10)
 
             pass
+
+def img_download_processing(df, path):
+
+    ws = 0
+
+    print('Initiating Multi-threading processing...')
+    print('Image Download Only!')
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        p.map(img_multiprocess, process_list)
+
+    # print(images[0][0][2]) # This the Path
+
+    #img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
 
 
 # DEV
@@ -267,12 +293,18 @@ def img_multiprocess_local(processes):
         return 'The cell {fimg} gives ConnectionError :('.format(fimg=cellName)
 
 
-def img_download_processing(df, path):
 
-    ws = 0
+
+
+
+# DEVELOPMENT
+
+def processing_xlsx_local_inj(df, path, size):
 
     print('Initiating Multi-threading processing...')
-    print('Image Download Only!')
+    print('Running Locally!')
+
+    ws = 0
 
     process_list = img_pre_multiprocess(df, ws, path)
 
@@ -281,12 +313,66 @@ def img_download_processing(df, path):
         #print(p.map(img_multiprocess, process_list))
         print('MULTI-THREADING PROCESS STARTED')
         print('Please wait...')
-        p.map(img_multiprocess, process_list)
+        images=(p.map(img_multiprocess_local, process_list))
 
     # print(images[0][0][2]) # This the Path
 
-    #img_post_multiprocess(images)
+    img_post_multiprocess_inj(images, size)
 
     print('MULTI-THREADING PROCESS ENDED')
 
     return True
+
+
+def img_post_multiprocess_inj(images, size=50):
+
+    #time.sleep(4)
+
+    #path = images[0][0][2]
+
+    #wb = load_workbook(filename=path)
+
+    cyl = injector.cylinder(images, size)
+
+    #print(type(cyl))
+
+    cyl.injection()
+
+    #print(x)
+
+    """
+
+    # Progress Bar Object
+    progsq = progressbar
+
+    for i in progsq.progressbar(range(0, len(images))):
+
+        loc = images[i][0][0]
+
+        try:
+            cellname = images[i][0][1]
+        except IndexError:
+            continue
+
+        try:
+
+            imgd = Image.open(loc)
+
+            xImg = pyImage(imgd)
+
+            ws = wb.active
+
+            ws[cellname] = ''
+
+            ws.add_image(xImg, cellname)
+
+        # This Exception is only raised when running local=True
+        except FileNotFoundError:
+
+            continue
+
+        wb.save(path)
+    
+    """
+    return True
+

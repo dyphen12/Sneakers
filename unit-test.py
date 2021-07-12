@@ -19,14 +19,15 @@ nowstr = now.strftime("%d-%m-%Y %H-%M-%S")
 
 shuset = skutils.load_shoes_dataset()
 
-sample = shuset.iloc[:20]
+sample = shuset.iloc[:50000]
 
 #sample = shuset
 
 slen = len(sample)
 
-ver = 'sample(building-big)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
+ver = 'TESTING(Injection-cylinder-system)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
 
 if __name__ == '__main__':
     #skutils.build_big_xlsx(sample, ver, local=True)
-    skutils.download_img(sample)
+    skutils.build_xlxs_injector(sample, ver, size=100, local=True)
+    #skutils.download_img(sample)
