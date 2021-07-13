@@ -1,20 +1,21 @@
 """
 
-Made by Alexis Wong.
-Prisma Inc.
+Prisma Inc. 2021
+
+injector.py
+
+Status: Checked
+
+Note: Injector class for image adding.
+
+Made by Alexis W.
 
 """
-import pandas as pd
-import os
-import requests
 import progressbar
 import time
-import gc
 from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
-
-from sneakers.api import processing
 
 
 def chunks(data, n):
@@ -29,22 +30,14 @@ class cylinder:
         self.images = images
         self.size = size
         self.space = len(images)
-        #self.package = [images]
 
     def injection(self):
 
         inj_q = int(self.space/self.size)
 
-        #print(self.space)
-        #print(self.size)
-        #print(self.images)
         print('{finjq} inyectors loaded'.format(finjq=inj_q))
 
-        #print(len(self.images))
-
         batch = chunks(self.images, inj_q)
-
-        #print(len(batch))
 
         for k in range(0, len(batch)):
             print('Batch {kf} loaded into chamber. Size: {fs}'.format(kf=k, fs=len(batch[k])))

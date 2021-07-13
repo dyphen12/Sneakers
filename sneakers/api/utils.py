@@ -1,6 +1,5 @@
 """
 
-Made by Alexis Wong.
 Prisma Inc.
 
 utils.py
@@ -11,18 +10,17 @@ Notes:
         download_images(df):
         Works but uses the multiprocessing system so, under dev.
 
-"""
+Made by Alexis W.
 
+"""
 import pandas as pd
 import os
 import requests
 import progressbar
-import time
 import gc
 from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
-
 from sneakers.api import processing
 
 

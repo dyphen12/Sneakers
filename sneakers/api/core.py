@@ -1,7 +1,14 @@
 """
 
-Made by Alexis Wong.
-Prisma Inc.
+Prisma Inc. 2021
+
+core.py
+
+Status: Checked
+
+Note: The core of the API, is the connection to RapidAPI and the online databases.
+
+Made by Alexis W.
 
 """
 import requests
@@ -9,8 +16,9 @@ import json
 import pandas as pd
 import progressbar
 
-# This functions connects to RapidAPI
-# Use this functions if there are tokens available for the API
+# Connections to RapidAPI
+# Works as the API core, the Sneakers Data.
+# Use this methods to Update and Set-up the API data.
 
 
 # Status: Checked

@@ -1,17 +1,16 @@
 """
 
-Made by Alexis Wong.
-Prisma Inc.
+Prisma Inc. 2021
+
+processing.py
+
+Status: Checked
+
+Note: Multi-processing algorithms for faster image manipulation.
+
+Made by Alexis W.
 
 """
-import multiprocessing
-from multiprocessing import Pool
-from multiprocessing import Process
-
-from sneakers.api import injector
-
-import pandas as pd
-import os
 import requests
 import progressbar
 import time
@@ -19,8 +18,11 @@ import gc
 from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
+from multiprocessing import Pool
+from sneakers.api import injector
 
 
+# MAIN PROCESSES
 def processing_xlsx(df, path):
 
     ws = 0
@@ -45,6 +47,108 @@ def processing_xlsx(df, path):
     return True
 
 
+def processing_xlsx_local(df, path):
+
+    print('Initiating Multi-threading processing...')
+    print('Running Locally!')
+
+    ws = 0
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images=(p.map(img_multiprocess_local, process_list))
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
+
+
+def processing_xlsx_local_inj(df, path, size):
+
+    print('Initiating Multi-threading processing...')
+    print('Running Locally!')
+
+    ws = 0
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images=(p.map(img_multiprocess_local, process_list))
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess_inj(images, size)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
+
+
+def processing_xlsx_inj(df, path, size):
+
+    print('Initiating Multi-threading processing...')
+    print('Downloading images!')
+
+    ws = 0
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images=(p.map(img_multiprocess, process_list))
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess_inj(images, size)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
+
+
+# DOWNLOAD ONLY MULTIPROCESSING
+def img_download_processing(df, path):
+
+    ws = 0
+
+    print('Initiating Multi-threading processing...')
+    print('Image Download Only!')
+
+    process_list = img_pre_multiprocess(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        p.map(img_multiprocess, process_list)
+
+    # print(images[0][0][2]) # This the Path
+
+    #img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True
+
+
+# PRE PROCESS
 def img_pre_multiprocess(df, ws, path):
 
     time.sleep(4)
@@ -67,6 +171,7 @@ def img_pre_multiprocess(df, ws, path):
     return cellprocess
 
 
+# PROCESSING
 def img_process(df, path):
 
     wb = load_workbook(filename=path)
@@ -120,99 +225,6 @@ def img_process(df, path):
             time.sleep(10)
 
             pass
-
-def img_download_processing(df, path):
-
-    ws = 0
-
-    print('Initiating Multi-threading processing...')
-    print('Image Download Only!')
-
-    process_list = img_pre_multiprocess(df, ws, path)
-
-    with Pool(5) as p:
-
-        #print(p.map(img_multiprocess, process_list))
-        print('MULTI-THREADING PROCESS STARTED')
-        print('Please wait...')
-        p.map(img_multiprocess, process_list)
-
-    # print(images[0][0][2]) # This the Path
-
-    #img_post_multiprocess(images)
-
-    print('MULTI-THREADING PROCESS ENDED')
-
-    return True
-
-
-# DEV
-
-def processing_xlsx_local(df, path):
-
-    print('Initiating Multi-threading processing...')
-    print('Running Locally!')
-
-    ws = 0
-
-    process_list = img_pre_multiprocess(df, ws, path)
-
-    with Pool(5) as p:
-
-        #print(p.map(img_multiprocess, process_list))
-        print('MULTI-THREADING PROCESS STARTED')
-        print('Please wait...')
-        images=(p.map(img_multiprocess_local, process_list))
-
-    # print(images[0][0][2]) # This the Path
-
-    img_post_multiprocess(images)
-
-    print('MULTI-THREADING PROCESS ENDED')
-
-    return True
-
-
-def img_post_multiprocess(images):
-
-    #time.sleep(4)
-
-    path = images[0][0][2]
-
-    wb = load_workbook(filename=path)
-
-    # Progress Bar Object
-    progsq = progressbar
-
-    for i in progsq.progressbar(range(0, len(images))):
-
-        loc = images[i][0][0]
-
-        try:
-            cellname = images[i][0][1]
-        except IndexError:
-            continue
-
-        try:
-
-            imgd = Image.open(loc)
-
-            xImg = pyImage(imgd)
-
-            ws = wb.active
-
-            ws[cellname] = ''
-
-            ws.add_image(xImg, cellname)
-
-        # This Exception is only raised when running local=True
-        except FileNotFoundError:
-
-            continue
-
-        wb.save(path)
-
-    return True
 
 
 def img_multiprocess(processes):
@@ -293,33 +305,45 @@ def img_multiprocess_local(processes):
         return 'The cell {fimg} gives ConnectionError :('.format(fimg=cellName)
 
 
+# POST PROCESSING
+def img_post_multiprocess(images):
 
+    #time.sleep(4)
 
+    path = images[0][0][2]
 
+    wb = load_workbook(filename=path)
 
-# DEVELOPMENT
+    # Progress Bar Object
+    progsq = progressbar
 
-def processing_xlsx_local_inj(df, path, size):
+    for i in progsq.progressbar(range(0, len(images))):
 
-    print('Initiating Multi-threading processing...')
-    print('Running Locally!')
+        loc = images[i][0][0]
 
-    ws = 0
+        try:
+            cellname = images[i][0][1]
+        except IndexError:
+            continue
 
-    process_list = img_pre_multiprocess(df, ws, path)
+        try:
 
-    with Pool(5) as p:
+            imgd = Image.open(loc)
 
-        #print(p.map(img_multiprocess, process_list))
-        print('MULTI-THREADING PROCESS STARTED')
-        print('Please wait...')
-        images=(p.map(img_multiprocess_local, process_list))
+            xImg = pyImage(imgd)
 
-    # print(images[0][0][2]) # This the Path
+            ws = wb.active
 
-    img_post_multiprocess_inj(images, size)
+            ws[cellname] = ''
 
-    print('MULTI-THREADING PROCESS ENDED')
+            ws.add_image(xImg, cellname)
+
+        # This Exception is only raised when running local=True
+        except FileNotFoundError:
+
+            continue
+
+        wb.save(path)
 
     return True
 
@@ -374,30 +398,5 @@ def img_post_multiprocess_inj(images, size=50):
         wb.save(path)
     
     """
-    return True
-
-
-def processing_xlsx_inj(df, path, size):
-
-    print('Initiating Multi-threading processing...')
-    print('Downloading images!')
-
-    ws = 0
-
-    process_list = img_pre_multiprocess(df, ws, path)
-
-    with Pool(5) as p:
-
-        #print(p.map(img_multiprocess, process_list))
-        print('MULTI-THREADING PROCESS STARTED')
-        print('Please wait...')
-        images=(p.map(img_multiprocess, process_list))
-
-    # print(images[0][0][2]) # This the Path
-
-    img_post_multiprocess_inj(images, size)
-
-    print('MULTI-THREADING PROCESS ENDED')
-
     return True
 
