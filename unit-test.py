@@ -28,21 +28,9 @@ titl = skutils.composer_title('composer', 'Demo1', sp)
 
 if __name__ == '__main__':
     
-
+    
     xcomposer = Composer(titl, samplesize=sp)
+    
     xcomposer.sync_file()
-    print(xcomposer.doc_id)
-    print(xcomposer.online)
-    
-
     
     
-
-
-
-
-
-
-
-
-

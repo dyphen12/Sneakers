@@ -39,18 +39,28 @@ def sync_by_id(doc_id, full_path, filename):
     
     
 def upload_folder(path, title):
-
-    gauth = GoogleAuth()
-    gauth.CommandLineAuth()
-    drive = GoogleDrive(gauth)
-
-    uploaded = drive.CreateFile({'title': title})
-    uploaded.SetContentFile(path)
-    uploaded.Upload()
-    print('Uploaded file with ID {}'.format(uploaded.get('id')))
-    print('Composer Doc {}'.format(title))
     
-    aid = uploaded.get('id')
+    try:
+        
+        gauth = GoogleAuth()
+        gauth.CommandLineAuth()
+        drive = GoogleDrive(gauth)
+    
+        uploaded = drive.CreateFile({'title': title})
+        uploaded.SetContentFile(path)
+        uploaded.Upload()
+        print('Uploaded file with ID {}'.format(uploaded.get('id')))
+        print('Composer Doc {}'.format(title))
+        
+        aid = uploaded.get('id')
+        
+    except Exception as e:
+        print(e)
+        
+        print('Load client-secrets.json')
+        
+
+    
     
     return aid
     
