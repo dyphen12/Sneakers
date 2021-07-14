@@ -18,33 +18,36 @@ Made by Alexis W.
 
 import sneakers.api.core as sk
 import sneakers.api.utils as skutils
-import sneakers.api.uploaders as up
-from datetime import datetime
-
-# Get current datetime
-now = datetime.now()
-
-# Change the date format
-nowstr = now.strftime("%d-%m-%Y %H-%M-%S")
+from sneakers.api.composer import Composer
+import sneakers.api.core as skcore
 
 # Loads the database
 shuset = skutils.load_shoes_dataset()
 
 # Pick a sample from the dataset
-sp = 100  # Sample Size
+sp = 200  # Sample Size
+
 sample = shuset.iloc[:sp]
 
-# Get length from sample
-slen = len(sample)
+ver = skutils.sheet_ver('COMPOSER', 'development', sp)
 
-# Set up the title for the xlsx
-ver = 'CLOUD(computing-perfomance)-({flen}rows)-{ftime}'.format(ftime=nowstr, flen=slen)
+
+titl = skutils.composer_title('composer', 'developmentv2', sp)
 
 if __name__ == '__main__':
-
     #skutils.download_img(sample)
     #skutils.build_big_xlsx(sample, ver, local=True)
 
-    # Build XLSX with the Injector
-    skutils.build_xlxs_injector(sample, ver, size=3, local=False)
+    xcomposer = Composer(titl, create=True, samplesize=sp)
+    #xcomposer.create_workbook()
+    #xcomposer.update_prices()
+    xcomposer.write_wb_xl([50,150], iny_size=20)
+
+
+
+
+
+
+
+
 

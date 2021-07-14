@@ -22,11 +22,12 @@ from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
 from sneakers.api import processing
+from datetime import datetime
 
 
 # Status: Check
 def load_shoes_dataset():
-    shoes = pd.read_csv('sneakers/datasets/sneakers-100000-extended.csv', index_col=0, low_memory=False)
+    shoes = pd.read_csv('sneakers/datasets/sneakers-local-db.csv', index_col=0, low_memory=False)
     return shoes
 
 
@@ -179,13 +180,13 @@ def build_large_xlsx(df, ver):
 
         except requests.exceptions.MissingSchema:
 
-            print('MissingSchema Error on iteration number {fit}'.format(fit=j))
+            #print('MissingSchema Error on iteration number {fit}'.format(fit=j))
 
             continue
 
         except requests.exceptions.ConnectionError:
 
-            print('Connection Error on iteration number {fit}'.format(fit=j))
+            #print('Connection Error on iteration number {fit}'.format(fit=j))
 
             continue
 
@@ -274,5 +275,26 @@ def build_xlxs_injector(df, ver, size, local=True):
     print('Check /sheets folder for {ffile}'.format(ffile=path))
 
     return True
+
+
+def sheet_ver(title, sub, sp):
+
+    # Get current datetime
+    now = datetime.now()
+
+    # Change the date format
+    nowstr = now.strftime("%d-%m-%Y %H-%M-%S")
+
+
+    # Set up the title for the xlsx
+    ver = '{ftitle}({fsub})-({flen}rows)-{ftime}'.format(ftitle=title,ftime=nowstr, flen=sp, fsub=sub)
+
+    return ver
+
+def composer_title(title,sub,sp):
+
+    return '{ftitle}({fsub})-({flen}rows)'.format(ftitle=title, flen=sp, fsub=sub)
+
+
 
 

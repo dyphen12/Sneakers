@@ -148,6 +148,7 @@ def img_download_processing(df, path):
     return True
 
 
+
 # PRE PROCESS
 def img_pre_multiprocess(df, ws, path):
 
@@ -312,6 +313,8 @@ def img_post_multiprocess(images):
 
     path = images[0][0][2]
 
+    print(path)
+
     wb = load_workbook(filename=path)
 
     # Progress Bar Object
@@ -343,7 +346,10 @@ def img_post_multiprocess(images):
 
             continue
 
-        wb.save(path)
+        try:
+            wb.save(path)
+        except PermissionError:
+            print('It seems like the xlsx is being used by another program, please close it first and try again.')
 
     return True
 
@@ -399,4 +405,52 @@ def img_post_multiprocess_inj(images, size=50):
     
     """
     return True
+
+
+# DEV
+
+def img_processor_local(process_list):
+
+    ws = 0
+
+    print('Initiating Multi-threading processing...')
+    print('Listing processes only')
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images = p.map(img_multiprocess_local, process_list)
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return images
+
+
+def img_processor_local_inj(process_list, size):
+
+    ws = 0
+
+    print('Initiating Multi-threading processing...')
+    print('Listing processes only')
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        images = p.map(img_multiprocess_local, process_list)
+
+    # print(images[0][0][2]) # This the Path
+
+    img_post_multiprocess_inj(images, size)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return images
 
