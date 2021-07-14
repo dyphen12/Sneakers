@@ -25,23 +25,26 @@ import sneakers.api.core as skcore
 shuset = skutils.load_shoes_dataset()
 
 # Pick a sample from the dataset
-sp = 200  # Sample Size
+sp = 250  # Sample Size
 
 sample = shuset.iloc[:sp]
 
 ver = skutils.sheet_ver('COMPOSER', 'development', sp)
 
 
-titl = skutils.composer_title('composer', 'developmentv2', sp)
+titl = skutils.composer_title('composer', 'Cloud9Dev', sp)
 
 if __name__ == '__main__':
     #skutils.download_img(sample)
     #skutils.build_big_xlsx(sample, ver, local=True)
 
-    xcomposer = Composer(titl, create=True, samplesize=sp)
+    xcomposer = Composer(titl, samplesize=sp)
     #xcomposer.create_workbook()
     #xcomposer.update_prices()
-    xcomposer.write_wb_xl([50,150], iny_size=20)
+    xcomposer.write_wb([22,44])
+    xcomposer.sync_file()
+    
+    
 
 
 

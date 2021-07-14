@@ -12,10 +12,12 @@ Made by Alexis W.
 
 """
 import pandas as pd
+import json
 from openpyxl import load_workbook
 from sneakers.api import utils
 from sneakers.api import processing
 from sneakers.api import core
+from sneakers.api import uploaders
 
 
 def chunks(data, n):
@@ -27,12 +29,48 @@ def chunks(data, n):
 
 # Composer is intended to work only on an Excel Worksheet object environment.
 class Composer:
-    def __init__(self, title, samplesize=0, create=False):
-        self.create = create
+    def __init__(self, title, samplesize=0):
+        self.exist = False
         self.samplesize = samplesize
         self.folder = 'workout'
         self.title = title
+        self.doc_file = '{ftit}.xlsx'.format(ftit=title)
         self.full_path = 'workout/{ftit}.xlsx'.format(ftit=title)
+        self.doc_id = 'NaN'
+        self.online = False
+        self.json_name = 'workout/{}.json'.format(title)
+        
+        
+        try:
+            wb = load_workbook(filename=self.full_path)
+            self.exist = True
+        except FileNotFoundError as e:
+            print('Composer workbook not found.')
+            print('Creating workbook...')
+            self.create_workbook()
+            print('Workbook Created!')
+            print('Check {}'.format(self.full_path))
+            self.exist = True
+            
+            
+        if self.exist == True:
+            try:
+                with open(self.json_name) as jsonFile:
+                    jsonObject = json.load(jsonFile)
+                    jsonFile.close()
+            
+                if jsonObject['composer']['doc_id'] == 'NaN':
+                    self.online = False
+                    
+                else:
+                    self.doc_id = jsonObject['composer']['doc_id']
+                    self.online = True
+                    
+            except FileNotFoundError:
+                
+                print('JSON does not exist')
+            
+
 
     def create_workbook(self):
         # Creates a new empty workbook with no sneaker images, just data
@@ -43,6 +81,17 @@ class Composer:
         writer = pd.ExcelWriter(self.full_path, engine='xlsxwriter', options={'strings_to_urls': False})
         sample.to_excel(writer)
         writer.close()
+        
+        aid = 'NaN'
+        
+        self.doc_id = aid
+        
+        json_comp = {"composer":{"doc_id":"NaN"}}
+            
+        with open('workout/{}.json'.format(self.title), 'w', encoding='utf-8') as f:
+                
+            json.dump(json_comp, f, ensure_ascii=False, indent=4)
+            
         print('Workbook saved to ', self.full_path)
 
 
@@ -135,6 +184,52 @@ class Composer:
 
         print('Prices Updated Succesufully')
         return True
+        
+    def upload_file(self):
+        
+        # Just for the fist time
+        
+        
+        if self.online == False:
+            
+        
+            aid = uploaders.upload_folder(self.full_path, self.doc_file)
+            self.doc_id = aid
+            
+            json_comp = {
+                            "composer": {
+                                "doc_id": aid
+                            }
+                        }
+            
+            with open(self.json_name, 'w', encoding='utf-8') as f:
+                
+                json.dump(json_comp, f, ensure_ascii=False, indent=4)
+                
+                
+            
+            self.online = True
+            
+            
+        else:
+            
+            print('This file is already online')
+            
+        
+        
+        return True
+        
+    
+    def sync_file(self):
+        
+        uploaders.sync_by_id(self.doc_id, self.full_path, self.doc_file)
+        
+        return True
+        
+        
+    #def check_json():
+        
+        
 
 
 
