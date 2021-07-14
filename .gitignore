@@ -117,6 +117,6 @@ dmypy.json
 #client_secrets.json
 
 #.git
-
+main.py
 
 *.png
