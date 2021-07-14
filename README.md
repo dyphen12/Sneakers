@@ -11,7 +11,11 @@ Also API allows images to be downloaded and processed, they can be downloaded an
 
 `git clone https://github.com/dyphen12/Sneakers.git`
 
-`python3 -m pip install -r requirements.txt`
+`cd Sneakers`
+
+`pip install -r requirements.txt`
+
+`python3 unit-test.py` 
 
 Windows users: make sure you got python in your $PATH
 
