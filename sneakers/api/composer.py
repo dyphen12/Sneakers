@@ -77,29 +77,36 @@ class Composer:
 
 
     def create_workbook(self, sz=5):
-        # Creates a new empty workbook with no sneaker images, just data
-        dataset = utils.load_shoes_dataset()
-        sample = dataset.iloc[:sz]
 
-        sample['pic'] = ''
-        writer = pd.ExcelWriter(self.full_path, engine='xlsxwriter', options={'strings_to_urls': False})
-        sample.to_excel(writer)
-        writer.close()
-        
-        aid = 'NaN'
+        try:
+            wb = load_workbook(filename=self.full_path)
+            print('Workbook already exists!')
+            self.exist = True
 
-        json_comp = {
-            "composer": {
-                "doc_id": 'NaN',
-                "size": sz
+        except FileNotFoundError as e:
+            # Creates a new empty workbook with no sneaker images, just data
+            dataset = utils.load_shoes_dataset()
+            sample = dataset.iloc[:sz]
+
+            sample['pic'] = ''
+            writer = pd.ExcelWriter(self.full_path, engine='xlsxwriter', options={'strings_to_urls': False})
+            sample.to_excel(writer)
+            writer.close()
+
+            aid = 'NaN'
+
+            json_comp = {
+                "composer": {
+                    "doc_id": 'NaN',
+                    "size": sz
+                }
             }
-        }
-            
-        with open('workout/{}.json'.format(self.title), 'w', encoding='utf-8') as f:
-                
-            json.dump(json_comp, f, ensure_ascii=False, indent=4)
-            
-        print('Workbook saved to ', self.full_path)
+
+            with open('workout/{}.json'.format(self.title), 'w', encoding='utf-8') as f:
+
+                json.dump(json_comp, f, ensure_ascii=False, indent=4)
+
+            print('Workbook saved to ', self.full_path)
 
 
 
