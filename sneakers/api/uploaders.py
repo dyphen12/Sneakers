@@ -1,7 +1,14 @@
 """
 
-Made by Alexis Wong.
-Prisma Inc.
+Prisma Inc. 2021
+
+uploaders.py
+
+Status: Checked
+
+Note: For unit testing purposes.
+
+Made by Alexis W.
 
 """
 
@@ -12,6 +19,51 @@ from openpyxl.drawing.image import Image as pyImage
 from PIL import Image
 import progressbar
 import requests
+
+
+def sync_by_id(doc_id, full_path, filename):
+    
+    gauth = GoogleAuth()
+    gauth.CommandLineAuth()
+    drive = GoogleDrive(gauth)
+    
+    
+    file6 = drive.CreateFile({'id': doc_id})
+    content = file6.GetContentFile('outputs/{}'.format(filename)) # Download file 
+    file6.SetContentFile(full_path)
+    file6.Upload()
+    print('Uploaded file with ID {}'.format(file6.get('id')))
+    print('Composer Doc {}'.format(filename))
+    
+    
+    
+    
+def upload_folder(path, title):
+    
+    try:
+        
+        gauth = GoogleAuth()
+        gauth.CommandLineAuth()
+        drive = GoogleDrive(gauth)
+    
+        uploaded = drive.CreateFile({'title': title})
+        uploaded.SetContentFile(path)
+        uploaded.Upload()
+        print('Uploaded file with ID {}'.format(uploaded.get('id')))
+        print('Composer Doc {}'.format(title))
+        
+        aid = uploaded.get('id')
+        
+    except Exception as e:
+        print(e)
+        
+        print('Load client-secrets.json')
+        
+
+    
+    
+    return aid
+    
 
 
 # Status: Failed // Unicode Error, presumably can't decode the symbol ö from Möebius.

@@ -171,6 +171,24 @@ def update_shoes_db(quantity):  # -----> String
 
         df.loc[i] = shoeDic
 
-        df.to_csv('sneakers/datasets/sneakers-100000-extended.csv')
+        df.to_csv('sneakers/datasets/sneakers-local-db.csv')
 
     return True
+
+
+def get_shoe_by_id(snid):
+
+    url = "https://the-sneaker-database.p.rapidapi.com/sneakers/{fid}".format(fid=snid)
+
+    header = {
+        'x-rapidapi-key': "d95141d382mshab73dd2df74b5dfp131a06jsn567d929b49db",
+        'x-rapidapi-host': "the-sneaker-database.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=header)
+
+    sneaker = json.loads(response.text)
+
+    return sneaker['results']
+
+
