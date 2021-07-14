@@ -114,7 +114,7 @@ dmypy.json
 .pyre/
 
 #sheeeesh the mf secrets pal
-client_secrets.json
+#client_secrets.json
 
 .git
 
