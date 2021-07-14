@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/outputs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sheets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/workout" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (aivenv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
