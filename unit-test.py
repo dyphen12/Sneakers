@@ -41,8 +41,9 @@ if __name__ == '__main__':
     xcomposer = Composer(titl, samplesize=sp)
     #xcomposer.create_workbook()
     #xcomposer.update_prices()
-    xcomposer.write_wb([22,44])
-    xcomposer.sync_file()
+    #xcomposer.write_wb([2,6])
+    #xcomposer.sync_file()
+
     
     
 

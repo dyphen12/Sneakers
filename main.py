@@ -8,7 +8,7 @@ import sneakers.api.utils as skutils
 
 def print_hi(name):
     skutils.flush_sheets()
-    #skutils.flush_img()
+    skutils.flush_img()
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 

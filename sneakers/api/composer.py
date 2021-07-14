@@ -100,7 +100,7 @@ class Composer:
         wb = load_workbook(filename=self.full_path)
         return wb
 
-    def write_wb(self, addr):
+    def write_wb(self, addr, local=False):
         msg = 'Writing from {ffrom} to {fto}'.format(ffrom=addr[0], fto=addr[1])
         print(msg)
         df = utils.load_shoes_dataset()
@@ -121,14 +121,16 @@ class Composer:
                 if cell == processes[i][0]:
                     writings.append(processes[i])
 
-
-        processing.img_processor_local(writings)
+        if local == True:
+            processing.img_processor(writings, local=True)
+        else:
+            processing.img_processor(process_list=writings)
 
         print('XLSX processed successfully')
 
         return True
 
-    def write_wb_xl(self, addr, iny_size=10):
+    def write_wb_xl(self, addr, iny_size=10, local=False):
         msg = 'Writing from {ffrom} to {fto}'.format(ffrom=addr[0], fto=addr[1])
         print(msg)
         df = utils.load_shoes_dataset()
@@ -149,7 +151,10 @@ class Composer:
                 if cell == processes[i][0]:
                     writings.append(processes[i])
 
-        processing.img_processor_local_inj(writings, iny_size)
+        if local == True:
+            processing.img_processor_inj(writings, iny_size)
+        else:
+            processing.img_processor_inj(process_list=writings, size=iny_size, local=False)
 
         print('XLSX processed successfully')
 
