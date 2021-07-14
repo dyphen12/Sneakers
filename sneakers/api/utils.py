@@ -39,6 +39,10 @@ def flush_sheets():
     for file in arr:
         os.remove('sheets/{fname}'.format(fname=file))
 
+    f = open("sheets/phasm.txt", "w+")
+    f.write('Prisma Inc. 2021')
+    f.close()
+
     return True
 
 
@@ -60,6 +64,10 @@ def flush_img():
 
     for file in arr:
         os.remove('img/{fname}'.format(fname=file))
+
+    f = open("img/phasm.txt", "w+")
+    f.write('Prisma Inc. 2021')
+    f.close()
 
     return True
 
@@ -291,9 +299,10 @@ def sheet_ver(title, sub, sp):
 
     return ver
 
-def composer_title(title,sub,sp):
 
-    return '{ftitle}({fsub})-({flen}rows)'.format(ftitle=title, flen=sp, fsub=sub)
+def composer_title(title, sub):
+
+    return '{ftitle}({fsub})'.format(ftitle=title, fsub=sub)
 
 
 

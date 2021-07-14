@@ -16,21 +16,21 @@ Made by Alexis W.
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-import sneakers.api.core as sk
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
-import sneakers.api.core as skcore
 
 
-sp = 20000  # Sample Size
-
-titl = skutils.composer_title('composer', 'Demo1', sp)
+titl = skutils.composer_title('composer', 'Testings1')
 
 if __name__ == '__main__':
-    
-    
-    xcomposer = Composer(titl, samplesize=sp)
-    
-    xcomposer.sync_file()
+    xcomposer = Composer(titl)
+
+
+
+
+
+
+
+
     
     

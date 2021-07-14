@@ -20,9 +20,14 @@ from openpyxl.drawing.image import Image as pyImage
 
 def chunks(data, n):
 
-    m = int(len(data)/n)
+    try:
+        m = int(len(data) / n)
+        return [data[x:x + m] for x in range(0, len(data), m)]
+    except ZeroDivisionError:
+        print('Chunks Injection cylinder failed, using normal processing.')
+        return 0
 
-    return [data[x:x+m] for x in range(0, len(data), m)]
+
 
 
 class cylinder:
@@ -38,6 +43,10 @@ class cylinder:
         print('{finjq} inyectors loaded'.format(finjq=inj_q))
 
         batch = chunks(self.images, inj_q)
+
+        if batch == 0:
+            self.chamber(images=self.images)
+            return 'yay'
 
         for k in range(0, len(batch)):
             print('Batch {kf} loaded into chamber. Size: {fs}'.format(kf=k, fs=len(batch[k])))
