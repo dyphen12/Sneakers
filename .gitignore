@@ -116,6 +116,7 @@ dmypy.json
 #sheeeesh the mf secrets pal
 #client_secrets.json
 
-.git
+#.git
+
 
 *.png
