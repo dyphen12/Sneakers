@@ -227,7 +227,14 @@ class Composer:
     
     def sync_file(self):
         
-        uploaders.sync_by_id(self.doc_id, self.full_path, self.doc_file)
+        if self.online == True:
+        
+            uploaders.sync_by_id(self.doc_id, self.full_path, self.doc_file)
+        
+        else:
+            
+            print('Sync failed, this workbook is not in the cloud.')
+            print('You can upload it with composer.upload_file() .')
         
         return True
         

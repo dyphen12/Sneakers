@@ -22,19 +22,18 @@ from sneakers.api.composer import Composer
 import sneakers.api.core as skcore
 
 
-sp = 250  # Sample Size
+sp = 20000  # Sample Size
 
-titl = skutils.composer_title('composer', 'Cloud9Dev', sp)
+titl = skutils.composer_title('composer', 'Demo1', sp)
 
 if __name__ == '__main__':
-    #skutils.download_img(sample)
-    #skutils.build_big_xlsx(sample, ver, local=True)
+    
 
     xcomposer = Composer(titl, samplesize=sp)
-    #xcomposer.create_workbook()
-    #xcomposer.update_prices()
-    #xcomposer.write_wb([2,6])
-    #xcomposer.sync_file()
+    xcomposer.sync_file()
+    print(xcomposer.doc_id)
+    print(xcomposer.online)
+    
 
     
     
