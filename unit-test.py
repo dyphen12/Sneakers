@@ -21,16 +21,8 @@ import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
 import sneakers.api.core as skcore
 
-# Loads the database
-shuset = skutils.load_shoes_dataset()
 
-# Pick a sample from the dataset
 sp = 250  # Sample Size
-
-sample = shuset.iloc[:sp]
-
-ver = skutils.sheet_ver('COMPOSER', 'development', sp)
-
 
 titl = skutils.composer_title('composer', 'Cloud9Dev', sp)
 
