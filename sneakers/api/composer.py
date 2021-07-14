@@ -355,6 +355,29 @@ class Composer:
         with open(self.json_name, 'w', encoding='utf-8') as f:
             json.dump(json_comp, f, ensure_ascii=False, indent=4)
 
+    def sync_flow_gui(self):
+
+        if self.online == True:
+
+            a, url = uploaders.sync_flow_1(self.doc_id, self.full_path, self.doc_file)
+
+            return a, url
+
+        else:
+
+            print('Sync failed, this workbook is not in the cloud.')
+            print('You can upload it with composer.upload_file() .')
+
+            return False
+
+    def sync_flow_gui_code(self, code, ga):
+        uploaders.auth_drive_gui(code, ga)
+        print('Successfully Synced.')
+        return True
+
+
+
+
 
 
 

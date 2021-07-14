@@ -20,6 +20,22 @@ from PIL import Image
 import progressbar
 import requests
 
+def get_drive_code():
+    gauth = GoogleAuth()
+    auth_url = gauth.GetAuthUrl()  # Create authentication url user needs to visit
+    print(auth_url)
+    return auth_url, gauth
+
+def auth_drive_gui(code, gauth):
+    gauth.Auth(code)
+
+
+def sync_flow_1(doc_id, full_path, filename):
+    url, a = get_drive_code()
+    print(url)
+    return a, url
+
+
 
 def sync_by_id(doc_id, full_path, filename):
     
@@ -53,17 +69,16 @@ def upload_folder(path, title):
         print('Composer Doc {}'.format(title))
         
         aid = uploaded.get('id')
+
+        return aid
         
     except Exception as e:
         print(e)
         
         print('Load client-secrets.json')
-        
 
-    
-    
-    return aid
-    
+
+
 
 
 # Status: Failed // Unicode Error, presumably can't decode the symbol ö from Möebius.
