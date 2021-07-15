@@ -1,6 +1,7 @@
 {
-    "composer": {
-        "doc_id": "NaN",
-        "size": 5
+    "results": {
+        "title": "NaN",
+        "from": 5,
+        "to": 2
     }
 }

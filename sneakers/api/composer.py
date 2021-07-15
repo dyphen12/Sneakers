@@ -247,9 +247,7 @@ class Composer:
         else:
             
             print('This file is already online')
-            
-        
-        
+
         return True
         
     

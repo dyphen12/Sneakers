@@ -59,7 +59,10 @@ class cylinder:
 
         time.sleep(1)
 
-        path = images[0][0][2]
+        try:
+            path = images[0][0][2]
+        except IndexError:
+            return True
 
         wb = load_workbook(filename=path, keep_links=False)
 
