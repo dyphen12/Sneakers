@@ -35,7 +35,7 @@ def sync_composer():
     titl = skutils.composer_title('composer', tait)
     xc = Composer(titl)
     global a
-    a, url = xc.sync_flow_gui()
+    url, a = xc.drive_flow_gui()
     #tk.Label(text=url).grid(row=10)
     global syncwindow
     syncwindow = tk.Toplevel(master)
@@ -62,7 +62,7 @@ def sync_composer_code():
     tait = e1.get()
     titl = skutils.composer_title('composer', tait)
     xc = Composer(titl)
-    xc.sync_flow_gui_code(cod,a)
+    xc.sync_worksheet(a, cod)
     tk.Label(syncwindow, text="Successfully Synced").grid(row=15, column=10)
     tk.Button(syncwindow,
               text='Quit',

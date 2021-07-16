@@ -19,11 +19,14 @@ Made by Alexis W.
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
 
+import sneakers.api.core as skcore
+
 
 titl = skutils.composer_title('composer', 'Testings1')
 
 if __name__ == '__main__':
-    xcomposer = Composer(titl)
+    cf = skcore.load_config()
+    print(cf.apikey)
 
 
 

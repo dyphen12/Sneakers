@@ -444,21 +444,24 @@ def img_processor(process_list, local=False):
     return images
 
 
-def img_processor_inj(process_list, size, local=False):
+def img_processor_inj(process_list, size, local):
 
     ws = 0
 
     print('Initiating Multi-threading processing...')
-    print('Listing processes only')
+
 
     with Pool(5) as p:
 
         #print(p.map(img_multiprocess, process_list))
         print('MULTI-THREADING PROCESS STARTED')
+
         print('Please wait...')
         if local == True:
+            print('RUNNING LOCAL!')
             images = p.map(img_multiprocess_local, process_list)
         else:
+            print('RUNNING ONLINE!')
             images = p.map(img_multiprocess, process_list)
 
 

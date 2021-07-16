@@ -20,21 +20,50 @@ from PIL import Image
 import progressbar
 import requests
 
+
 def get_drive_code():
     gauth = GoogleAuth()
     auth_url = gauth.GetAuthUrl()  # Create authentication url user needs to visit
     print(auth_url)
     return auth_url, gauth
 
-def auth_drive_gui(code, gauth):
+def sync_flow(code, gauth, doc_id, full_path, filename):
+
     gauth.Auth(code)
+    drive = GoogleDrive(gauth)
+
+    file6 = drive.CreateFile({'id': doc_id})
+    content = file6.GetContentFile('outputs/{}'.format(filename))  # Download file
+    file6.SetContentFile(full_path)
+    file6.Upload()
+    print('Uploaded file with ID {}'.format(file6.get('id')))
+    print('Composer Doc {}'.format(filename))
+    return True
+
+def upload_flow(gauth, code, title, path):
+
+    gauth.Auth(code)
+    drive = GoogleDrive(gauth)
+
+    uploaded = drive.CreateFile({'title': title})
+    uploaded.SetContentFile(path)
+    uploaded.Upload()
+    print('Uploaded file with ID {}'.format(uploaded.get('id')))
+    print('Composer Doc {}'.format(title))
+
+    aid = uploaded.get('id')
+
+    return aid
 
 
-def sync_flow_1(doc_id, full_path, filename):
+def sync_flow_dum(doc_id, full_path, filename):
     url, a = get_drive_code()
     print(url)
     return a, url
 
+
+
+# Normal Uploader
 
 
 def sync_by_id(doc_id, full_path, filename):
@@ -52,8 +81,7 @@ def sync_by_id(doc_id, full_path, filename):
     print('Composer Doc {}'.format(filename))
     
     
-    
-    
+
 def upload_folder(path, title):
     
     try:
@@ -76,9 +104,6 @@ def upload_folder(path, title):
         print(e)
         
         print('Load client-secrets.json')
-
-
-
 
 
 # Status: Failed // Unicode Error, presumably can't decode the symbol ö from Möebius.

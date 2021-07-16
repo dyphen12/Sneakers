@@ -1,0 +1,9 @@
+{
+    "api-config": {
+        "db-size": 100000,
+        "image-row-litter": "S",
+      "api-key": "d95141d382mshab73dd2df74b5dfp131a06jsn567d929b49db",
+      "iny-base-size": 20,
+      "local-imaging": "true"
+    }
+}

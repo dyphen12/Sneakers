@@ -39,8 +39,8 @@ class Composer:
         self.doc_id = 'NaN'
         self.online = False
         self.json_name = 'workout/{}.json'.format(title)
-        
-        
+
+
         try:
             wb = load_workbook(filename=self.full_path)
             self.exist = True
@@ -52,17 +52,17 @@ class Composer:
             print('Workbook Created!')
             print('Check {}'.format(self.full_path))
             self.exist = True
-            
-            
+
+
         if self.exist == True:
             try:
                 with open(self.json_name) as jsonFile:
                     jsonObject = json.load(jsonFile)
                     jsonFile.close()
-            
+
                 if jsonObject['composer']['doc_id'] == 'NaN':
                     self.online = False
-                    
+
                 else:
                     self.doc_id = jsonObject['composer']['doc_id']
                     self.online = True
@@ -71,9 +71,9 @@ class Composer:
 
 
             except FileNotFoundError:
-                
+
                 print('JSON does not exist')
-            
+
 
 
     def create_workbook(self, sz=5):
@@ -116,6 +116,11 @@ class Composer:
 
     def write_wb(self, addr, local=False):
 
+        cf = core.load_config()
+
+        if cf.localimg == 'true':
+            local=True
+
         if addr[1] > self.samplesize:
             print('Index Error, the max number of rows to image injection is {}.'.format(self.samplesize))
             print('Maybe you should expand the worksheet first.')
@@ -151,7 +156,14 @@ class Composer:
 
         return True
 
-    def write_wb_xl(self, addr, iny_size=10, local=False):
+    def write_wb_xl(self, addr, iny_size=10):
+
+        cf = core.load_config()
+
+        if cf.localimg == 'true':
+            local = True
+        else:
+            local = False
 
         if addr[1] > self.samplesize:
             print('Index Error, the max number of rows to image injection is {}.'.format(self.samplesize))
@@ -179,7 +191,7 @@ class Composer:
                     writings.append(processes[i])
 
         if local == True:
-            processing.img_processor_inj(writings, iny_size)
+            processing.img_processor_inj(writings, iny_size, local=True)
         else:
             processing.img_processor_inj(process_list=writings, size=iny_size, local=False)
 
@@ -216,57 +228,53 @@ class Composer:
 
         print('Prices Updated Succesufully')
         return True
-        
+
     def upload_file(self):
-        
+
         # Just for the fist time
-        
-        
+
+
         if self.online == False:
-            
-        
+
+
             aid = uploaders.upload_folder(self.full_path, self.doc_file)
             self.doc_id = aid
-            
+
             json_comp = {
                             "composer": {
                                 "doc_id": aid,
                                 "size": self.samplesize
                             }
                         }
-            
+
             with open(self.json_name, 'w', encoding='utf-8') as f:
-                
+
                 json.dump(json_comp, f, ensure_ascii=False, indent=4)
-                
-                
-            
+
+
+
             self.online = True
-            
-            
+
+
         else:
-            
+
             print('This file is already online')
-            
-        
-        
+
         return True
-        
-    
+
     def sync_file(self):
-        
+
         if self.online == True:
-        
+
             uploaders.sync_by_id(self.doc_id, self.full_path, self.doc_file)
-        
+
         else:
-            
+
             print('Sync failed, this workbook is not in the cloud.')
             print('You can upload it with composer.upload_file() .')
-        
+
         return True
-        
-        
+
     def expand_worksheet(self, new_size):
 
         if new_size == self.samplesize:
@@ -338,7 +346,6 @@ class Composer:
         print('Worksheet Expanded Successfully')
         return
 
-
     def change_size_json(self, nsz):
 
         with open(self.json_name) as jsonFile:
@@ -355,25 +362,43 @@ class Composer:
         with open(self.json_name, 'w', encoding='utf-8') as f:
             json.dump(json_comp, f, ensure_ascii=False, indent=4)
 
-    def sync_flow_gui(self):
 
-        if self.online == True:
 
-            a, url = uploaders.sync_flow_1(self.doc_id, self.full_path, self.doc_file)
+            # UPLOADERS FOR WEB
 
-            return a, url
+    def drive_flow_gui(self):
 
+        url, ga = uploaders.get_drive_code()
+
+        return url, ga
+            # New Drive Algo
+
+    def sync_worksheet(self, ga, code):
+
+        if self.online is not True:
+
+            aid = uploaders.upload_flow(ga, code, self.title, self.full_path)
+            self.doc_id = aid
+
+            json_comp = {
+                "composer": {
+                    "doc_id": aid,
+                    "size": self.samplesize
+                }
+            }
+
+            with open(self.json_name, 'w', encoding='utf-8') as f:
+
+                json.dump(json_comp, f, ensure_ascii=False, indent=4)
+
+            self.online = True
+
+            print('Succesfully Uploaded.')
+            return True
         else:
-
-            print('Sync failed, this workbook is not in the cloud.')
-            print('You can upload it with composer.upload_file() .')
-
-            return False
-
-    def sync_flow_gui_code(self, code, ga):
-        uploaders.auth_drive_gui(code, ga)
-        print('Successfully Synced.')
-        return True
+            uploaders.sync_flow(code, ga, self.doc_id, self.full_path, self.doc_file)
+            print('Successfully Synced.')
+            return True
 
 
 
@@ -383,8 +408,6 @@ class Composer:
 
 
 
-        
-        
 
 
 
