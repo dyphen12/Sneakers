@@ -6,6 +6,8 @@ function initWorkbook() {
     var workbooktitle = document.getElementById("init-wb-input").value;
     console.log(workbooktitle);
 
+    document.getElementById("init-status").innerHTML = 'Loading Workbook...';
+
     var url = std.replace('%', workbooktitle);
 
     //document.getElementById("demo").innerHTML = credential;
@@ -21,8 +23,12 @@ function initWorkbook() {
       if (res == 'fail'){
         console.log('Fail')
 
+
       } else {
         console.log('Sy')
+        document.getElementById("workbook-info").style.opacity = 10;
+        infoWorkbook();
+        document.getElementById("init-status").innerHTML = '';
       }
 
       }
@@ -38,6 +44,9 @@ function initWorkbook() {
 function expandWorkbook() {
 
     var std = "http://127.0.0.1:5000/expand/%";
+
+    document.getElementById("expansion-status").style.opacity = 10;
+    document.getElementById("expansion-status").innerHTML = 'Expanding! Please wait until it finishes...';
 
     var workbooktitle = document.getElementById("init-wb-input").value;
     var expandsize = document.getElementById("new-wb-size").value;
@@ -62,12 +71,17 @@ function expandWorkbook() {
 
       if (res == 'fail'){
         console.log('Fail')
+        document.getElementById("expansion-status").innerHTML = 'Expansion Failed';
 
       } else {
-        console.log('Sy')
+        console.log('Sy');
+        document.getElementById("expansion-status").innerHTML = 'Expanded Successfully';
+        infoWorkbook();
       }
 
-      }
+      }else{
+      document.getElementById("expansion-status").innerHTML = 'Expanding! Please wait until it finishes...';}
+
     };
     xhttp.open("GET", url);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -77,6 +91,8 @@ function expandWorkbook() {
 }
 
 function imagingWorkbook() {
+
+    document.getElementById("img-status").innerHTML = 'Inserting images... This could take minutes or several hours.';
 
     var std = "http://127.0.0.1:5000/imaging/%";
 
@@ -107,6 +123,8 @@ function imagingWorkbook() {
 
       } else {
         console.log('Sy')
+        infoWorkbook()
+        document.getElementById("img-status").innerHTML = 'Images inserted successfully, sync and check your drive!';
       }
 
       }
@@ -118,9 +136,9 @@ function imagingWorkbook() {
     return true;
 }
 
-function syncWorkbook() {
+function drivecodeWorkbook() {
 
-    var std = "http://127.0.0.1:5000/sync/%";
+    var std = "http://127.0.0.1:5000/drive/%";
 
     var workbooktitle = document.getElementById("init-wb-input").value;
     console.log(workbooktitle);
@@ -142,6 +160,10 @@ function syncWorkbook() {
 
       } else {
         console.log(res);
+        document.getElementById("send-wb-aco").style.opacity = 10;
+        document.getElementById("send-wb-aco").href = res;
+        document.getElementById("send-wb-code").style.opacity = 10;
+        document.getElementById("send-wb-button").style.opacity = 10;
       }
 
       }
@@ -154,24 +176,34 @@ function syncWorkbook() {
     return true;
 
 
-
-
-    return true;
 }
 
-function sync2Workbook() {
+function syncWorkbook() {
+
+    document.getElementById("sync-result").innerHTML = 'Syncing...';
 
     var workbooktitle = document.getElementById("init-wb-input").value;
-    var acode = document.getElementById("send-code").value;
+    var acode = document.getElementById("send-wb-code").value;
 
-    var std = "http://127.0.0.1:5000/sync2/%";
+    document.getElementById("send-wb-aco").style.opacity = 0;
+    document.getElementById("send-wb-aco").innerHTML = 'Please wait...';
+    document.getElementById("send-wb-code").style.opacity = 0;
+    document.getElementById("send-wb-button").style.opacity = 0;
 
-     var query = '{"results": {"title": "%","code": $}}';
+    var std = "http://127.0.0.1:5000/sync/%";
+
+    cryptedcode = acode.replace('/','totona')
+
+     var query = '{"results": {"title": "%","code": "$"}}'
+
+
 
      var query2 = query.replace('%', workbooktitle);
-     var finalquery = query2.replace('$', acode);
+     var finalquery = query2.replace('$', cryptedcode);
 
      var url = std.replace('%', finalquery)
+
+     console.log(url)
 
        var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -186,6 +218,8 @@ function sync2Workbook() {
 
       } else {
         console.log('Sy')
+        infoWorkbook();
+        document.getElementById("sync-result").innerHTML = 'Succesfully Synced! Check your drive!';
       }
 
       }
@@ -196,4 +230,144 @@ function sync2Workbook() {
 
     return true;
 }
+
+function infoWorkbook() {
+
+    var std = "http://127.0.0.1:5000/info/%";
+
+    document.getElementById("workbook-info").style.opacity = 10;
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+      console.log('Toy aqui pajuo');
+      tit = res['composer']['title'];
+      siz = res['composer']['size'];
+      syn = res['composer']['synced'];
+      docn = res['composer']['doc_name'];
+      document.getElementById("wb-title").innerHTML = res['composer']['title'];
+      document.getElementById("wb-size").innerHTML = siz;
+      if (syn == true) {
+      document.getElementById("wb-sync").innerHTML = 'Synced to Google Drive';}
+      else{
+      document.getElementById("wb-sync").innerHTML = 'Not Synced';
+      }
+      document.getElementById("wb-docname").innerHTML = docn;
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+
+
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+function updateWorkbook() {
+
+    var std = "http://127.0.0.1:5000/update/%";
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    document.getElementById("update-status").innerHTML = 'Updating prices...';
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+        document.getElementById("workbook-info").style.opacity = 10;
+        infoWorkbook();
+        document.getElementById("update-status").innerHTML = 'Workbook prices up to date!';
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+function updateDB() {
+
+    var std = "http://127.0.0.1:5000/update/%";
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    document.getElementById("updatedb-status").innerHTML = 'Updating all the sneakers...';
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+        document.getElementById("workbook-info").style.opacity = 10;
+        infoWorkbook();
+        document.getElementById("updatedb-status").innerHTML = 'Sneakers up to date!';
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
 
