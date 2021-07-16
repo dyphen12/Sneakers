@@ -8,3 +8,6 @@ requests
 pandas
 requests
 gunicorn
+flask
+flask-cors
+flask-restful
