@@ -94,7 +94,7 @@ function imagingWorkbook() {
 
     document.getElementById("img-status").innerHTML = 'Inserting images... This could take minutes or several hours.';
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/imaging/%";
 
     var query = '{"results": {"title": "%","from": #,"to": &}}'
 
@@ -138,7 +138,7 @@ function imagingWorkbook() {
 
 function drivecodeWorkbook() {
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/drive/%";
 
     var workbooktitle = document.getElementById("init-wb-input").value;
     console.log(workbooktitle);
@@ -190,7 +190,7 @@ function syncWorkbook() {
     document.getElementById("send-wb-code").style.opacity = 0;
     document.getElementById("send-wb-button").style.opacity = 0;
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/sync/%";
 
     cryptedcode = acode.replace('/','totona')
 
@@ -233,7 +233,7 @@ function syncWorkbook() {
 
 function infoWorkbook() {
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/info/%";
 
     document.getElementById("workbook-info").style.opacity = 10;
 
@@ -286,7 +286,7 @@ function infoWorkbook() {
 
 function updateWorkbook() {
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/update/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -329,7 +329,7 @@ function updateWorkbook() {
 
 function updateDB() {
 
-    var std = "https://sneakers-app-api.herokuapp.com/%";
+    var std = "https://sneakers-app-api.herokuapp.com/updatedb/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
