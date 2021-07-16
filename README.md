@@ -1,8 +1,8 @@
 # Sneakers API
 
-This API works as a wrapper for TheSneakersDatabase, you can download the database and export it in a CSV, you can also update and modify it.
+This API works as a wrapper for TheSneakersDatabase, you can download the database and export it into a CSV, update it and modify it.
 
-Also API allows sneakers images to be downloaded and processed, they are downloaded and saved in the 'img' folder and they can be composed into a fully automated ExcelSheet.
+API allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
 
 Featuring the 'Worksheet Composer', with the Composer you can create, manipulate, and save an XLSX worksheet.
 
