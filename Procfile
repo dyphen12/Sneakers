@@ -1,1 +1,1 @@
-web: gunicorn application:app
+web: gunicorn --bind :8000 project.wsgi:application
