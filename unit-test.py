@@ -19,10 +19,8 @@ Made by Alexis W.
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
 
-import sneakers.api.core as skcore
 
-
-titl = skutils.composer_title('composer', 'codeTest')
+titl = skutils.composer_title('composer', 'HelloWorld')
 
 if __name__ == '__main__':
     xc = Composer(titl)
