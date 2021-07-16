@@ -142,5 +142,5 @@ api.add_resource(updateWorkbook, '/update/<string:todo_id>')
 api.add_resource(updateDB, '/updatedb/<string:todo_id>')
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
-    #app.run(debug=True)
+    #app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
+    app.run(debug=True)

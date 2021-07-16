@@ -1,6 +1,6 @@
 function initWorkbook() {
 
-    var std = "http://127.0.0.1:5000/init/%";
+    var std = "https://b7e8c5ca01f94d128503f2a0072836d6.vfs.cloud9.us-east-2.amazonaws.com/init/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
