@@ -22,11 +22,13 @@ from sneakers.api.composer import Composer
 import sneakers.api.core as skcore
 
 
-titl = skutils.composer_title('composer', 'Testings1')
+titl = skutils.composer_title('composer', 'codeTest')
 
 if __name__ == '__main__':
-    cf = skcore.load_config()
-    print(cf.apikey)
+    xc = Composer(titl)
+    xc.expand_worksheet(100)
+    xc.write_wb([2,10])
+
 
 
 
