@@ -31,6 +31,14 @@ You can run the example script 'unit-test.py'.
 
 `python3 unit-test.py`
 
+Also, you can use a Tkinter GUI.
+
+`python3 main.py`
+
+Or, you can start the REST API.
+
+`python3 app.py`
+
 ### Basic usage:
 
 ```import sneakers.api.utils as skutils
