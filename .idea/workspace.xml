@@ -27,14 +27,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/unit-test.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/client_secrets.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/sneakers/api/utils.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/demo.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/sneakers/api/core.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/sneakers/api/uploaders.py" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="ProjectId" id="1uvnBG29AaYio5zr9wVYgpQR3HB" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -163,9 +155,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.demo" />
       <item itemvalue="Python.core" />
       <item itemvalue="Python.unit-test" />
-      <item itemvalue="Python.demo" />
       <item itemvalue="Python.wsgi" />
       <item itemvalue="Python.application" />
     </list>
