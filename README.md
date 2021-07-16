@@ -17,7 +17,7 @@ You can also synchronize the composer and the composer worksheet with your Googl
 
 `$ git clone https://github.com/dyphen12/Sneakers.git`
 
-`cd Sneakers`
+`$ cd Sneakers`
 
 `$ pip install -r requirements.txt`
 
