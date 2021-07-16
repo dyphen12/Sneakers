@@ -7,6 +7,8 @@ import json
 
 
 from sneakers.api.composer import Composer
+from sneakers.api.core import load_config
+from sneakers.api.core import update_shoes_db
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,13 +18,13 @@ CORS(app)
 
 todos = {}
 
-global a
 
 class InitWorkbook(Resource):
 
     def get(self, todo_id):
         xc = Composer(todo_id)
         return 'yay'
+
 
 class expandWorkbook(Resource):
 
@@ -39,6 +41,7 @@ class expandWorkbook(Resource):
             xc.expand_worksheet(siz)
             return 'yay'
 
+
 class imagingWorkbook(Resource):
 
     def get(self, todo_id):
@@ -53,45 +56,89 @@ class imagingWorkbook(Resource):
             return 'Empty Title :('
         else:
             xc = Composer(tit)
-            xc.write_wb_xl(listadd, iny_size=50)
+            cf = load_config()
+            xc.write_wb_xl(listadd, cf.inysize)
             return 'yay'
+
+
+class driveWorkbook(Resource):
+
+    def get(self, todo_id):
+
+        print(todo_id)
+        try:
+            global a
+            tit = todo_id
+            xc = Composer(tit)
+            url, a = xc.drive_flow_gui()
+
+            return url
+        except TypeError:
+            return 'Whoops'
+
 
 class syncWorkbook(Resource):
 
     def get(self, todo_id):
-        print(todo_id)
-        query = json.loads(todo_id)
-        tit = query['results']['title']
-
-        if tit == 'title':
-            return 'Empty Title :('
-        else:
-            xc = Composer(tit)
-            url, a = xc.sync_flow_gui()
-            return url
-
-class sync2Workbook(Resource):
-
-    def get(self, todo_id):
-        print(todo_id)
-        query = json.loads(todo_id)
+        todo_2 = todo_id.replace('totona','/')
+        print(todo_2)
+        query = json.loads(todo_2)
         tit = query['results']['title']
         cod = query['results']['code']
+        print(cod)
+        print(type(a))
+
 
         if tit == 'title':
             return 'Empty Title :('
         else:
             xc = Composer(tit)
-            xc.sync_flow_gui_code(cod, a)
+            xc.sync_worksheet(a, cod)
             return 'yay'
 
 
+class infoWorkbook(Resource):
+
+    def get(self, todo_id):
+        xc = Composer(todo_id)
+
+        data = {
+    "composer": {
+        "doc_id": xc.doc_id,
+        "title": xc.title,
+        "doc_name":xc.doc_file,
+        "synced": xc.online,
+        "size": xc.samplesize
+    }}
+
+        return data
+
+
+class updateWorkbook(Resource):
+
+    def get(self, todo_id):
+        xc = Composer(todo_id)
+        xc.update_prices()
+
+        return 'Prices updated'
+
+class updateDB(Resource):
+
+    def get(self, todo_id):
+        #xc = Composer(todo_id)
+        print('Please, active the updates')
+        #update_shoes_db()
+
+        return 'Prices updated'
 
 api.add_resource(InitWorkbook, '/init/<string:todo_id>')
 api.add_resource(expandWorkbook, '/expand/<string:todo_id>')
 api.add_resource(imagingWorkbook, '/imaging/<string:todo_id>')
+api.add_resource(driveWorkbook, '/drive/<string:todo_id>')
 api.add_resource(syncWorkbook, '/sync/<string:todo_id>')
-api.add_resource(sync2Workbook, '/sync2/<string:todo_id>')
+api.add_resource(infoWorkbook, '/info/<string:todo_id>')
+api.add_resource(updateWorkbook, '/update/<string:todo_id>')
+api.add_resource(updateDB, '/updatedb/<string:todo_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)

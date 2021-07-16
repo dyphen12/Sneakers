@@ -20,6 +20,35 @@ import progressbar
 # Works as the API core, the Sneakers Data.
 # Use this methods to Update and Set-up the API data.
 
+class Config:
+    def __init__(self, dbs, imglit, apik, inys, localimg):
+        self.dbsize = dbs
+        self.imglitter = imglit
+        self.apikey = apik
+        self.inysize = inys
+        self.localimg = localimg
+
+
+def load_config():
+    config_loc= 'sneakers/config.json'
+    try:
+        with open(config_loc) as jsonFile:
+            jsonObject = json.load(jsonFile)
+            jsonFile.close()
+
+        dbsize = jsonObject['api-config']['db-size']
+        imagelitter = jsonObject['api-config']['image-row-litter']
+        apikey = jsonObject['api-config']['api-key']
+        inysize = jsonObject['api-config']['iny-base-size']
+        localimg = jsonObject['api-config']['local-imaging']
+
+        cf = Config(dbsize, imagelitter, apikey, inysize, localimg)
+
+        return cf
+
+    except FileNotFoundError:
+        print('cofig not found.')
+
 
 # Status: Checked
 def get_response(limit, page):
@@ -28,8 +57,10 @@ def get_response(limit, page):
 
     querystring = {"limit": limit, "page": page}
 
+    cf = load_config()
+
     header = {
-        'x-rapidapi-key': "d95141d382mshab73dd2df74b5dfp131a06jsn567d929b49db",
+        'x-rapidapi-key': cf.apikey,
         'x-rapidapi-host': "the-sneaker-database.p.rapidapi.com"
     }
 
@@ -107,7 +138,11 @@ def get_shoes(quantity):  # -----> String
 
 
 # Status: Checked
-def update_shoes_db(quantity):  # -----> String
+def update_shoes_db():  # -----> String
+
+    cf = load_config()
+
+    quantity = cf.dbsize
 
     ShoeList = []
 
@@ -178,10 +213,12 @@ def update_shoes_db(quantity):  # -----> String
 
 def get_shoe_by_id(snid):
 
+    cf = load_config()
+
     url = "https://the-sneaker-database.p.rapidapi.com/sneakers/{fid}".format(fid=snid)
 
     header = {
-        'x-rapidapi-key': "d95141d382mshab73dd2df74b5dfp131a06jsn567d929b49db",
+        'x-rapidapi-key': cf.apikey,
         'x-rapidapi-host': "the-sneaker-database.p.rapidapi.com"
     }
 
