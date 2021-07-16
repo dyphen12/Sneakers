@@ -1,6 +1,6 @@
 function initWorkbook() {
 
-    var std = "https://b7e8c5ca01f94d128503f2a0072836d6.vfs.cloud9.us-east-2.amazonaws.com/init/%";
+    var std = "https://sneakers-app-api.herokuapp.com/init/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -43,7 +43,7 @@ function initWorkbook() {
 
 function expandWorkbook() {
 
-    var std = "http://127.0.0.1:5000/expand/%";
+    var std = "https://sneakers-app-api.herokuapp.com/expand/%";
 
     document.getElementById("expansion-status").style.opacity = 10;
     document.getElementById("expansion-status").innerHTML = 'Expanding! Please wait until it finishes...';
@@ -94,7 +94,7 @@ function imagingWorkbook() {
 
     document.getElementById("img-status").innerHTML = 'Inserting images... This could take minutes or several hours.';
 
-    var std = "http://127.0.0.1:5000/imaging/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
     var query = '{"results": {"title": "%","from": #,"to": &}}'
 
@@ -138,7 +138,7 @@ function imagingWorkbook() {
 
 function drivecodeWorkbook() {
 
-    var std = "http://127.0.0.1:5000/drive/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
     var workbooktitle = document.getElementById("init-wb-input").value;
     console.log(workbooktitle);
@@ -190,7 +190,7 @@ function syncWorkbook() {
     document.getElementById("send-wb-code").style.opacity = 0;
     document.getElementById("send-wb-button").style.opacity = 0;
 
-    var std = "http://127.0.0.1:5000/sync/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
     cryptedcode = acode.replace('/','totona')
 
@@ -233,7 +233,7 @@ function syncWorkbook() {
 
 function infoWorkbook() {
 
-    var std = "http://127.0.0.1:5000/info/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
     document.getElementById("workbook-info").style.opacity = 10;
 
@@ -286,7 +286,7 @@ function infoWorkbook() {
 
 function updateWorkbook() {
 
-    var std = "http://127.0.0.1:5000/update/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -329,7 +329,7 @@ function updateWorkbook() {
 
 function updateDB() {
 
-    var std = "http://127.0.0.1:5000/update/%";
+    var std = "https://sneakers-app-api.herokuapp.com/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
