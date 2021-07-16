@@ -1,155 +1,146 @@
-# This is a sample Python script.
+# Made by @dyphen12
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import reqparse, abort, Api, Resource
+import json
+import os
 
 
-import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
+from sneakers.api.core import load_config
+from sneakers.api.core import update_shoes_db
+
+app = Flask(__name__)
+api = Api(app)
+CORS(app)
+
+################# Deployment Api #######################
+
+todos = {}
 
 
-def init_composer():
-    tait = e1.get()
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    return True
+class InitWorkbook(Resource):
 
-def expand_composer():
-    tait = e1.get()
-    news = e2.get()
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    xc.expand_worksheet(int(news))
-    return True
-
-def upload_composer():
-    tait = e1.get()
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    xc.upload_file()
-    return True
+    def get(self, todo_id):
+        xc = Composer(todo_id)
+        return 'yay'
 
 
-def sync_composer():
-    tait = e1.get()
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    global a
-    url, a = xc.drive_flow_gui()
-    #tk.Label(text=url).grid(row=10)
-    global syncwindow
-    syncwindow = tk.Toplevel(master)
-    text = tk.Text(master=syncwindow, height=10, width=30)
-    global e5
-    e5 = tk.Entry(syncwindow)  # Write To
-    e5.grid(row=14, column=12)
-    text.grid(column=4, row=12)
-    text.insert(tk.END, url)
-    tk.Label(syncwindow, text="Code").grid(row=13)
-    tk.Button(syncwindow,
-              text='Send Code', command=sync_composer_code).grid(row=14,
-                                                                 column=10,
-                                                                 sticky=tk.W,
-                                                                 pady=4)
+class expandWorkbook(Resource):
+
+    def get(self, todo_id):
+        print(todo_id)
+        query = json.loads(todo_id)
+        tit = query['results']['title']
+        siz = query['results']['size']
+
+        if tit == 'title':
+            return 'Empty Title :('
+        else:
+            xc = Composer(tit)
+            xc.expand_worksheet(siz)
+            return 'yay'
 
 
-    #xc.sync_flow_gui_code(cod, a)
+class imagingWorkbook(Resource):
 
-    return True
+    def get(self, todo_id):
+        print(todo_id)
+        query = json.loads(todo_id)
+        tit = query['results']['title']
+        afrom = query['results']['from']
+        ato = query['results']['to']
+        listadd = [afrom, ato]
 
-def sync_composer_code():
-    cod = e5.get()
-    tait = e1.get()
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    xc.sync_worksheet(a, cod)
-    tk.Label(syncwindow, text="Successfully Synced").grid(row=15, column=10)
-    tk.Button(syncwindow,
-              text='Quit',
-              command=syncwindow.destroy).grid(row=20,
-                                        column=0,
-                                        sticky=tk.W,
-                                        pady=4)
-
-
-def write_composer(iny=10):
-    tait = e1.get()
-    frm = e3.get()
-    tom = e4.get()
-    newaddr = [int(frm),int(tom)]
-    titl = skutils.composer_title('composer', tait)
-    xc = Composer(titl)
-    xc.write_wb_xl(newaddr,iny)
-    return True
+        if tit == 'title':
+            return 'Empty Title :('
+        else:
+            xc = Composer(tit)
+            cf = load_config()
+            xc.write_wb_xl(listadd, cf.inysize)
+            return 'yay'
 
 
-if __name__ == '__main__':
-    import tkinter as tk
+class driveWorkbook(Resource):
 
-    master = tk.Tk()
-    master.title("Sneakers Composer")
-    tk.Label(master, text="Title").grid(row=0)
-    tk.Label(master, text="Expand Size").grid(row=1)
+    def get(self, todo_id):
 
-    tk.Label(text="Write Options:").grid(row=2)
-    tk.Label(master, text="From").grid(row=3)
-    tk.Label(master, text="To").grid(row=4)
+        print(todo_id)
+        try:
+            global a
+            tit = todo_id
+            xc = Composer(tit)
+            url, a = xc.drive_flow_gui()
 
-
-    e1 = tk.Entry(master) # Title
-    e2 = tk.Entry(master) # Expand Size
-    e3 = tk.Entry(master) # Write From
-    e4 = tk.Entry(master)  # Write To
+            return url
+        except TypeError:
+            return 'Whoops'
 
 
-    e1.grid(row=0, column=1)
-    e2.grid(row=1, column=1)
-    e3.grid(row=3, column=1)
-    e4.grid(row=4, column=1)
+class syncWorkbook(Resource):
+
+    def get(self, todo_id):
+        todo_2 = todo_id.replace('totona','/')
+        print(todo_2)
+        query = json.loads(todo_2)
+        tit = query['results']['title']
+        cod = query['results']['code']
+        print(cod)
+        print(type(a))
 
 
+        if tit == 'title':
+            return 'Empty Title :('
+        else:
+            xc = Composer(tit)
+            xc.sync_worksheet(a, cod)
+            return 'yay'
 
 
+class infoWorkbook(Resource):
 
-    # Buttons
+    def get(self, todo_id):
+        xc = Composer(todo_id)
 
-    tk.Button(master,
-              text='Quit',
-              command=master.quit).grid(row=20,
-                                        column=0,
-                                        sticky=tk.W,
-                                        pady=4)
-    tk.Button(master,
-              text='Init Composer', command=init_composer).grid(row=5,
-                                                           column=1,
-                                                           sticky=tk.W,
-                                                           pady=4)
+        data = {
+    "composer": {
+        "doc_id": xc.doc_id,
+        "title": xc.title,
+        "doc_name":xc.doc_file,
+        "synced": xc.online,
+        "size": xc.samplesize
+    }}
 
-    tk.Button(master,
-              text='Expand', command=expand_composer).grid(row=6,
-                                                                column=1,
-                                                                sticky=tk.W,
-                                                                pady=4)
-    tk.Button(master,
-              text='Write', command=write_composer).grid(row=7,
-                                                           column=1,
-                                                           sticky=tk.W,
-                                                           pady=4)
-    tk.Button(master,
-              text='Upload to Drive', command=upload_composer).grid(row=8,
-                                                         column=1,
-                                                         sticky=tk.W,
-                                                         pady=4)
-    tk.Button(master,
-              text='Sync to Drive', command=sync_composer).grid(row=9,
-                                                                    column=1,
-                                                                    sticky=tk.W,
-                                                                    pady=4)
+        return data
 
 
+class updateWorkbook(Resource):
 
-    master.mainloop()
+    def get(self, todo_id):
+        xc = Composer(todo_id)
+        xc.update_prices()
 
+        return 'Prices updated'
 
+class updateDB(Resource):
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    def get(self, todo_id):
+        #xc = Composer(todo_id)
+        print('Please, active the updates')
+        #update_shoes_db()
+
+        return 'Prices updated'
+
+api.add_resource(InitWorkbook, '/init/<string:todo_id>')
+api.add_resource(expandWorkbook, '/expand/<string:todo_id>')
+api.add_resource(imagingWorkbook, '/imaging/<string:todo_id>')
+api.add_resource(driveWorkbook, '/drive/<string:todo_id>')
+api.add_resource(syncWorkbook, '/sync/<string:todo_id>')
+api.add_resource(infoWorkbook, '/info/<string:todo_id>')
+api.add_resource(updateWorkbook, '/update/<string:todo_id>')
+api.add_resource(updateDB, '/updatedb/<string:todo_id>')
+
+#if __name__ == '__main__':
+#    #app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
+#    app.run(debug=True)
