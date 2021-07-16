@@ -15,13 +15,13 @@ You can also synchronize the composer and the composer worksheet with your Googl
 
 ### Linux, Windows, Mac:
 
-`git clone https://github.com/dyphen12/Sneakers.git`
+`$ git clone https://github.com/dyphen12/Sneakers.git`
 
 `cd Sneakers`
 
-`pip install -r requirements.txt`
+`$ pip install -r requirements.txt`
 
-`python3 unit-test.py` 
+`$ python3 unit-test.py` 
 
 Windows users: make sure you got python in your $PATH
 
@@ -29,19 +29,22 @@ Windows users: make sure you got python in your $PATH
 
 You can run the example script 'unit-test.py'.
 
-`python3 unit-test.py`
+`$ python3 unit-test.py`
 
 Also, you can use a Tkinter GUI.
 
-`python3 main.py`
+`$ python3 main.py`
 
 Or, you can start the REST API.
 
-`python3 app.py`
+`$ python3 app.py`
 
 ### Basic usage:
 
-```import sneakers.api.utils as skutils
+```
+unit-test.py
+
+import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
 
 
