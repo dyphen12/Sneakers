@@ -137,10 +137,10 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.application" />
       <item itemvalue="Python.core" />
       <item itemvalue="Python.unit-test" />
       <item itemvalue="Python.wsgi" />
-      <item itemvalue="Python.application" />
     </list>
     <recent_temporary>
       <list>
