@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c7cd5460-fb4d-4b1b-85e5-05eeafe9dae9" name="Default Changelist" comment="Composer fix">
-      <change beforePath="$PROJECT_DIR$/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/scripts.js" afterDir="false" />
+    <list default="true" id="c7cd5460-fb4d-4b1b-85e5-05eeafe9dae9" name="Default Changelist" comment="http to https">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,6 +181,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Composer fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Composer fix" />
+    <MESSAGE value="http to https" />
+    <option name="LAST_COMMIT_MESSAGE" value="http to https" />
   </component>
 </project>
