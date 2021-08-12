@@ -18,14 +18,13 @@ Made by Alexis W.
 
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
+import sneakers.api.core as skcore
 
 
 titl = skutils.composer_title('composer', 'HelloWorld')
 
 if __name__ == '__main__':
-    xc = Composer(titl)
-    xc.expand_worksheet(100)
-    xc.write_wb([2,10])
+    skcore.get_data_vars()
 
 
 

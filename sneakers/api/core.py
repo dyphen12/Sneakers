@@ -30,7 +30,7 @@ class Config:
 
 
 def load_config():
-    config_loc= 'sneakers/config.json'
+    config_loc = 'sneakers/config.json'
     try:
         with open(config_loc) as jsonFile:
             jsonObject = json.load(jsonFile)
@@ -47,7 +47,7 @@ def load_config():
         return cf
 
     except FileNotFoundError:
-        print('cofig not found.')
+        print('Config not found.')
 
 
 # Status: Checked

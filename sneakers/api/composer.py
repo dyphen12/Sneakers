@@ -74,8 +74,6 @@ class Composer:
 
                 print('JSON does not exist')
 
-
-
     def create_workbook(self, sz=5):
 
         try:
@@ -107,7 +105,6 @@ class Composer:
                 json.dump(json_comp, f, ensure_ascii=False, indent=4)
 
             print('Workbook saved to ', self.full_path)
-
 
 
     def load_wb(self):
@@ -226,7 +223,7 @@ class Composer:
         except PermissionError:
             print('It seems like the xlsx is being used by another program, please close it first and try again.')
 
-        print('Prices Updated Succesufully')
+        print('Prices Updated Successfully')
         return True
 
     def upload_file(self):
