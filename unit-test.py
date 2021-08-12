@@ -19,12 +19,17 @@ Made by Alexis W.
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
 import sneakers.api.core as skcore
+import sneakers.api.ticker as skticker
 
 
 titl = skutils.composer_title('composer', 'HelloWorld')
 
+url = "https://www.goat.com/sneakers/haribo-x-suede-poppy-red-382563-01"
+
 if __name__ == '__main__':
-    skcore.get_data_vars()
+    skcore.load_config()
+    skticker.get_price(url)
+
 
 
 
