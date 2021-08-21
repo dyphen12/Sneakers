@@ -24,6 +24,10 @@ from openpyxl.drawing.image import Image as pyImage
 from sneakers.api import processing
 from datetime import datetime
 
+def load_shoes_dataset_quantity(q):
+    shoes = pd.read_csv('sneakers/datasets/sneakers-local-db.csv', index_col=0, low_memory=False)
+    out = shoes.iloc[:q]
+    return out
 
 # Status: Check
 def load_shoes_dataset():
@@ -40,6 +44,19 @@ def flush_sheets():
         os.remove('sheets/{fname}'.format(fname=file))
 
     f = open("sheets/phasm.txt", "w+")
+    f.write('Prisma Inc. 2021')
+    f.close()
+
+    return True
+
+def flush_airsheets():
+
+    arr = os.listdir('airout')
+
+    for file in arr:
+        os.remove('airout/{fname}'.format(fname=file))
+
+    f = open("airout/phasm.txt", "w+")
     f.write('Prisma Inc. 2021')
     f.close()
 

@@ -101,7 +101,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
     <h1 class="w3-jumbo"><span class="w3-hide-small">The</span> Sneakers API.</h1>
     <p id="version"></p>
-    <p>Composer GUI Access.</p>
+    <p>Airtable Handler Composer GUI Access.</p>
     <img src="../img/SneakerS2.png" alt="boy" id="sapatiko" class="w3-image">
     <img src="../img/SneakerS3.png" alt="boy" id="sapatiko" class="w3-image">
     <img src="../img/SneakerS4.png" alt="boy" id="sapatiko" class="w3-image">
@@ -118,20 +118,20 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
   <!-- About Section -->
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-    <h2 id="workstart" class="w3-text-light-grey">Set your Workbook</h2>
+    <h2 id="workstart" class="w3-text-light-grey">Load Table</h2>
     <hr style="width:200px" class="w3-opacity">
-    <p>You can use the Sneaker Composer to access the Sneakers API with more than 100,000 models, this system can create an Excel Worksheet, fill it with information with all the Sneakers you want and then process and insert the images.
+    <p>Put the name of the table that you have available, make sure it has the same parameters and that it is valid, otherwise it will fail.
 
     </p>
 
-    <p>You can start a new Worksheet or very well load one that you have already created previously in the system.</p>
+    <p>You can deploy to an empty table or you can upload an existing one to update to current market prices.</p>
 
       <p><input id="init-wb-input" class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
 
 
 
-      <button onclick="initWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-        <i class="fa fa-book"></i> <a>Init Workbook</a>
+      <button onclick="initTable()" class="w3-button w3-light-grey w3-padding-large w3-section">
+        <i class="fa fa-book"></i> <a>Init Table</a>
     </button>
     <p id="init-status" ></p>
 
@@ -149,50 +149,27 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
     <h3 id="setup" class="w3-padding-16 w3-text-light-grey">Control Panel</h3>
 
-    <p class="w3-wide w3-text-white">Expansion</p>
+    <p class="w3-wide w3-text-white">Deploy</p>
       <p><input id="new-wb-size" class="w3-input w3-padding-16" type="text" placeholder="New Size" required name="New Size"></p>
-    <p id="expansion-status">Expanding workbook... Please wait!</p>
-    <button onclick="expandWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-plus-square-o"></i> Expand Workbook
-    </button>
-
-    <p class="w3-wide w3-text-white">Imaging</p>
-    <p id="img-status" ></p>
-      <p><input id="imaging-from" class="w3-input w3-padding-16" type="text" placeholder="From" required name="From"></p>
-      <p><input id="imaging-to" class="w3-input w3-padding-16" type="text" placeholder="To" required name="To"></p>
-    <button onclick="imagingWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-picture-o"></i> Load Images
-    </button>
-
-    <p class="w3-wide w3-text-white">Cloud</p>
-      <button onclick="drivecodeWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-cloud-upload"></i> Sync
-    </button><br>
-<p id="sync-result"></p>
-<a id="send-wb-aco" target="_blank" >Auth Link</a>
-<p><input id="send-wb-code" class="w3-input w3-padding-16" type="text" placeholder="Code from Drive" required name="Code from Drive"></p>
-    <button id="send-wb-button" onclick="syncWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-key"></i> Send Code
+    <p id="expansion-status">Deploying into table... Please wait!</p>
+    <button onclick="deployTable()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-plus-square-o"></i> Deploy data
     </button>
 
 
     <!-- Grid for pricing tables -->
-    <h3 id="updating" class="w3-padding-16 w3-text-light-grey">Update workbook.</h3>
+    <h3 id="updating" class="w3-padding-16 w3-text-light-grey">Update Estimated Market Values.</h3>
 
-    <h6 class="w3-text-red" > WARNING: These functions are going to consume your RapidAPI Tokens</h6>
+    <h6 class="w3-text-green" > UPDATE: This function is not going to consume your RapidAPI Tokens! (Only available for Airtable).</h6>
 
-    <p class="w3-wide">Update prices while connecting to RapidAPI</p>
-    <button onclick="updateWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-plus-square-o"></i> Update Prices
-    </button><br>
-    <p id="update-status"></p>
-    <br>
-    <p class="w3-wide">Update entire sneaker setup while connecting to RapidAPI. This is going to give new worksheets with new shoes, so be careful. You may need to start a new Worksheet for the new sneakers.</p>
+    <p class="w3-wide">Update prices with The Sneaker API Ticker.</p>
     <p class="w3-wide"></p>
-    <button onclick="updateDB()" class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-plus-square-o"></i> Update Sneaker Setup
+    <button onclick="updateTable()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-plus-square-o"></i> Update Prices
     </button>
-    <p id="updatedb-status"></p>
+    <p id="update-status"></p>
+
+
 
 
 

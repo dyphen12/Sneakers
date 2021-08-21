@@ -8,12 +8,21 @@ import os
 
 
 from sneakers.api.composer import Composer
+from sneakers.api.airtable_composer import Aircomposer
 from sneakers.api.core import load_config
 from sneakers.api.core import update_shoes_db
+from sneakers.api.core import api_version
+
 
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
+
+class Hello(Resource):
+
+    def get(self):
+        return api_version()
+
 
 ################# Deployment Api #######################
 
@@ -132,6 +141,8 @@ class updateDB(Resource):
 
         return 'Prices updated'
 
+api.add_resource(Hello, '/')
+
 api.add_resource(InitWorkbook, '/init/<string:todo_id>')
 api.add_resource(expandWorkbook, '/expand/<string:todo_id>')
 api.add_resource(imagingWorkbook, '/imaging/<string:todo_id>')
@@ -140,6 +151,65 @@ api.add_resource(syncWorkbook, '/sync/<string:todo_id>')
 api.add_resource(infoWorkbook, '/info/<string:todo_id>')
 api.add_resource(updateWorkbook, '/update/<string:todo_id>')
 api.add_resource(updateDB, '/updatedb/<string:todo_id>')
+
+#----------Airtable API----------
+
+class InitTable(Resource):
+
+    def get(self, todo_id):
+        xc = Aircomposer(todo_id)
+        return 'yay'
+
+class InfoTable(Resource):
+
+    def get(self, todo_id):
+        xc = Aircomposer(todo_id)
+
+        data = {
+    "composer": {
+        "doc_id": xc.doc_id,
+        "title": xc.title,
+        "doc_name":xc.doc_file,
+        "synced": xc.online,
+        "size": xc.samplesize
+    }}
+
+        return data
+
+class DeployTable(Resource):
+
+    def get(self, todo_id):
+        print(todo_id)
+        query = json.loads(todo_id)
+        tit = query['results']['title']
+        siz = query['results']['size']
+
+        if tit == 'title':
+            return 'Empty Title :('
+        else:
+            xc = Aircomposer(tit)
+            r = xc.deploy_airtable(siz)
+            if r is False:
+                return 'Table already deployed...'
+            else:
+                return 'yay'
+
+
+class updateTable(Resource):
+
+    def get(self, todo_id):
+        xc = Aircomposer(todo_id)
+        xc.update_marketvalue()
+
+        return 'Prices updated'
+
+api.add_resource(InfoTable, '/infotable/<string:todo_id>')
+api.add_resource(InitTable, '/inittable/<string:todo_id>')
+api.add_resource(DeployTable, '/deploytable/<string:todo_id>')
+api.add_resource(updateTable, '/updatetable/<string:todo_id>')
+
+
+
 
 if __name__ == '__main__':
 #    #app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
