@@ -21,16 +21,18 @@ import progressbar
 # Use this methods to Update and Set-up the API data.
 
 class Config:
-    def __init__(self, dbs, imglit, apik, inys, localimg):
+    def __init__(self, dbs, imglit, apik, inys, localimg, airkey, airbasekey):
         self.dbsize = dbs
         self.imglitter = imglit
         self.apikey = apik
         self.inysize = inys
         self.localimg = localimg
+        self.airkey = airkey
+        self.airbasekey = airbasekey
 
 
 def load_config():
-    config_loc= 'sneakers/config.json'
+    config_loc = 'sneakers/config.json'
     try:
         with open(config_loc) as jsonFile:
             jsonObject = json.load(jsonFile)
@@ -41,13 +43,15 @@ def load_config():
         apikey = jsonObject['api-config']['api-key']
         inysize = jsonObject['api-config']['iny-base-size']
         localimg = jsonObject['api-config']['local-imaging']
+        airkey = jsonObject['api-config']['air-key']
+        airbasekey = jsonObject['api-config']['airbase-key']
 
-        cf = Config(dbsize, imagelitter, apikey, inysize, localimg)
+        cf = Config(dbsize, imagelitter, apikey, inysize, localimg, airkey, airbasekey)
 
         return cf
 
     except FileNotFoundError:
-        print('cofig not found.')
+        print('Config not found.')
 
 
 # Status: Checked
@@ -229,3 +233,6 @@ def get_shoe_by_id(snid):
     return sneaker['results']
 
 
+def api_version():
+    version = '2.0.0'
+    return version

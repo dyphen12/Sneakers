@@ -1,14 +1,22 @@
 # Sneakers API
 
+### v2.0.0
+
+## Airtable Update
+
 This API works as a wrapper for TheSneakersDatabase, you can download the database and export it into a CSV, update it and modify it.
 
 API allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
 
-Featuring the 'Worksheet Composer', with the Composer you can create, manipulate, and save an XLSX worksheet.
+Featuring the 'Composer', with the Composer you can create, manipulate, and save XLSX worksheets, and Handle Airtable.
 
 But wait! There's more!
 
 You can also synchronize the composer and the composer worksheet with your Google Drive!
+
+AND NOW!!!! You can also synchronize the composer and the composer worksheet with your Airtable!
+
+Just instead of using Composer, use the Aircomposer.
 
 
 ## Installation:

@@ -18,14 +18,31 @@ Made by Alexis W.
 
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
-
+from sneakers.api.airtable_composer import Aircomposer
+import sneakers.api.core as skcore
+import sneakers.api.ticker as skticker
+import sneakers.api.datautils as skdata
 
 titl = skutils.composer_title('composer', 'HelloWorld')
 
+url = "https://goat.com/sneakers/lebron-18-ep-goat-cq9284-008"
+
 if __name__ == '__main__':
-    xc = Composer(titl)
-    xc.expand_worksheet(100)
-    xc.write_wb([2,10])
+    conf = skcore.load_config()
+    # skdata.database_masterpage_update()
+    # skdata.to_airtable('Testing', 20)
+    # skticker.get_price(url)
+    # skdata.constructor()
+    # skutils.flush_img()
+    # skdata.image_deploy()
+    # skdata.export_data()
+    skutils.flush_airsheets()
+
+
+
+
+
+
 
 
 

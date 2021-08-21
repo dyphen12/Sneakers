@@ -371,3 +371,230 @@ function updateDB() {
 }
 
 
+// Airtable's functions
+
+function initTable() {
+
+    var std = "http://127.0.0.1:5000/inittable/%";
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    document.getElementById("init-status").innerHTML = 'Loading Table...';
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+        document.getElementById("workbook-info").style.opacity = 10;
+        infoTable();
+        document.getElementById("init-status").innerHTML = '';
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+function infoTable() {
+
+    var std = "http://127.0.0.1:5000/infotable/%";
+
+    document.getElementById("workbook-info").style.opacity = 10;
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+      console.log('Toy aqui pajuo');
+      tit = res['composer']['title'];
+      siz = res['composer']['size'];
+      syn = res['composer']['synced'];
+      docn = res['composer']['doc_name'];
+      document.getElementById("wb-title").innerHTML = res['composer']['title'];
+      document.getElementById("wb-size").innerHTML = siz;
+      if (syn == true) {
+      document.getElementById("wb-sync").innerHTML = 'Synced to Airtable';}
+      else{
+      document.getElementById("wb-sync").innerHTML = 'Not Synced';
+      }
+      document.getElementById("wb-docname").innerHTML = docn;
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+
+
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+
+function deployTable() {
+
+    var std = "http://127.0.0.1:5000/deploytable/%";
+
+    document.getElementById("expansion-status").style.opacity = 10;
+    document.getElementById("expansion-status").innerHTML = 'Deploying! Please wait until it finishes...';
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    var expandsize = document.getElementById("new-wb-size").value;
+    console.log(expandsize);
+    console.log(workbooktitle);
+
+
+     var query = '{"results": {"title": "%","size": $}}'
+
+     var query2 = query.replace('%', workbooktitle);
+     var finalquery = query2.replace('$', expandsize);
+
+     var url = std.replace('%', finalquery)
+
+       var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+        document.getElementById("expansion-status").innerHTML = 'Deploy Failed';
+
+      } else {
+        console.log('Sy');
+        document.getElementById("expansion-status").innerHTML = res;
+        infoTable();
+      }
+
+      }else{
+      document.getElementById("expansion-status").innerHTML = 'Deploying! Please wait until it finishes...';}
+
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+    return true;
+}
+
+function updateTable() {
+
+    var std = "http://127.0.0.1:5000/updatetable/%";
+
+
+    var workbooktitle = document.getElementById("init-wb-input").value;
+    console.log(workbooktitle);
+
+    document.getElementById("update-status").innerHTML = 'Updating prices...';
+
+    var url = std.replace('%', workbooktitle);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+        document.getElementById("workbook-info").style.opacity = 10;
+        infoTable();
+        document.getElementById("update-status").innerHTML = 'Table prices up to date!';
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+function apiVersion() {
+
+    var std = "http://127.0.0.1:5000/";
+
+
+    document.getElementById("version").innerHTML = 'Loading...';
+
+    var url = std
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}

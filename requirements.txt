@@ -11,3 +11,6 @@ gunicorn
 flask
 flask-cors
 flask-restful
+beautifulsoup4
+fake_useragent
+IPython
