@@ -54,16 +54,20 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 }
 
 </style>
-<body class="w3-black">
+<body onload="apiVersion()" class="w3-black">
 
-<script type='text/javascript' src='../Sneakers/js/scripts.js'></script>
+<script type='text/javascript' src='../front/js/scripts.js'></script>
 
 <!-- Icon Bar (Sidebar - hidden on small screens) -->
 <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
   <!-- Avatar image in top left corner -->
-  <a href="#workstart" class="w3-bar-item w3-button w3-padding-large w3-black">
+  <a href="../front/index.html" class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-file-excel-o w3-xxlarge"></i>
-    <p>START</p>
+    <p>XLSX</p>
+  </a>
+  <a href="../front/airtable.html" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-table w3-xxlarge"></i>
+    <p>AIRTABLE</p>
   </a>
   <a href="#setup" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-cogs w3-xxlarge"></i>
@@ -83,7 +87,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <!-- Navbar on small screens (Hidden on medium and large screens) -->
 <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
   <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-    <a href="#workstart" class="w3-bar-item w3-button" style="width:25% !important">START</a>
+    <a href="#workstart" class="w3-bar-item w3-button" style="width:25% !important">XLSX</a>
+    <a href="#workstart" class="w3-bar-item w3-button" style="width:25% !important">AIRTABLE</a>
     <a href="#setup" class="w3-bar-item w3-button" style="width:25% !important">SETUP</a>
     <a href="#updating" class="w3-bar-item w3-button" style="width:25% !important">UPDATE</a>
     <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
@@ -95,19 +100,20 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   <!-- Header/Home -->
   <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
     <h1 class="w3-jumbo"><span class="w3-hide-small">The</span> Sneakers API.</h1>
+    <p id="version"></p>
     <p>Composer GUI Access.</p>
-    <img src="../Sneakers/img/SneakerS2.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS3.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS4.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS5.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS6.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS7.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS8.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS9.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS10.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS11.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS12.png" alt="boy" id="sapatiko" class="w3-image">
-    <img src="../Sneakers/img/SneakerS13.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS2.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS3.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS4.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS5.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS6.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS7.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS8.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS9.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS10.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS11.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS12.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS13.png" alt="boy" id="sapatiko" class="w3-image">
   </header>
 
   <!-- About Section -->
@@ -198,12 +204,12 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <i class="fa fa-pinterest-p w3-hover-opacity"></i>
     <i class="fa fa-twitter w3-hover-opacity"></i>
     <i class="fa fa-linkedin w3-hover-opacity"></i>
-    <p id="contact" class="w3-medium">Powered by <a href="https://prismasys.site" target="_blank" class="w3-hover-text-green">Prisma Systems</a></p>
+    <p id="contact" class="w3-medium">Powered by <a href="https://adacore.000webhostapp.com/home.html" target="_blank" class="w3-hover-text-green">Prisma Intelligent Systems</a></p>
     <p class="w3-medium w3-text-white">For assistance email to:</p>
-    <p class="w3-medium">contact@prismasys.site</p>
+    <p class="w3-medium">prismasolutions1@gmail.com</p>
     <p class="w3-medium w3-text-white">Team:</p>
-    <p class="w3-medium">alexiswong@prismasys.site</p>
-    <p class="w3-medium">danieleo@prismasys.site</p>
+    <p class="w3-medium">alexiswong10@gmail.com</p>
+    <p class="w3-medium">danielld707@gmail.com</p>
   <!-- End footer -->
   </footer>
 
