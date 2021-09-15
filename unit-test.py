@@ -36,7 +36,7 @@ if __name__ == '__main__':
     # skutils.flush_img()
     # skdata.image_deploy()
     # skdata.export_data()
-    skutils.flush_airsheets()
+    # skutils.flush_airsheets()
 
 
 

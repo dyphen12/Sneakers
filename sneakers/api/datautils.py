@@ -19,6 +19,7 @@ import pandas as pd
 import json
 import requests
 import progressbar
+import time
 from IPython.core.display import HTML
 from sneakers.api import core
 from sneakers.api import utils
@@ -55,6 +56,12 @@ def path_to_image_html(path):
     return '<img src="'+ str(path) + '" width="60" >'
 
 def export_data():
+    """
+
+    export_data(): Exports database data into an HTML table.
+
+    :return: None
+    """
     print('Exporting Data to folder')
     dataset = utils.load_shoes_dataset()
     links = dataset.loc[:, "image"]
@@ -66,6 +73,12 @@ def export_data():
     print('Database exported!')
 
 def get_database_snapshot(quantity):
+    """
+    Gets a dataset with a piece of data from the database
+    :param quantity: How many rows do you want?
+    :return: Pandas Dataframe
+    """
+
     print('Taking snapshot...')
     # dataset = utils.load_shoes_dataset()
     dataset = utils.load_shoes_dataset_quantity(quantity)
@@ -108,6 +121,7 @@ def database_quickviewpage_update(q):
 
 
 # -----------------------AIRTABLE Handler-------------------------
+
 # In Collaboration with some dude
 
 def load_airtable(tablename):
@@ -326,8 +340,14 @@ def airtable_upload(table, upload_data, typecast=True, api_key=None, base_id=Non
         upload_dict = {"records": [{"fields": upload_data}], "typecast": typecast}
         upload_json = json.dumps(upload_dict)
         # print(upload_json)
-        response = requests.post(path, data=upload_json, headers=headers)
-        airtable_response = response.json()
+        try:
+            response = requests.post(path, data=upload_json, headers=headers)
+            airtable_response = response.json()
+        except ConnectionError as e:
+            print('Connection error {err}'.format(err=e))
+            print('Trying Again in 5 seconds...')
+            time.sleep(5)
+            pass
 
     # Update Record
     if record_id != None:
@@ -338,10 +358,10 @@ def airtable_upload(table, upload_data, typecast=True, api_key=None, base_id=Non
         airtable_response = response.json()
 
     # Identify Errors
-    if 'error' in airtable_response:
-        identify_errors(airtable_response)
+        if 'error' in airtable_response:
+            identify_errors(airtable_response)
 
-    return airtable_response
+        return airtable_response
 
 
 def upload_pandas_dataframe(pandas_dataframe, table, api_key, base_id):
