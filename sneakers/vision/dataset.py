@@ -84,7 +84,7 @@ def build_dataset(quantity, brandname='None'):
 
     return data
 
-def build_training(dataset, title):
+def build_tf_training(dataset, title):
 
     create_training_folder(title)
 

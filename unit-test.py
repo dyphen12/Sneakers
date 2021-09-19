@@ -32,7 +32,7 @@ if __name__ == '__main__':
     conf = skcore.load_config()
     training_name = 'adidas1'
     data = skvdataset.build_dataset(20, 'adidas')
-    skvdataset.build_training(data, training_name)
+    skvdataset.build_tf_training(data, training_name)
 
 
 
