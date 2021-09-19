@@ -122,3 +122,9 @@ def clean_tf_training(path):
             os.rmdir(npath)
 
     return True
+
+def get_labels(path):
+
+    arr = os.listdir(path)
+
+    return arr
