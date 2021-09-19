@@ -479,6 +479,7 @@ def img_multiprocess_training(processes):
 
         nloc = path + '/1.png'
 
+
         im_100.save(nloc, format="png")
 
         #img = Image.open(loc)

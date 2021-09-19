@@ -39,7 +39,7 @@ def create_training_subfolder(name, parent):
         # print("Directory '% s' created" % name)
 
     except FileExistsError:
-        print('Directory already exists! Skipping folder creation...')
+        # print('Directory already exists! Skipping folder creation...')
         return True
     return True
 
@@ -84,12 +84,41 @@ def build_dataset(quantity, brandname='None'):
 
     return data
 
+
+def check_folder_exist(dir_name):
+
+    if os.path.isdir(dir_name):
+        if not os.listdir(dir_name):
+            # print("Directory is empty")
+            return False
+        else:
+            # print("Directory is not empty")
+            return True
+    else:
+        print("Given directory doesn't exist")
+        return None
+
 def build_tf_training(dataset, title):
 
     create_training_folder(title)
 
-    processing.img_downloader_training(dataset, 'sneakers/datasets/{ftitle}'.format(ftitle=title))
+    path = 'sneakers/datasets/{ftitle}'.format(ftitle=title)
 
+    # processing.img_downloader_training(dataset, path)
 
+    clean_tf_training(path)
 
     return ':p'
+
+def clean_tf_training(path):
+
+    arr = os.listdir(path)
+
+    print(arr)
+
+    for arrs in arr:
+        npath = os.path.join(path, arrs)
+        if check_folder_exist(npath) is False:
+            os.rmdir(npath)
+
+    return True

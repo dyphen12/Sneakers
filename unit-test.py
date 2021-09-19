@@ -30,7 +30,7 @@ url = "https://goat.com/sneakers/lebron-18-ep-goat-cq9284-008"
 
 if __name__ == '__main__':
     conf = skcore.load_config()
-    training_name = 'adidas1'
+    training_name = 'adidas2'
     data = skvdataset.build_dataset(20, 'adidas')
     skvdataset.build_tf_training(data, training_name)
 
