@@ -14,7 +14,7 @@
 
 ### Main
 
-This is the main of TheSneakersDatabase, you can download this API and export the database into a CSV, update it and modify it. It allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
+This is the main API of TheSneakersDatabase, you can download this API and export the database into a CSV, update it and modify it. It allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
 
 Featuring the 'Composer', you can create, manipulate, and save XLSX worksheets, and export Airtable sheets.
 
