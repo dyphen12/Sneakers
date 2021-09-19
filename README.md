@@ -1,23 +1,24 @@
-# Sneakers API
+# Sneakers API [DEV]
 
-### v2.0.0
+### v3.0.0a
 
-## Airtable Update
+## Vision Update!!! 
 
-This API works as a wrapper for TheSneakersDatabase, you can download the database and export it into a CSV, update it and modify it.
+#### Computer Vision Model Added.
 
-API allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
+- Tensorflow model added
+- Dataset constructor
+- Training builder
+- Plotting and debugging utilities
 
-Featuring the 'Composer', with the Composer you can create, manipulate, and save XLSX worksheets, and Handle Airtable.
 
-But wait! There's more!
+### Main
 
-You can also synchronize the composer and the composer worksheet with your Google Drive!
+This is the main of TheSneakersDatabase, you can download this API and export the database into a CSV, update it and modify it. It allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
 
-AND NOW!!!! You can also synchronize the composer and the composer worksheet with your Airtable!
+Featuring the 'Composer', you can create, manipulate, and save XLSX worksheets, and export Airtable sheets.
 
-Just instead of using Composer, use the Aircomposer.
-
+You can also synchronize the composer and the composer worksheet with your Google Drive and Airtable.
 
 ## Installation:
 
