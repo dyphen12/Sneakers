@@ -26,18 +26,42 @@ def data_by_brand(dataset, brandname):
 
     return fwsetv
 
+def create_training_subfolder(name, parent):
+
+    # parent = 'sneakers/datasets'
+
+    path = os.path.join(parent, name)
+
+    try:
+
+        os.makedirs(path)
+
+        # print("Directory '% s' created" % name)
+
+    except FileExistsError:
+        print('Directory already exists! Skipping folder creation...')
+        return True
+    return True
+
 def create_training_folder(name):
 
     parent = 'sneakers/datasets'
 
     path = os.path.join(parent, name)
 
-    os.makedirs(path)
+    try:
 
-    print("Directory '% s' created" % name)
+        os.makedirs(path)
+
+        print("Directory '% s' created" % name)
+
+    except FileExistsError:
+        print('Directory already exists! Skipping folder creation...')
+        return True
+
     return True
 
-def build_dataset(brand=False, brandname='none'):
+def build_dataset(quantity, brandname='None'):
     """
     Builds the dataset for training
     :param brand: If True gets branded if false, well, else.
@@ -47,13 +71,12 @@ def build_dataset(brand=False, brandname='none'):
 
     data = datautils.constructor()
 
-    if brand is True:
+    if brandname is not 'None':
 
         databranded = data_by_brand(data, brandname)
 
-        data = databranded
+        data = databranded.iloc[:quantity]
 
-        print(data)
 
     else:
 
@@ -63,11 +86,9 @@ def build_dataset(brand=False, brandname='none'):
 
 def build_training(dataset, title):
 
-    # create_training_folder(title)
+    create_training_folder(title)
 
-    processing.img_downloader_training(dataset, 'sneakers/datasets/sheit')
-
-
+    processing.img_downloader_training(dataset, 'sneakers/datasets/{ftitle}'.format(ftitle=title))
 
 
 

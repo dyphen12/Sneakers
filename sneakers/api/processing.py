@@ -20,6 +20,7 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
 from multiprocessing import Pool
 from sneakers.api import injector
+from sneakers.vision import dataset
 
 
 # Basic XLSX process
@@ -443,17 +444,20 @@ def img_pre_multiprocess_training(df, ws, path):
 
     for i in (range(0, len(df.index))):
 
-        url = df['image'][i]
+        url = df['image'][df.index[i]]
 
-        name = df['sku'][i]
+        name = df['name'][df.index[i]]
 
-        print(name)
+        npath = path + '/' + name
+
+        dataset.create_training_subfolder(name, path)
 
         j = i + 2
 
         cellname = 'S{fnum}'.format(fnum=j)
 
-        cellprocess.append([cellname, url, ws, path])
+        cellprocess.append([cellname, url, ws, npath])
+
 
     return cellprocess
 
@@ -473,7 +477,9 @@ def img_multiprocess_training(processes):
 
         loc = "img/Sneaker{}.png".format(cellName)
 
-        im_100.save(loc, format="png")
+        nloc = path + '/1.png'
+
+        im_100.save(nloc, format="png")
 
         #img = Image.open(loc)
 
