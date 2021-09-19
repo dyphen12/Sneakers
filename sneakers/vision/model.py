@@ -39,7 +39,7 @@ def load_model(labels):
 
     return model
 
-def compile_model(model, train_generator):
+def compile_model(model, train_generator, model_name):
 
     model.compile(loss = 'categorical_crossentropy',
                   optimizer= 'rmsprop',
@@ -48,8 +48,8 @@ def compile_model(model, train_generator):
     history = model.fit_generator(train_generator, epochs=25, validation_data = train_generator, verbose=1)
 
 
-    model.save('sneakers/models')
+    model.save('sneakers/models/{}.h5'.format(model_name))
 
     print('Model Trained and saved!')
 
-    return True
+    return history
