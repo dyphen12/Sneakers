@@ -18,15 +18,15 @@ Made by Alexis W.
 
 import sneakers.api.utils as skutils
 from sneakers.api.composer import Composer
-from sneakers.api.airtable_composer import Aircomposer
+from sneakers.api.airtable_complite import Aircomposer
 import sneakers.api.core as skcore
 import sneakers.api.ticker as skticker
 import sneakers.api.datautils as skdata
-from sneakers.vision import training as skvtraining
-from sneakers.vision import dataset as skvdataset
-from sneakers.vision import model as skvmodel
-from sneakers.vision import computation as skvcomps
-from sneakers.vision import modelutils as skvutils
+#from sneakers.vision import training as skvtraining
+#from sneakers.vision import dataset as skvdataset
+#from sneakers.vision import model as skvmodel
+#from sneakers.vision import computation as skvcomps
+#from sneakers.vision import modelutils as skvutils
 
 
 titl = skutils.composer_title('composer', 'HelloWorld')
@@ -44,14 +44,20 @@ if __name__ == '__main__':
     # lab = skvdataset.get_labels(training_path)
     # vmodel = skvmodel.load_model(len(lab))
     # vmodel.summary()
-    train = skvtraining.training_constructor(training_path)
-    test = skvtraining.training_constructor(test_path)
-    x = train.class_indices
-    print(x)
+    # train = skvtraining.training_constructor(training_path)
+    # test = skvtraining.training_constructor(test_path)
+    # x = train.class_indices
+    # print(x)
     # skvmodel.compile_model(vmodel, train, 'skvision')
-    results = skvcomps.do_magic('skvision', test)
+    #results = skvcomps.do_magic('skvision', test)
 
-    skvutils.prediction_labeling(x,results)
+    # skvutils.prediction_labeling(x,results)
+
+    # x = skdata.get_link_by_sku('CZ4178-005')
+    # print(x)
+
+    x = Aircomposer('allSneakers2021')
+    x.update_marketvalueNZD()
 
 
 
