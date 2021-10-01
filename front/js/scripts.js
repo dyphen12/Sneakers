@@ -598,3 +598,1522 @@ function apiVersion() {
 
     return true;
 }
+
+
+// --------- STOCKDOTSHOP ----------
+
+// These are the functions of the main Stockdotshop app
+// Status: Under Development
+// Note: Fixes for organization a better standard resourcing of functions
+
+
+// ########## INDEX MAIN PROCESSES ########
+
+function getUsername(ssid) {
+
+    var std = "http://127.0.0.1:5000/user/%";
+
+
+    var url = std.replace('%', ssid);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+
+        document.getElementById("user-welcome").innerHTML = 'Welcome, ' + res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+function sneakerData() {
+
+    document.getElementById("sneaker-container").innerHTML = 'Loading...';
+
+
+
+    apiVersion();
+
+    // var std = "http://127.0.0.1:5000/alldata";
+
+    var std = "http://127.0.0.1:5000/alldataindex/%";
+
+    var sneakerLivePage = document.getElementById("sneaker-quantity").value;
+
+
+    var url = std.replace('%', sneakerLivePage);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+      document.getElementById("sneakers-live-amount").innerHTML = sneakerLiveAmount;
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+
+
+      asyncCall(res);
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function resolveAfter2Seconds(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+       var shoecard = document.getElementById('shoe-card');
+       console.log(shoecard);
+
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+        var counter = 0;
+
+        console.log(counter)
+
+        document.getElementById("sneaker-container").style.opacity = "0.0";
+        document.getElementById("sneaker-container").innerHTML = '';
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(sneaker)
+
+
+          var snk = res[sneaker];
+
+          //console.log(snk['name'])
+
+          // console.log(snk[prop]);
+          // console.log(`${prop}: ${snk[prop]}`);
+
+          // Object Creation
+
+          //Big Card
+          var card = document.createElement("div");
+
+          card.className = "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp";
+
+          // Four childs
+
+          // Child 1 - Img
+
+          var cardimg = document.createElement("div");
+
+          cardimg.className = "mdl-card__media";
+
+          var img = document.createElement('img');
+          img.src = snk['thumbnail'];
+
+          cardimg.appendChild(img);
+
+          // Child 2 - Title
+
+          var cardtitle = document.createElement("div");
+
+          cardtitle.id = snk['id'];
+
+          cardtitle.className = "mdl-card__title";
+
+          var title = document.createElement("h4");
+
+          title.innerHTML = snk['name'];
+
+          console.log(snk)
+
+          title.className = "mdl-card__title-text"
+
+          cardtitle.appendChild(title)
+
+          // Child 3 - Supporting Text
+
+          var cardsubtext = document.createElement("div");
+
+          cardsubtext.className = "mdl-card__supporting-text";
+
+          var subtext = document.createElement("span");
+
+
+          subtext.innerHTML = snk['colorway'] + "<br><br>";
+
+          subtext.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          var subtextprice = document.createElement("span");
+
+          subtextprice.innerHTML = snk['NZDvalue'] + "$";
+
+          subtextprice.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          cardsubtext.appendChild(subtext)
+          cardsubtext.appendChild(subtextprice)
+
+          // Child 4 - Button
+
+          var cardaction = document.createElement("div");
+
+          cardaction.className = "mdl-card__actions";
+
+          var linktoaction = document.createElement("a");
+
+          linktoaction.href = snk['link3'];
+
+          linktoaction.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktoaction.innerHTML = 'See';
+
+          var icon = document.createElement("i");
+
+          icon.className = "material-icons";
+
+          icon.innerHTML = "chevron_right"
+
+          linktoaction.appendChild(icon)
+          cardaction.appendChild(linktoaction)
+
+          // Child 5 Fav button
+
+          var linktofav = document.createElement("a");
+
+          linktofav.id = snk['sku'];
+
+          // linktofav.href = snk['link3'];
+
+          linktofav.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktofav.innerHTML = 'Save ';
+
+          linktofav.onclick = function() {saveSneaker(this.id);}
+
+          var ficon = document.createElement("i");
+
+          //var skid = snk['USDvalue'];
+
+          //ficon.id = skid;
+
+          ficon.className = "material-icons";
+
+          ficon.innerHTML = "favorite_border"
+
+
+          linktofav.appendChild(ficon)
+          cardaction.appendChild(linktofav)
+
+
+
+          // Append Childs to Mother
+
+          card.appendChild(cardimg)
+          card.appendChild(cardtitle)
+          card.appendChild(cardsubtext)
+          card.appendChild(cardaction)
+
+          // Append to Sneaker Container
+
+          var sneakercontainer = document.getElementById('sneaker-container');
+
+          sneakercontainer.appendChild(card)
+
+          counter++;
+
+          console.log(counter)
+
+          // checkSneakers(skid);
+
+          if (counter == sneakerLiveAmount) {
+
+          console.log('Hooray!')
+
+          break;
+
+          }
+
+
+          // console.log(card)
+
+
+        }
+
+
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function asyncCall(res) {
+  console.log('calling');
+  const result = await resolveAfter2Seconds(res);
+  console.log(result);
+  console.log('Here I should Fav everything but I dont know how :(');
+  loaduserlite();
+
+  // expected output: "resolved"
+}
+
+
+function loadHome() {
+
+  // RYZEN: First (R1)
+  console.log('R1 Started')
+
+  // This deletes some item that bothers.
+
+
+  // Loads Sneaker Live Table Routine
+
+
+  // Start SSID
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+
+  // R1 Fail end
+    //document.getElementById("mySidebar").innerHTML = '';
+    //document.getElementById("pageC").innerHTML = 'Please Login';
+    console.log('Please Login')
+    HomeData();
+
+  }
+  else {
+
+    // RYZEN: Second (R2)
+    console.log('R2 Started')
+
+    // First Message to Console
+
+    console.log(ssid);
+    console.log('Somos los que somos');
+
+    // User's name routines
+
+    // Get user name from index.html (this is a faulty one) needs to be in a future onload for index only.
+    getUsername(ssid);
+    sneakerData();
+
+
+
+  }
+
+}
+
+function HomeData() {
+
+    document.getElementById("sneaker-container").innerHTML = 'Loading...';
+
+    apiVersion();
+
+    // var std = "http://127.0.0.1:5000/alldata";
+
+    var std = "http://127.0.0.1:5000/alldataindex/%";
+
+    var sneakerLivePage = document.getElementById("sneaker-quantity").value;
+
+
+    var url = std.replace('%', sneakerLivePage);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+      document.getElementById("sneakers-live-amount").innerHTML = sneakerLiveAmount;
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+
+
+      HomeDataasyncCall(res);
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function HomeDataResolve(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+       var shoecard = document.getElementById('shoe-card');
+       console.log(shoecard);
+
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+        var counter = 0;
+
+        console.log(counter)
+
+        document.getElementById("sneaker-container").style.opacity = "0.0";
+        document.getElementById("sneaker-container").innerHTML = '';
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(sneaker)
+
+
+          var snk = res[sneaker];
+
+          //console.log(snk['name'])
+
+          // console.log(snk[prop]);
+          // console.log(`${prop}: ${snk[prop]}`);
+
+          // Object Creation
+
+          //Big Card
+          var card = document.createElement("div");
+
+          card.className = "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp";
+
+          // Four childs
+
+          // Child 1 - Img
+
+          var cardimg = document.createElement("div");
+
+          cardimg.className = "mdl-card__media";
+
+          var img = document.createElement('img');
+          img.src = snk['thumbnail'];
+
+          cardimg.appendChild(img);
+
+          // Child 2 - Title
+
+          var cardtitle = document.createElement("div");
+
+          cardtitle.id = snk['id'];
+
+          cardtitle.className = "mdl-card__title";
+
+          var title = document.createElement("h4");
+
+          title.innerHTML = snk['name'];
+
+          console.log(snk)
+
+          title.className = "mdl-card__title-text"
+
+          cardtitle.appendChild(title)
+
+          // Child 3 - Supporting Text
+
+          var cardsubtext = document.createElement("div");
+
+          cardsubtext.className = "mdl-card__supporting-text";
+
+          var subtext = document.createElement("span");
+
+
+          subtext.innerHTML = snk['colorway'] + "<br><br>";
+
+          subtext.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          var subtextprice = document.createElement("span");
+
+          subtextprice.innerHTML = snk['NZDvalue'] + "$";
+
+          subtextprice.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          cardsubtext.appendChild(subtext)
+          cardsubtext.appendChild(subtextprice)
+
+          // Child 4 - Button
+
+          var cardaction = document.createElement("div");
+
+          cardaction.className = "mdl-card__actions";
+
+          var linktoaction = document.createElement("a");
+
+          linktoaction.href = snk['link3'];
+
+          linktoaction.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktoaction.innerHTML = 'See';
+
+          var icon = document.createElement("i");
+
+          icon.className = "material-icons";
+
+          icon.innerHTML = "chevron_right"
+
+          linktoaction.appendChild(icon)
+          cardaction.appendChild(linktoaction)
+
+          // Child 5 Fav button
+
+          var linktofav = document.createElement("a");
+
+          linktofav.id = snk['sku'];
+
+          // linktofav.href = snk['link3'];
+
+          linktofav.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktofav.innerHTML = 'Save ';
+
+          // linktofav.onclick = function() {saveSneaker(this.id);}
+
+          var ficon = document.createElement("i");
+
+          //var skid = snk['USDvalue'];
+
+          //ficon.id = skid;
+
+          ficon.className = "material-icons";
+
+          ficon.innerHTML = "favorite_border"
+
+
+          linktofav.appendChild(ficon)
+          cardaction.appendChild(linktofav)
+
+
+
+          // Append Childs to Mother
+
+          card.appendChild(cardimg)
+          card.appendChild(cardtitle)
+          card.appendChild(cardsubtext)
+          card.appendChild(cardaction)
+
+          // Append to Sneaker Container
+
+          var sneakercontainer = document.getElementById('sneaker-container');
+
+          sneakercontainer.appendChild(card)
+
+          counter++;
+
+          console.log(counter)
+
+          // checkSneakers(skid);
+
+          if (counter == sneakerLiveAmount) {
+
+          console.log('Hooray!')
+
+          break;
+
+          }
+
+
+          // console.log(card)
+
+
+        }
+
+
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function HomeDataasyncCall(res) {
+  console.log('calling');
+  const result = await HomeDataResolve(res);
+  console.log(result);
+  document.getElementById("sneaker-container").style.opacity = "1.0";
+
+  // expected output: "resolved"
+}
+
+
+
+// -------- LOGIN - SIGN UP ----------
+
+// Notes: There's no sign up process yet
+
+// Front: Called on Index
+function login() {
+
+    var x , y;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("login-mail").value;
+    y = document.getElementById("loginpass").value;
+
+    var token = "user=%&pass=$"
+    var credentialx = token.replace('%',x);
+    var credential = credentialx.replace('$',y);
+
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        // document.getElementById("demo").innerHTML = 'Wrong password or username';
+
+      } else {
+        // document.getElementById("demo").innerHTML = 'Succesfully Logged in';
+        var cookiephrase = 'ssid=';
+        var ssidcookie = cookiephrase + res;
+        sessionStorage.setItem('ssid',res);
+        var andnavcontainer = document.getElementById('nav-cont');
+
+        andnavcontainer.innerHTML = '';
+
+        makelogin();
+      }
+
+      }
+    };
+    xhttp.open("POST", "http://127.0.0.1:5000/auth", true);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send(credential);
+
+}
+
+// Back Processes
+function setCookie(key, value) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        }
+
+// Called on: login()>makelogin() / R2 /
+// Just changes the Header to an Logged Header
+function makeloginProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+    var drawSignin = document.getElementById('draw-signin').innerHTML = 'Welcome';
+    var drawLogin = document.getElementById('draw-login').style.display = 'none';
+    document.getElementById('more-button').style.display = 'inline';
+
+    document.getElementById('draw-signin').onclick = dummy;
+
+
+    //Nav Container
+          var navcontainer = document.createElement("nav");
+
+          navcontainer.className = "android-navigation mdl-navigation";
+
+          // Four childs
+
+          // Child 1 - a
+
+          var aname = document.createElement("a");
+
+          aname.className = "mdl-navigation__link mdl-typography--text-uppercase";
+
+          aname.innerHTML = 'Welcome, ';
+
+          aname.id = 'user-welcome';
+
+          navcontainer.appendChild(aname);
+
+       // document.getElementById('loginbots').style.display = "inline";
+
+
+       var andnavcontainer = document.getElementById('nav-cont');
+
+          andnavcontainer.appendChild(navcontainer)
+
+      resolve('makeloginProcess() ended');
+    }, 2);
+  });
+}
+
+// Called on: Login
+async function makelogin() {
+  console.log('calling');
+  const result = await makeloginProcess();
+  console.log(result);
+  document.getElementById('loginbots').style.display = 'none';
+  loaduser();
+
+  // expected output: "resolved"
+}
+
+// Front Ad hoc
+
+function toggleloginProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+        document.getElementById('loginbots').style.display = "inline";
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function togglelogin() {
+  console.log('calling');
+  const result = await toggleloginProcess();
+  console.log(result);
+  // expected output: "resolved"
+}
+
+function togglesignupProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+        document.getElementById('saininbots').style.display = "inline";
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function togglesignup() {
+  console.log('calling');
+  const result = await togglesignupProcess();
+  console.log(result);
+  // expected output: "resolved"
+}
+
+function gosignupProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+        document.getElementById('formasignup').innerHTML = 'Loading...';
+
+
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function gosignup() {
+  console.log('calling');
+  const result = await gosignupProcess();
+  console.log(result);
+  // expected output: "resolved"
+}
+
+
+
+// ########## USER APP MAIN PROCESSES ########
+
+
+// Just a Logout
+
+function logout() {
+  sessionStorage.removeItem('ssid');
+  window.location.href = "index.html";
+
+}
+
+// COOKIES
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+                    }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+                    }
+                  }
+                  return "";
+}
+
+
+// Loads Username for the user.html page
+// STARTED BY:
+
+// loaduser():
+function getUsernameprofile(ssid) {
+
+    var std = "http://127.0.0.1:5000/user/%";
+
+
+    var url = std.replace('%', ssid);
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+
+      } else {
+        console.log('Sy')
+
+        document.getElementById("hello-user").innerHTML = 'Hello, ' + res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+}
+
+
+// --------- USER DATA ----------
+
+// RYZEN: Onload Call
+
+function loaduser() {
+
+
+  // RYZEN: First (R1)
+  console.log('R1 Started')
+
+  // This deletes some item that bothers.
+  document.getElementById('more-button').style.display = 'none';
+  var andnavcontainer = document.getElementById('nav-cont');
+  andnavcontainer.innerHTML = '';
+
+  // Loads Sneaker Live Table Routine
+  sneakerData();
+
+  // Start SSID
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+
+  // R1 Fail end
+    //document.getElementById("mySidebar").innerHTML = '';
+    //document.getElementById("pageC").innerHTML = 'Please Login';
+    console.log('Please Login')
+
+  }
+  else {
+
+
+    // RYZEN: Second (R2)
+    console.log('R2 Started')
+
+
+    // First Message to Console
+
+    console.log(ssid);
+    console.log('Somos los que somos');
+
+
+    // User's name routines
+
+
+    // Get user name from index.html (this is a faulty one) needs to be in a future onload for index only.
+    getUsername(ssid);
+
+    // Get user name for user.html (this is the main one for the profile so thats why)
+    // So it only changes the "Hello, user"
+    getUsernameprofile(ssid);
+
+
+
+    // Does the header changing for user.html
+    makeloginProcess();
+    document.getElementById('more-button').style.display = 'inline';
+
+
+    //RYZEN: Third (R3)
+    //Loads My Sneaker Table Routine
+    userData(ssid);
+
+
+
+    //var usernurl = 'http://detfladder.pythonanywhere.com/usern/' + ssid;
+    //fetch(usernurl)
+    //.then(response => response.json())
+    //.then(data => document.getElementById("username").innerHTML = data);
+
+  }
+
+}
+
+// ---- MY SNEAKER TABLE ROUTINE --------
+
+//--------- User Data -------------------
+
+function userData(ssid) {
+
+    document.getElementById("sneaker-container-user").innerHTML = 'Loading...';
+
+    apiVersion();
+
+
+    var std = "http://127.0.0.1:5000/userdata/%";
+
+
+    var url = std.replace('%', ssid);
+
+
+    // document.getElementById("version").innerHTML = 'Loading...';
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+      userdataCall(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function userdataProcess(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+       // My Sneaker Table Card Creator
+       // res = json table
+       // skid = snk['name']
+
+
+
+       //Card Creation
+       var shoecard = document.getElementById('shoe-card');
+       console.log(shoecard);
+
+
+
+        //console.log(counter)
+
+        document.getElementById("sneaker-container-user").innerHTML = '';
+
+        //
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(sneaker)
+
+
+          var snk = res[sneaker];
+
+          //console.log(snk['name'])
+
+          // console.log(snk[prop]);
+          // console.log(`${prop}: ${snk[prop]}`);
+
+          // Object Creation
+
+          //Big Card
+          var card = document.createElement("div");
+
+          card.className = "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp";
+
+          // Four childs
+
+          // Child 1 - Img
+
+          var cardimg = document.createElement("div");
+
+          cardimg.className = "mdl-card__media";
+
+          var img = document.createElement('img');
+          img.src = snk['thumbnail'];
+
+          cardimg.appendChild(img);
+
+          // Child 2 - Title
+
+          var cardtitle = document.createElement("div");
+
+          cardtitle.id = snk['id'];
+
+          cardtitle.className = "mdl-card__title";
+
+          var title = document.createElement("h4");
+
+          title.innerHTML = snk['name'];
+
+          console.log(snk)
+
+          title.className = "mdl-card__title-text"
+
+          cardtitle.appendChild(title)
+
+          // Child 3 - Supporting Text
+
+          var cardsubtext = document.createElement("div");
+
+          cardsubtext.className = "mdl-card__supporting-text";
+
+          var subtext = document.createElement("span");
+
+
+          subtext.innerHTML = snk['colorway'] + "<br><br>";
+
+          subtext.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          var subtextprice = document.createElement("span");
+
+          subtextprice.innerHTML = snk['NZDvalue'] + "$";
+
+          subtextprice.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          cardsubtext.appendChild(subtext)
+          cardsubtext.appendChild(subtextprice)
+
+          // Child 4 - Button
+
+          var cardaction = document.createElement("div");
+
+          cardaction.className = "mdl-card__actions";
+
+          var linktoaction = document.createElement("a");
+
+          linktoaction.href = snk['link3'];
+
+          linktoaction.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktoaction.innerHTML = 'See';
+
+          var icon = document.createElement("i");
+
+          icon.className = "material-icons";
+
+          icon.innerHTML = "chevron_right"
+
+          linktoaction.appendChild(icon)
+          cardaction.appendChild(linktoaction)
+
+          // Child 5 Fav button
+
+          var linktofav = document.createElement("a");
+
+          linktofav.id = snk['sku'];
+
+          // linktofav.href = snk['link3'];
+
+          linktofav.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktofav.innerHTML = 'Save ';
+
+
+          // Adds the saveSneaker() function to the card onclick.
+
+          linktofav.onclick = function() {saveSneaker(this.id);}
+
+          var ficon = document.createElement("i");
+
+          var skid = snk['name'];
+
+          ficon.id = skid;
+
+          ficon.className = "material-icons";
+
+          ficon.innerHTML = "favorite_border"
+
+          linktofav.appendChild(ficon)
+          cardaction.appendChild(linktofav)
+
+
+
+          // Append Childs to Mother
+
+          card.appendChild(cardimg)
+          card.appendChild(cardtitle)
+          card.appendChild(cardsubtext)
+          card.appendChild(cardaction)
+
+          // Append to Sneaker Container
+
+          var sneakercontainer = document.getElementById('sneaker-container-user');
+
+          sneakercontainer.appendChild(card)
+
+          markSneakerFav(snk['sku']);
+
+
+          // Ryzen Fourth (R4)
+          // RYZEN SUBROUTINE I (R3 Call): Sneaker Checker
+          // checkSneakers(skid);
+
+          // console.log(card)
+
+        }
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function userdataCall(res) {
+  console.log('calling');
+  const result = await userdataProcess(res);
+  console.log(result);
+
+  // expected output: "resolved"
+}
+
+
+//// RYZEN SUBROUTINE I: Mark Sneakers Faved
+
+function markSneakerFav(ide){
+
+        console.log('This is already faved ewe')
+        //targetDiv.textContent = "favorite";
+
+        sss = '[id="%"]';
+        query = sss.replace('%', ide)
+
+        var elements = document.querySelectorAll(query);
+
+        for(var i = 0; i < elements.length; i++) {
+            var icon = elements[i].getElementsByClassName("material-icons")[0];
+            icon.innerHTML = 'favorite';
+        }
+
+
+
+}
+
+
+//--------- SNEAKERS CARD ONCLICK FUNCTIONS -----------
+
+function dummy() {
+
+  console.log('I love you!');
+
+}
+
+//----------- SAVE ----------
+
+async function saveSneaker(ide) {
+  console.log('fav');
+
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    //document.getElementById("mySidebar").innerHTML = '';
+    //document.getElementById("pageC").innerHTML = 'Please Login';
+    console.log('Ando buscando la chica que este mas buena')
+
+
+
+
+
+  }
+  else {
+    console.log(ssid);
+    console.log('this the fav icon uwu');
+
+
+
+
+    var targetDiv = document.getElementById(ide).getElementsByClassName("material-icons")[0];
+    var option = targetDiv.textContent;
+
+    console.log(option)
+
+    if (option == 'favorite_border') {
+
+        console.log('This is going to be a fav uwu')
+        sneakerSender(ssid, ide);
+        loaduserUpdate();
+        //targetDiv.textContent = "favorite";
+
+        sss = '[id="%"]';
+        query = sss.replace('%', ide)
+
+        var elements = document.querySelectorAll(query);
+
+        for(var i = 0; i < elements.length; i++) {
+            var icon = elements[i].getElementsByClassName("material-icons")[0];
+            icon.innerHTML = 'favorite';
+        }
+
+    } else {
+
+        console.log('owo you dont like it anymore?')
+        sneakerUnfaver(ssid, ide)
+        loaduserUpdate();
+
+        //targetDiv.textContent = "favorite_border";
+
+        sss = '[id="%"]';
+        query = sss.replace('%', ide)
+
+        var elements = document.querySelectorAll(query);
+
+        for(var i = 0; i < elements.length; i++) {
+            var icon = elements[i].getElementsByClassName("material-icons")[0];
+            icon.innerHTML = 'favorite_border';
+        }
+
+
+    }
+
+
+
+    // targetDiv.onclick = function() {unfavSneaker(this.id);}
+
+
+
+
+    console.log('fav ended awa');
+
+    //sneakerSender(ssid, ide);
+
+
+    //document.getElementById('more-button').style.display = 'inline';
+
+
+    //var usernurl = 'http://detfladder.pythonanywhere.com/usern/' + ssid;
+    //fetch(usernurl)
+    //.then(response => response.json())
+    //.then(data => document.getElementById("username").innerHTML = data);
+
+  }
+
+
+
+
+  const result = await saveSneakerProcess();
+  console.log(ide);
+  // expected output: "resolved"
+}
+
+function saveSneakerProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+        // document.getElementById('loginbots').style.display = "inline";
+       console.log('Saved!')
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+function sneakerSender(ssid, sku) {
+
+    var std = "http://127.0.0.1:5000/savethis/%";
+
+    console.log(ssid);
+    console.log(sku);
+
+
+     var query = '{"results": {"ssid": "%","sku": "$"}}'
+
+     var query2 = query.replace('%', ssid);
+     var finalquery = query2.replace('$', sku);
+
+     var url = std.replace('%', finalquery)
+
+       var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+      } else {
+        console.log('Sy');
+
+      }
+
+      }else{
+      console.log('Kwait')}
+
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+    return true;
+}
+
+//----------- UNSAVE ----------
+
+
+function unfavSneakerProcess() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+
+        // document.getElementById('loginbots').style.display = "inline";
+       console.log('Saved!')
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+function sneakerUnfaver(ssid, sku) {
+
+    var std = "http://127.0.0.1:5000/deletethis/%";
+
+
+     var query = '{"results": {"ssid": "%","sku": "$"}}'
+
+     var query2 = query.replace('%', ssid);
+     var finalquery = query2.replace('$', sku);
+
+     var url = std.replace('%', finalquery)
+
+       var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+      } else {
+        console.log('Sy');
+
+      }
+
+      }else{
+      console.log('Kwait')}
+
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+    return true;
+}
+
+
+// --------- Profile Sneaker LIVE Fav already faved Routine-----------
+
+function loaduserlite() {
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    console.log('And now I do and I am going to fav everything uwu')
+
+  }
+  else {
+    userDataLite(ssid);
+
+  }
+
+}
+
+function userDataLite(ssid) {
+
+    var std = "http://127.0.0.1:5000/userdata/%";
+    var url = std.replace('%', ssid);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+      userdataCallLite(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function userdataProcessLite(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+
+          var snk = res[sneaker];
+
+          markSneakerFav(snk['sku']);
+        }
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function userdataCallLite(res) {
+  console.log('doing my jobbbb just faving everything here u know owo');
+  const result = await userdataProcessLite(res);
+  console.log(result);
+  document.getElementById("sneaker-container").style.opacity = "1.0";
+  // expected output: "resolved"
+}
+
+//#########################
+
+function loaduserUpdate() {
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    console.log('And now I do and I am going to fav everything uwu')
+  }
+  else {
+    userData(ssid);
+
+  }
+
+}
+
+
+// Sign Up Process
+
+function SignUpNow() {
+
+    document.getElementById("signup-status").innerHTML = 'Signing up...';
+
+    var std = "http://127.0.0.1:5000/signup/%";
+
+    var query = '{"results": {"name": "%","lastname": "#","email": "&","password": "$"}}'
+
+    var signname = document.getElementById("name").value;
+    var signlastname = document.getElementById("lastname").value;
+    var signemail = document.getElementById("email").value;
+    var signpassword = document.getElementById("signpassword").value;
+
+    console.log(query);
+
+    var query1 = query.replace('%', signname);
+    var query2 = query1.replace('#', signlastname);
+    var query3 = query2.replace('&', signemail);
+    var query4 = query3.replace('$', signpassword);
+
+    var url = std.replace('%',query4)
+
+       var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      console.log(res);
+      document.getElementById("signup-status").innerHTML = res;
+
+
+      if (res == 'User Already Registered'){
+        console.log(res)
+
+
+
+      } else {
+
+        var cookiephrase = 'ssid=';
+
+        var ssidcookie = cookiephrase + res;
+
+        sessionStorage.setItem('ssid',res);
+
+        location.href='user.html';
+
+        console.log(res)
+
+
+
+        // document.getElementById("img-status").innerHTML = 'Images inserted successfully, sync and check your drive!';
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+    return true;
+}

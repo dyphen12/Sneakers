@@ -27,6 +27,7 @@ import sneakers.api.datautils as skdata
 #from sneakers.vision import model as skvmodel
 #from sneakers.vision import computation as skvcomps
 #from sneakers.vision import modelutils as skvutils
+from sneakers.api.low import database as lowd
 
 
 titl = skutils.composer_title('composer', 'HelloWorld')
@@ -55,9 +56,8 @@ if __name__ == '__main__':
 
     # x = skdata.get_link_by_sku('CZ4178-005')
     # print(x)
+    lowd.load_database()
 
-    x = Aircomposer('allSneakers2021')
-    x.update_marketvalueNZD()
 
 
 

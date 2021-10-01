@@ -1,24 +1,19 @@
 # Sneakers API [DEV]
 
-### v3.0.0a
+### v4.0.0a
 
-## Vision Update!!! 
-
-#### Computer Vision Model Added.
-
-- Tensorflow model added
-- Dataset constructor
-- Training builder
-- Plotting and debugging utilities
-
+## Ryzen Update!!!
 
 ### Main
 
-This is the main API of TheSneakersDatabase, you can download this API and export the database into a CSV, update it and modify it. It allows sneaker images to be downloaded and processed. Saved in the 'img' folder, they can be composed into a fully automated ExcelSheet.
+We are preparing something big!
 
-Featuring the 'Composer', you can create, manipulate, and save XLSX worksheets, and export Airtable sheets.
+### Computer Vision Model Summary
 
-You can also synchronize the composer and the composer worksheet with your Google Drive and Airtable.
+- Tensorflow model
+- Dataset constructor
+- Training builder
+- Plotting and debugging utilities
 
 ## Installation:
 
@@ -89,6 +84,7 @@ _Example:_
 
 The title is the name of the worksheet and the name of the composer, 
 in order to load or create a workbook you must provide the correct name.
+
 
 
 

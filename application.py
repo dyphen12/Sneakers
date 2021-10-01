@@ -12,6 +12,8 @@ from sneakers.api.airtable_composer import Aircomposer
 from sneakers.api.core import load_config
 from sneakers.api.core import update_shoes_db
 from sneakers.api.core import api_version
+from sneakers.api.low import builder
+from sneakers.api.users import handler as uhd
 
 
 app = Flask(__name__)
@@ -209,6 +211,169 @@ api.add_resource(DeployTable, '/deploytable/<string:todo_id>')
 api.add_resource(updateTable, '/updatetable/<string:todo_id>')
 
 
+################# Ryzen Api #######################
+
+class AllData(Resource):
+
+    def get(self):
+        x = builder.build_dataset()
+        return x
+
+
+class AllDataIndexed(Resource):
+
+    def get(self, todo_id):
+        page = int(todo_id)
+        x = builder.build_dataset_pages(page)
+        return x
+
+api.add_resource(AllData, '/alldata')
+api.add_resource(AllDataIndexed, '/alldataindex/<string:todo_id>')
+
+
+
+
+################# Login Api #######################
+
+CREDENTIAL = {
+    'token1':{'user': "admin",
+              'pass': "admin1"}
+}
+
+def abort_if_credential_doesnt_exist(token_id):
+    if token_id not in CREDENTIAL:
+        abort(404, message="Token {} doesn't exist".format(token_id))
+
+
+parserauth = reqparse.RequestParser()
+parserauth.add_argument('user')
+parserauth.add_argument('pass')
+
+
+class Login(Resource):
+
+    def post(self):
+
+        args = parserauth.parse_args()
+        token_id = int(max(CREDENTIAL.keys()).lstrip('token')) + 1
+        token_id = 'token%i' % token_id
+        CREDENTIAL[token_id] = {'user': args['user'],
+                                'pass': args['pass']}
+
+        token = CREDENTIAL[token_id]
+
+        x, auth = uhd.user_login(token['user'],token['pass'])
+
+        try:
+
+            ids = x['id'].values[0]
+
+
+            ssid = ids
+            print('auth success')
+
+            return ssid
+
+
+        except TypeError:
+            ids = 0
+            print('auth failed')
+            return 'fail'
+
+
+api.add_resource(Login, '/auth')
+
+
+class sneakerSaver(Resource):
+
+    def get(self, todo_id):
+        query = json.loads(todo_id)
+        ids = query['results']['ssid']
+        sku = query['results']['sku']
+
+        uhd.user_addsneaker(int(ids), str(sku))
+        return 'yay'
+
+api.add_resource(sneakerSaver, '/savethis/<string:todo_id>')
+
+
+class getuserName(Resource):
+
+    def get(self, todo_id):
+
+        x = uhd.get_username(int(todo_id))
+
+        return x.values[0]
+
+
+api.add_resource(getuserName, '/user/<string:todo_id>')
+
+
+class userData(Resource):
+
+    def get(self, todo_id):
+
+        x = uhd.get_user_sneakers(int(todo_id))
+        return x
+
+api.add_resource(userData, '/userdata/<string:todo_id>')
+
+
+class userSneakerlist(Resource):
+
+    def get(self, todo_id):
+        x = uhd.get_user_sneaker_list(int(todo_id))
+        return x
+
+api.add_resource(userSneakerlist, '/userlist/<string:todo_id>')
+
+
+class sneakerValidator(Resource):
+
+    def get(self, todo_id):
+
+        query = json.loads(todo_id)
+
+        print(query)
+        ids = query['results']['ssid']
+        name = query['results']['name']
+        x = uhd.validate_sneaker(ids, name)
+
+        if x is True:
+            return 'vastase'
+        else:
+            return 'fail'
+
+api.add_resource(sneakerValidator, '/validator/<string:todo_id>')
+
+
+class sneakerDeleter(Resource):
+
+    def get(self, todo_id):
+        query = json.loads(todo_id)
+        ids = query['results']['ssid']
+        sku = query['results']['sku']
+
+        uhd.delete_sneaker(int(ids), str(sku))
+        return 'yay'
+
+api.add_resource(sneakerDeleter, '/deletethis/<string:todo_id>')
+
+class SignUp(Resource):
+
+    def get(self, todo_id):
+        print(todo_id)
+        query = json.loads(todo_id)
+        uname = query['results']['name']
+        ulastname = query['results']['lastname']
+        uemail = query['results']['email']
+        upass = query['results']['password']
+        resulta = uhd.user_signup(uname, ulastname, upass, uemail)
+
+        return resulta
+
+
+api.add_resource(SignUp, '/signup/<string:todo_id>')
 
 
 if __name__ == '__main__':
