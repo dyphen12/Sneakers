@@ -674,7 +674,7 @@ function sneakerData() {
       // console.log(res);
 
 
-
+      document.getElementById("sneaker-container").style.opacity = "0.0";
       asyncCall(res);
 
       if (res == 'fail'){
@@ -710,7 +710,7 @@ function resolveAfter2Seconds(res) {
 
         console.log(counter)
 
-        document.getElementById("sneaker-container").style.opacity = "0.0";
+
         document.getElementById("sneaker-container").innerHTML = '';
 
         for (sneaker in res) {
@@ -884,8 +884,7 @@ async function asyncCall(res) {
   const result = await resolveAfter2Seconds(res);
   console.log(result);
   console.log('Here I should Fav everything but I dont know how :(');
-  document.getElementById("sneaker-container").style.opacity = "1.0";
-  loaduserlite();
+  loadsneakerlite();
 
 
   // expected output: "resolved"
@@ -2075,6 +2074,86 @@ function sneakerUnfaver(ssid, sku) {
 
 // --------- Profile Sneaker LIVE Fav already faved Routine-----------
 
+function loadusersearchlite() {
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    console.log('And now I do and I am going to fav everything uwu')
+
+  }
+  else {
+
+    usersearchDataLite(ssid);
+
+  }
+
+}
+
+function usersearchDataLite(ssid) {
+
+    var std = "http://127.0.0.1:5000/userdata/%";
+    var url = std.replace('%', ssid);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+      usersearchCallLite(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function usersearchProcessLite(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+
+          var snk = res[sneaker];
+
+          markSneakerFav(snk['sku']);
+        }
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function usersearchCallLite(res) {
+  console.log('doing my jobbbb just faving everything here u know owo');
+  const result = await usersearchProcessLite(res);
+  console.log(result);
+  document.getElementById("sneaker-container-search").style.opacity = "1.0";
+  // expected output: "resolved"
+}
+
+
+
+
+
+
+
 function loaduserlite() {
   let ssid = sessionStorage.getItem('ssid');
   if (ssid == null) {
@@ -2141,6 +2220,89 @@ function userdataProcessLite(res) {
 }
 
 async function userdataCallLite(res) {
+  console.log('doing my jobbbb just faving everything here u know owo');
+  const result = await userdataProcessLite(res);
+  console.log(result);
+  document.getElementById("sneaker-container").style.opacity = "1.0";
+  // expected output: "resolved"
+}
+
+
+
+
+
+
+
+
+
+
+
+function loadsneakerlite() {
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    console.log('And now I do and I am going to fav everything uwu')
+
+  }
+  else {
+    sneakerDataLite(ssid);
+
+  }
+
+}
+
+function sneakerDataLite(ssid) {
+
+    var std = "http://127.0.0.1:5000/userdata/%";
+    var url = std.replace('%', ssid);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+      sneakerdataCallLite(res);
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function sneakerdataProcessLite(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+
+          var snk = res[sneaker];
+
+          markSneakerFav(snk['sku']);
+        }
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function sneakerdataCallLite(res) {
   console.log('doing my jobbbb just faving everything here u know owo');
   const result = await userdataProcessLite(res);
   console.log(result);
@@ -2338,8 +2500,10 @@ function searchData() {
       var res = JSON.parse(this.responseText);
       // console.log(res);
 
+      document.getElementById("sneaker-container-search").style.opacity = "0.0";
+
       searchdataCall(res);
-      loaduserlite();
+      loadusersearchlite();
 
 
       if (res == 'fail'){
@@ -2382,6 +2546,9 @@ function searchdataProcess(res) {
         //console.log(counter)
 
         document.getElementById("sneaker-container-search").innerHTML = '';
+
+
+
 
         //
 
