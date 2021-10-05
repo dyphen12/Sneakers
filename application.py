@@ -224,7 +224,7 @@ class AllDataIndexed(Resource):
 
     def get(self, todo_id):
         page = int(todo_id)
-        x = builder.build_dataset_pages(page)
+        x = builder.build_dataset_pages_ryzen(page)
         return x
 
 api.add_resource(AllData, '/alldata')
@@ -374,6 +374,18 @@ class SignUp(Resource):
 
 
 api.add_resource(SignUp, '/signup/<string:todo_id>')
+
+
+
+class searchData(Resource):
+
+    def get(self, todo_id):
+
+        x = builder.build_search_ryzen(todo_id)
+
+        return x
+
+api.add_resource(searchData, '/search/<string:todo_id>')
 
 
 if __name__ == '__main__':

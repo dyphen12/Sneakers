@@ -30,6 +30,7 @@ def update_usd():
     return True
 
 def update_nzd():
+
     print('Updating database NZD prices, please wait.')
     datab = database.load_database()
     usdprices = datab['USDvalue'].tolist()
@@ -38,8 +39,27 @@ def update_nzd():
     print(len(nzdprices))
     datab['NZDvalue'] = nzdprices
     database.save_database(datab)
+
     return True
 
 
+def update_both():
+
+    print('Updating database prices, please wait.')
+    datab = database.load_database()
+    usdprices = datab['USDvalue'].tolist()
+    links = datab['link3'].tolist()
+    prices = threading.update_usd_processing(links)
+    datab['USDvalue'] = prices
+    database.save_database(datab)
+
+
+    print('Updating database NZD prices, please wait.')
+    datab = database.load_database()
+    usdprices = datab['USDvalue'].tolist()
+    nzdprices = threading.update_nzd_processing(usdprices)
+    datab['NZDvalue'] = nzdprices
+    database.save_database(datab)
+    return True
 
 

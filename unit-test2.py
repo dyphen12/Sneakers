@@ -19,14 +19,16 @@ Made by Alexis W.
 from sneakers.api.low import database as lowd
 from sneakers.api.low import dynamics as dyn
 from sneakers.api.low import builder as bd
+from sneakers.api.low import usera as usa
 
 from sneakers.api.users import userbase as ubd
 
 from sneakers.api.users import handler as uhd
 
+
 if __name__ == '__main__':
     #x, y = uhd.user_login('pharma_dream@gmail.com', 'gustavo1')
-    x, y = uhd.user_login('alexiswong10@gmail.com', 'alexis1')
+    # x, y = uhd.user_login('alexiswong10@gmail.com', 'alexis1')
 
     #x = uhd.user_login('danieleo@gmail.com', 'daniel1')
     #x = uhd.user_login('yokohama@gmail.com', 'yokohama1')
@@ -34,20 +36,4 @@ if __name__ == '__main__':
 
     #print(x)
 
-    idx = x['id'].values[0]
-
-    #print(type(idx))
-
-    # print(id)
-
-    sku1 = '382563-01'
-
-    sku2 = ['382563-01', 'FZ4882', 'DH9696-100']
-
-    #uhd.user_addsneaker(idx, sku1)
-
-    print(uhd.get_user_sneakers(idx))
-
-    print(uhd.validate_sneaker(idx, "Chuck Taylor All Star High TD 'Gingham'"))
-
-    uhd.delete_sneaker(idx, sku1)
+    usa.getsome()

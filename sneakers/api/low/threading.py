@@ -9,19 +9,29 @@ Status: UNDER DEVELOPMENT for Major Update Ryzen
 Made by Alexis W.
 
 """
-
+from itertools import product
+from itertools import repeat
 from multiprocessing import Pool
-
-from sneakers.api.low import database
+from sneakers.api.low import builder as bd
+from sneakers.api.low import database as db
+from sneakers.api.low import usera
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 import requests
 import json
 
+import time
+
 
 def get_price_silence(urlprocess):
 
     url = urlprocess
+
+    usa = usera.getsome()
+
+    # time.sleep(5)
+
+    # print(usa)
 
     newprice = 0
 
@@ -32,13 +42,19 @@ def get_price_silence(urlprocess):
         header = {'User-Agent': str(ua.chrome)}
 
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Nintendo WiiU) AppleWebKit/536.30 (KHTML, like Gecko) NX/3.0.4.2.12 NintendoBrowser/4.3.1.11264.US'}
+            'User-Agent': usa}
 
         r = requests.request("GET", url, headers=headers)
 
         data = r.text
 
         print(r)
+
+        if r.status_code == 404:
+            newprice = 0
+
+            return newprice
+
 
         soup = BeautifulSoup(data, features="lxml")
 
@@ -56,15 +72,22 @@ def get_price_silence(urlprocess):
 
         # print(type(result))
 
+        print(result)
+
         offer = result['offers']['offers'][1]
 
+        print(offer)
+
         newprice = offer['price']
+
+        print(newprice)
 
         return newprice
 
     except Exception as e:
-        # print(e)
-        return newprice
+
+        print(e)
+
 
 def get_nzd_price(priceprocess):
 
@@ -99,4 +122,6 @@ def update_nzd_processing(processes):
         for price in p.map(get_nzd_price, processes):
             print('Price Obtained: {fprice}'.format(fprice=str(price)))
             prices.append(price)
+
     return prices
+ 

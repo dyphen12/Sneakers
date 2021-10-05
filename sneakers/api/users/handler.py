@@ -19,6 +19,46 @@ import pandas as pd
 
 import random
 
+#------------------
+
+# Ryzen Connection
+
+
+def get_user_sneakers_ryzen(ids):
+
+    users = userbase.load_userbase()
+
+    userobj = users.loc[users['id'] == ids]
+
+    currentportfolio = userobj['portfolio'].apply(eval)
+
+    newport = currentportfolio.values[0]
+
+    data = database.load_database_ryzen()
+
+    newdata = data[0:0]
+
+    for sneaker in newport:
+
+        userobj = data.loc[data['sku'] == sneaker]
+
+        newdata = newdata.append(userobj)
+
+
+    dnewdata = newdata.drop_duplicates()
+
+    userdatajson = builder.build_userdataset_ryzen(dnewdata)
+
+    return userdatajson
+
+
+
+
+
+
+
+#----------------
+
 
 def user_login(email, password):
 

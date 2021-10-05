@@ -821,7 +821,7 @@ function resolveAfter2Seconds(res) {
 
           linktofav.innerHTML = 'Save ';
 
-          linktofav.onclick = function() {saveSneaker(this.id);}
+          linktofav.onclick = function() {saveSneakerLite(this.id);}
 
           var ficon = document.createElement("i");
 
@@ -884,7 +884,9 @@ async function asyncCall(res) {
   const result = await resolveAfter2Seconds(res);
   console.log(result);
   console.log('Here I should Fav everything but I dont know how :(');
+  document.getElementById("sneaker-container").style.opacity = "1.0";
   loaduserlite();
+
 
   // expected output: "resolved"
 }
@@ -913,6 +915,8 @@ function loadHome() {
 
   }
   else {
+
+    makelogin();
 
     // RYZEN: Second (R2)
     console.log('R2 Started')
@@ -1274,7 +1278,7 @@ function makeloginProcess() {
           andnavcontainer.appendChild(navcontainer)
 
       resolve('makeloginProcess() ended');
-    }, 2);
+    }, 0);
   });
 }
 
@@ -1360,6 +1364,11 @@ function logout() {
 
 }
 
+
+function logoutlite() {
+  sessionStorage.removeItem('ssid');
+}
+
 // COOKIES
 
 function getCookie(cname) {
@@ -1436,16 +1445,16 @@ function loaduser() {
   var andnavcontainer = document.getElementById('nav-cont');
   andnavcontainer.innerHTML = '';
 
-  // Loads Sneaker Live Table Routine
-  sneakerData();
 
   // Start SSID
   let ssid = sessionStorage.getItem('ssid');
   if (ssid == null) {
 
   // R1 Fail end
-    //document.getElementById("mySidebar").innerHTML = '';
-    //document.getElementById("pageC").innerHTML = 'Please Login';
+    document.getElementById("hello-user").innerHTML = 'Please Login';
+    document.getElementById("stockdotshop-content").innerHTML = '';
+    document.getElementById("sneaker-user").innerHTML = '';
+    document.getElementById("sneaker-live").innerHTML = '';
     console.log('Please Login')
 
   }
@@ -1678,7 +1687,7 @@ function userdataProcess(res) {
 
           // Adds the saveSneaker() function to the card onclick.
 
-          linktofav.onclick = function() {saveSneaker(this.id);}
+          linktofav.onclick = function() {saveSneakerLite(this.id);}
 
           var ficon = document.createElement("i");
 
@@ -1765,6 +1774,104 @@ function dummy() {
 
 //----------- SAVE ----------
 
+
+async function saveSneakerLite(ide) {
+  console.log('fav');
+
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+    //document.getElementById("mySidebar").innerHTML = '';
+    //document.getElementById("pageC").innerHTML = 'Please Login';
+    console.log('Ando buscando la chica que este mas buena')
+
+
+
+
+
+
+  }
+  else {
+    console.log(ssid);
+    console.log('this the fav icon uwu');
+
+
+
+
+    var targetDiv = document.getElementById(ide).getElementsByClassName("material-icons")[0];
+    var option = targetDiv.textContent;
+
+    console.log(option)
+
+    if (option == 'favorite_border') {
+
+        console.log('This is going to be a fav uwu')
+        sneakerSender(ssid, ide);
+        //loaduserUpdate();
+        //targetDiv.textContent = "favorite";
+
+        sss = '[id="%"]';
+        query = sss.replace('%', ide)
+
+        var elements = document.querySelectorAll(query);
+
+        for(var i = 0; i < elements.length; i++) {
+            var icon = elements[i].getElementsByClassName("material-icons")[0];
+            icon.innerHTML = 'favorite';
+        }
+
+    } else {
+
+        console.log('owo you dont like it anymore?')
+        sneakerUnfaver(ssid, ide)
+        // await new Promise(r => setTimeout(r, 2000));
+        //loaduserUpdate();
+
+        //targetDiv.textContent = "favorite_border";
+
+        sss = '[id="%"]';
+        query = sss.replace('%', ide)
+
+        var elements = document.querySelectorAll(query);
+
+        for(var i = 0; i < elements.length; i++) {
+            var icon = elements[i].getElementsByClassName("material-icons")[0];
+            icon.innerHTML = 'favorite_border';
+        }
+
+
+    }
+
+
+
+    // targetDiv.onclick = function() {unfavSneaker(this.id);}
+
+
+
+
+    console.log('fav ended awa');
+
+    //sneakerSender(ssid, ide);
+
+
+    //document.getElementById('more-button').style.display = 'inline';
+
+
+    //var usernurl = 'http://detfladder.pythonanywhere.com/usern/' + ssid;
+    //fetch(usernurl)
+    //.then(response => response.json())
+    //.then(data => document.getElementById("username").innerHTML = data);
+
+  }
+
+
+
+
+  const result = await saveSneakerProcess();
+  console.log(ide);
+  // expected output: "resolved"
+}
+
+
 async function saveSneaker(ide) {
   console.log('fav');
 
@@ -1773,6 +1880,7 @@ async function saveSneaker(ide) {
     //document.getElementById("mySidebar").innerHTML = '';
     //document.getElementById("pageC").innerHTML = 'Please Login';
     console.log('Ando buscando la chica que este mas buena')
+
 
 
 
@@ -1812,6 +1920,7 @@ async function saveSneaker(ide) {
 
         console.log('owo you dont like it anymore?')
         sneakerUnfaver(ssid, ide)
+        // await new Promise(r => setTimeout(r, 2000));
         loaduserUpdate();
 
         //targetDiv.textContent = "favorite_border";
@@ -2076,6 +2185,15 @@ function SignUpNow() {
     var query3 = query2.replace('&', signemail);
     var query4 = query3.replace('$', signpassword);
 
+    if (signname == '' || signlastname == '' || signemail == '' || signpassword == '' ) {
+
+        document.getElementById("signup-status").innerHTML = 'Fill the entire form';
+        return true
+
+
+
+    }
+
     var url = std.replace('%',query4)
 
        var xhttp = new XMLHttpRequest();
@@ -2084,7 +2202,7 @@ function SignUpNow() {
 
       var res = JSON.parse(this.responseText);
       console.log(res);
-      document.getElementById("signup-status").innerHTML = res;
+
 
 
       if (res == 'User Already Registered'){
@@ -2092,7 +2210,10 @@ function SignUpNow() {
 
 
 
+
       } else {
+
+      document.getElementById("signup-status").innerHTML = 'Eureka!';
 
         var cookiephrase = 'ssid=';
 
@@ -2116,4 +2237,315 @@ function SignUpNow() {
     xhttp.send();
 
     return true;
+}
+
+
+// SEARCH IMPLEMENTATION
+
+function loadSearch() {
+
+
+  // RYZEN: First (R1)
+  console.log('R1 Started')
+
+  document.getElementById("sneaker-container-search").innerHTML = 'Search something first.';
+
+  // This deletes some item that bothers.
+  document.getElementById('more-button').style.display = 'none';
+  var andnavcontainer = document.getElementById('nav-cont');
+  andnavcontainer.innerHTML = '';
+
+
+  // Start SSID
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+
+  // R1 Fail end
+    //document.getElementById("hello-user").innerHTML = 'Please Login';
+    //document.getElementById("stockdotshop-content").innerHTML = '';
+    //document.getElementById("sneaker-user").innerHTML = '';
+    //document.getElementById("sneaker-live").innerHTML = '';
+    console.log('Please Login')
+
+  }
+  else {
+
+
+    // RYZEN: Second (R2)
+    console.log('R2 Started')
+
+
+    // First Message to Console
+
+    console.log(ssid);
+    console.log('Somos los que somos');
+
+
+    // User's name routines
+
+
+    // Get user name from index.html (this is a faulty one) needs to be in a future onload for index only.
+
+
+    // Get user name for user.html (this is the main one for the profile so thats why)
+    // So it only changes the "Hello, user"
+
+
+
+    // Does the header changing for user.html
+    makeloginProcess();
+    document.getElementById('more-button').style.display = 'inline';
+
+    getUsername(ssid);
+
+
+
+    //var usernurl = 'http://detfladder.pythonanywhere.com/usern/' + ssid;
+    //fetch(usernurl)
+    //.then(response => response.json())
+    //.then(data => document.getElementById("username").innerHTML = data);
+
+  }
+
+}
+
+function searchData() {
+
+    var searchquery = document.getElementById("search-query").value;
+
+
+    console.log(searchquery)
+
+    document.getElementById("sneaker-container-search").innerHTML = 'Loading...';
+
+    apiVersion();
+
+
+    var std = "http://127.0.0.1:5000/search/%";
+
+
+    var url = std.replace('%', searchquery);
+
+
+    // document.getElementById("version").innerHTML = 'Loading...';
+
+    //document.getElementById("demo").innerHTML = credential;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+      searchdataCall(res);
+      loaduserlite();
+
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+
+}
+
+function searchdataProcess(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       console.log(res)
+
+       // My Sneaker Table Card Creator
+       // res = json table
+       // skid = snk['name']
+
+
+
+       //Card Creation
+       var shoecard = document.getElementById('shoe-card');
+       console.log(shoecard);
+
+
+
+        //console.log(counter)
+
+        document.getElementById("sneaker-container-search").innerHTML = '';
+
+        //
+
+        for (sneaker in res) {
+
+          console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(sneaker)
+
+
+          var snk = res[sneaker];
+
+          //console.log(snk['name'])
+
+          // console.log(snk[prop]);
+          // console.log(`${prop}: ${snk[prop]}`);
+
+          // Object Creation
+
+          //Big Card
+          var card = document.createElement("div");
+
+          card.className = "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp";
+
+          // Four childs
+
+          // Child 1 - Img
+
+          var cardimg = document.createElement("div");
+
+          cardimg.className = "mdl-card__media";
+
+          var img = document.createElement('img');
+          img.src = snk['thumbnail'];
+
+          cardimg.appendChild(img);
+
+          // Child 2 - Title
+
+          var cardtitle = document.createElement("div");
+
+          cardtitle.id = snk['id'];
+
+          cardtitle.className = "mdl-card__title";
+
+          var title = document.createElement("h4");
+
+          title.innerHTML = snk['name'];
+
+          console.log(snk)
+
+          title.className = "mdl-card__title-text"
+
+          cardtitle.appendChild(title)
+
+          // Child 3 - Supporting Text
+
+          var cardsubtext = document.createElement("div");
+
+          cardsubtext.className = "mdl-card__supporting-text";
+
+          var subtext = document.createElement("span");
+
+
+          subtext.innerHTML = snk['colorway'] + "<br><br>";
+
+          subtext.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          var subtextprice = document.createElement("span");
+
+          subtextprice.innerHTML = snk['NZDvalue'] + "$";
+
+          subtextprice.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          cardsubtext.appendChild(subtext)
+          cardsubtext.appendChild(subtextprice)
+
+          // Child 4 - Button
+
+          var cardaction = document.createElement("div");
+
+          cardaction.className = "mdl-card__actions";
+
+          var linktoaction = document.createElement("a");
+
+          linktoaction.href = snk['link3'];
+
+          linktoaction.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktoaction.innerHTML = 'See';
+
+          var icon = document.createElement("i");
+
+          icon.className = "material-icons";
+
+          icon.innerHTML = "chevron_right"
+
+          linktoaction.appendChild(icon)
+          cardaction.appendChild(linktoaction)
+
+          // Child 5 Fav button
+
+          var linktofav = document.createElement("a");
+
+          linktofav.id = snk['sku'];
+
+          // linktofav.href = snk['link3'];
+
+          linktofav.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktofav.innerHTML = 'Save ';
+
+
+          // Adds the saveSneaker() function to the card onclick.
+
+          linktofav.onclick = function() {saveSneakerLite(this.id);}
+
+          var ficon = document.createElement("i");
+
+          var skid = snk['name'];
+
+          ficon.id = skid;
+
+          ficon.className = "material-icons";
+
+          ficon.innerHTML = "favorite_border"
+
+          linktofav.appendChild(ficon)
+          cardaction.appendChild(linktofav)
+
+
+
+          // Append Childs to Mother
+
+          card.appendChild(cardimg)
+          card.appendChild(cardtitle)
+          card.appendChild(cardsubtext)
+          card.appendChild(cardaction)
+
+          // Append to Sneaker Container
+
+          var sneakercontainer = document.getElementById('sneaker-container-search');
+
+          sneakercontainer.appendChild(card)
+
+          // markSneakerFav(snk['sku']);
+
+
+          // Ryzen Fourth (R4)
+          // RYZEN SUBROUTINE I (R3 Call): Sneaker Checker
+          // checkSneakers(skid);
+
+          // console.log(card)
+
+        }
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function searchdataCall(res) {
+  console.log('calling');
+  const result = await searchdataProcess(res);
+  console.log(result);
+
+  // expected output: "resolved"
 }
