@@ -2410,7 +2410,7 @@ function loadSearch() {
   // RYZEN: First (R1)
   console.log('R1 Started')
 
-  document.getElementById("sneaker-container-search").innerHTML = 'Search something first.';
+
 
   // This deletes some item that bothers.
   document.getElementById('more-button').style.display = 'none';
@@ -2428,6 +2428,9 @@ function loadSearch() {
     //document.getElementById("sneaker-user").innerHTML = '';
     //document.getElementById("sneaker-live").innerHTML = '';
     console.log('Please Login')
+    document.getElementById("stockdotshop-content").innerHTML = 'Please Login';
+    document.getElementById("sneaker-container-search").innerHTML = '';
+    document.getElementById("sneaker-search").innerHTML = '';
 
   }
   else {
@@ -2435,6 +2438,8 @@ function loadSearch() {
 
     // RYZEN: Second (R2)
     console.log('R2 Started')
+
+    document.getElementById("sneaker-container-search").innerHTML = 'Search something first.';
 
 
     // First Message to Console
@@ -2713,6 +2718,7 @@ async function searchdataCall(res) {
   console.log('calling');
   const result = await searchdataProcess(res);
   console.log(result);
+  document.getElementById("sneaker-container-search").style.opacity = "0.0";
 
   // expected output: "resolved"
 }
