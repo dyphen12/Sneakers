@@ -1,12 +1,14 @@
 # Sneakers API [DEV]
 
-### v4.0.0a
+### v4.5.0
 
 ## Ryzen Update!!!
 
 ### Main
 
-We are preparing something big!
+In this update, we have developed a new client, a web app capable of manipulating the 100,000 Sneakers, in which users will be able to register himself and manipulate the Sneakers they want, save them and keep track of the ticker price update.
+
+The database has been migrate to MongoDB and adding to it an optimization in data access making the app even faster.
 
 ### Computer Vision Model Summary
 

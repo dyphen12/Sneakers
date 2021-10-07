@@ -264,8 +264,6 @@ class Login(Resource):
 
         x, auth = uhd.user_login_ryzen(token['user'],token['pass'])
 
-        print(x)
-
         try:
 
             ids = x['id'].values[0]
@@ -273,7 +271,7 @@ class Login(Resource):
 
 
             ssid = ids
-            print('auth success')
+            #print('auth success')
 
             return int(ssid)
 
