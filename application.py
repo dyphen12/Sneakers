@@ -216,7 +216,7 @@ api.add_resource(updateTable, '/updatetable/<string:todo_id>')
 class AllData(Resource):
 
     def get(self):
-        x = builder.build_dataset()
+        x = builder.build_dataset_ryzen()
         return x
 
 
@@ -262,17 +262,20 @@ class Login(Resource):
 
         token = CREDENTIAL[token_id]
 
-        x, auth = uhd.user_login(token['user'],token['pass'])
+        x, auth = uhd.user_login_ryzen(token['user'],token['pass'])
+
+        print(x)
 
         try:
 
             ids = x['id'].values[0]
 
 
+
             ssid = ids
             print('auth success')
 
-            return ssid
+            return int(ssid)
 
 
         except TypeError:
@@ -291,7 +294,7 @@ class sneakerSaver(Resource):
         ids = query['results']['ssid']
         sku = query['results']['sku']
 
-        uhd.user_addsneaker(int(ids), str(sku))
+        uhd.user_addsneaker_ryzen(int(ids), str(sku))
         return 'yay'
 
 api.add_resource(sneakerSaver, '/savethis/<string:todo_id>')
@@ -301,7 +304,7 @@ class getuserName(Resource):
 
     def get(self, todo_id):
 
-        x = uhd.get_username(int(todo_id))
+        x = uhd.get_username_ryzen(int(todo_id))
 
         return x.values[0]
 
@@ -313,38 +316,10 @@ class userData(Resource):
 
     def get(self, todo_id):
 
-        x = uhd.get_user_sneakers(int(todo_id))
+        x = uhd.get_user_sneakers_ryzen(int(todo_id))
         return x
 
 api.add_resource(userData, '/userdata/<string:todo_id>')
-
-
-class userSneakerlist(Resource):
-
-    def get(self, todo_id):
-        x = uhd.get_user_sneaker_list(int(todo_id))
-        return x
-
-api.add_resource(userSneakerlist, '/userlist/<string:todo_id>')
-
-
-class sneakerValidator(Resource):
-
-    def get(self, todo_id):
-
-        query = json.loads(todo_id)
-
-        print(query)
-        ids = query['results']['ssid']
-        name = query['results']['name']
-        x = uhd.validate_sneaker(ids, name)
-
-        if x is True:
-            return 'vastase'
-        else:
-            return 'fail'
-
-api.add_resource(sneakerValidator, '/validator/<string:todo_id>')
 
 
 class sneakerDeleter(Resource):
@@ -354,7 +329,7 @@ class sneakerDeleter(Resource):
         ids = query['results']['ssid']
         sku = query['results']['sku']
 
-        uhd.delete_sneaker(int(ids), str(sku))
+        uhd.delete_sneaker_ryzen(int(ids), str(sku))
         return 'yay'
 
 api.add_resource(sneakerDeleter, '/deletethis/<string:todo_id>')
@@ -362,13 +337,12 @@ api.add_resource(sneakerDeleter, '/deletethis/<string:todo_id>')
 class SignUp(Resource):
 
     def get(self, todo_id):
-        print(todo_id)
         query = json.loads(todo_id)
         uname = query['results']['name']
         ulastname = query['results']['lastname']
         uemail = query['results']['email']
         upass = query['results']['password']
-        resulta = uhd.user_signup(uname, ulastname, upass, uemail)
+        resulta = uhd.user_signup_ryzen(uname, ulastname, upass, uemail)
 
         return resulta
 

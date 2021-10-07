@@ -12,6 +12,7 @@ Made by Alexis W.
 from sneakers.api.low import database
 
 import json
+import pandas as pd
 
 
 # ------- MongoDB Ryzen -------
@@ -54,9 +55,16 @@ def build_dataset_index_ryzen(index , ppage):
     return parsed
 
 def build_userdataset_ryzen(userdataset):
+
     datab = userdataset
     #datab.reset_index(drop=True, inplace=True)
-    datab = datab.set_index('_id')
+
+    try:
+
+
+        datab = datab.set_index('_id')
+    except KeyError:
+        return False
 
     result = datab.to_json(orient='index')
     parsed = json.loads(result)

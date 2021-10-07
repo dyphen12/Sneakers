@@ -18,10 +18,15 @@ Made by Alexis W.
 
 from sneakers.api.low import database as lowd
 from sneakers.api.low import builder as bd
+from sneakers.api.users import handler as hd
+from sneakers.api.users import userbase as ub
+
 
 
 
 if __name__ == '__main__':
     #lowd.load_database_ryzen()
-    #bd.build_dataset_ryzen()
-    print(bd.build_search_ryzen('adan smith swarovski'))
+    #lowd.get_sneaker_by_sku('DM0841-100')
+    #print(ub.get_user_by_email('alexiswong10@gmail.com'))
+    x = [1,2,3,4]
+    print(str(x))

@@ -26,7 +26,7 @@ import random
 
 def get_user_sneakers_ryzen(ids):
 
-    users = userbase.load_userbase()
+    users = userbase.load_userbase_ryzen()
 
     userobj = users.loc[users['id'] == ids]
 
@@ -34,27 +34,119 @@ def get_user_sneakers_ryzen(ids):
 
     newport = currentportfolio.values[0]
 
-    data = database.load_database_ryzen()
+    # print(newport)
+    portfolio = database.get_sneaker_by_sku(newport)
 
-    newdata = data[0:0]
-
-    for sneaker in newport:
-
-        userobj = data.loc[data['sku'] == sneaker]
-
-        newdata = newdata.append(userobj)
-
-
-    dnewdata = newdata.drop_duplicates()
-
-    userdatajson = builder.build_userdataset_ryzen(dnewdata)
+    userdatajson = builder.build_userdataset_ryzen(portfolio)
 
     return userdatajson
 
+def user_login_ryzen(email, password):
+
+    userobj = userbase.get_user_by_email(email)
+
+    exist = len(userobj)
+
+    if exist != 0:
+        userobjpass = userobj['password'].values
+        if userobjpass == password:
+            uname = userobj['name'].values
+            print('Welcome, {fname}'.format(fname=uname[0]))
+            return userobj, True
+        else:
+            return 'Wrong Password', False
+
+    else:
+        return 'User does not exist', False
 
 
+def user_signup_ryzen(name, lastname, password, email):
+
+    try:
+        ids = random.randint(10000, 99999)
+
+        print(ids)
+
+        userdf = {'id': ids, 'name': name, 'lastname': lastname, 'password': password, 'email': email, 'sub': 0,
+                  'portfolio': "['empty']", 'payment': 0}
+
+        print(userdf)
+
+        emailsq = userbase.get_user_by_email(email)
+
+        if emailsq.empty:
+
+            print('jue')
+
+            userbase.insert_user(userdf)
+
+            return ids
+
+        else:
+            return 'User Already Registered'
+
+    except Exception as e:
+        print(e)
+        return('Something goes bad')
 
 
+def get_username_ryzen(ids):
+
+    users = userbase.get_user_by_id(ids)
+
+    userobj = users.loc[users['id'] == ids]
+
+    usersname = userobj['name']
+
+    return usersname
+
+
+def user_addsneaker_ryzen(ids, sneakersku):
+
+    userobj = userbase.get_user_by_id(ids)
+
+    currentportfolio = userobj['portfolio'].apply(eval)
+
+    newport = currentportfolio.values[0]
+
+    for things in newport:
+        if things == sneakersku:
+            print('Sneaker already added')
+            return False
+
+    newport.append(sneakersku)
+
+    userbase.update_portofolio(ids, newport)
+
+    return True
+
+def delete_sneaker_ryzen(ids, sneakersku):
+
+    userobj = userbase.get_user_by_id(ids)
+
+    currentportfolio = userobj['portfolio'].apply(eval)
+
+    newport = currentportfolio.values[0]
+
+    for things in newport:
+
+        # print(things)
+
+        if things == sneakersku:
+
+            newport.remove(sneakersku)
+
+            userbase.update_portofolio(ids, newport)
+
+            print('Sneaker Deleted!')
+
+            return False
+
+        else:
+
+            print('Sneaker does not exist')
+
+    return True
 
 
 #----------------
@@ -95,7 +187,6 @@ def user_signup(name, lastname, password, email):
         users = userbase.load_userbase()
 
         emailsq = users['email']
-
 
 
         emails = emailsq.to_list()
@@ -143,7 +234,6 @@ def user_addsneaker(ids, sneakersku):
     userobj['portfolio'] = currentportfolio
 
     users.update(userobj)
-
 
     userbase.save_userdatabase(users)
 

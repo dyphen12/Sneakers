@@ -76,6 +76,21 @@ def get_page_database_ryzen(x):
     return result
 
 
+def get_sneaker_by_sku(sku):
+
+    myquery2 = {"sku": sku}
+
+    q3 = {"sku": {"$in": sku}}
+
+    resultcursor = list(snkcoll.find(q3))
+
+    result = pd.DataFrame(resultcursor)
+
+    print(result)
+
+    return result
+
+
 #---------- LEGACY PANDAS -----------------------
 def load_database():
     shoes = pd.read_csv('sneakers/datasets/sneakerstempdb2live.csv', low_memory=False)
