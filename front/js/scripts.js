@@ -1220,6 +1220,7 @@ function login() {
         andnavcontainer.innerHTML = '';
 
         makelogin();
+        location.reload();
       }
 
       }
@@ -1283,11 +1284,13 @@ function makeloginProcess() {
 
 // Called on: Login
 async function makelogin() {
+
   console.log('calling');
   const result = await makeloginProcess();
   console.log(result);
   document.getElementById('loginbots').style.display = 'none';
   loaduser();
+
 
   // expected output: "resolved"
 }
