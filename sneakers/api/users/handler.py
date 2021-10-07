@@ -26,9 +26,7 @@ import random
 
 def get_user_sneakers_ryzen(ids):
 
-    users = userbase.load_userbase_ryzen()
-
-    userobj = users.loc[users['id'] == ids]
+    userobj = userbase.get_user_by_id(ids)
 
     currentportfolio = userobj['portfolio'].apply(eval)
 
@@ -51,7 +49,7 @@ def user_login_ryzen(email, password):
         userobjpass = userobj['password'].values
         if userobjpass == password:
             uname = userobj['name'].values
-            print('Welcome, {fname}'.format(fname=uname[0]))
+            # print('Welcome, {fname}'.format(fname=uname[0]))
             return userobj, True
         else:
             return 'Wrong Password', False
@@ -65,18 +63,18 @@ def user_signup_ryzen(name, lastname, password, email):
     try:
         ids = random.randint(10000, 99999)
 
-        print(ids)
+        # print(ids)
 
         userdf = {'id': ids, 'name': name, 'lastname': lastname, 'password': password, 'email': email, 'sub': 0,
                   'portfolio': "['empty']", 'payment': 0}
 
-        print(userdf)
+        # print(userdf)
 
         emailsq = userbase.get_user_by_email(email)
 
         if emailsq.empty:
 
-            print('jue')
+            #print('jue')
 
             userbase.insert_user(userdf)
 
@@ -86,7 +84,7 @@ def user_signup_ryzen(name, lastname, password, email):
             return 'User Already Registered'
 
     except Exception as e:
-        print(e)
+        #print(e)
         return('Something goes bad')
 
 
@@ -109,10 +107,8 @@ def user_addsneaker_ryzen(ids, sneakersku):
 
     newport = currentportfolio.values[0]
 
-    for things in newport:
-        if things == sneakersku:
-            print('Sneaker already added')
-            return False
+    if sneakersku in newport:
+        return False
 
     newport.append(sneakersku)
 
@@ -128,25 +124,17 @@ def delete_sneaker_ryzen(ids, sneakersku):
 
     newport = currentportfolio.values[0]
 
-    for things in newport:
+    if sneakersku in newport:
 
-        # print(things)
+        newport.remove(sneakersku)
 
-        if things == sneakersku:
+        userbase.update_portofolio(ids, newport)
 
-            newport.remove(sneakersku)
+        return False
 
-            userbase.update_portofolio(ids, newport)
+    else:
 
-            print('Sneaker Deleted!')
-
-            return False
-
-        else:
-
-            print('Sneaker does not exist')
-
-    return True
+        return False
 
 
 #----------------

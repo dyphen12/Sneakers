@@ -1530,14 +1530,16 @@ function userData(ssid) {
       var res = JSON.parse(this.responseText);
       // console.log(res);
 
-      userdataCall(res);
+
 
 
       if (res == 'fail'){
+        document.getElementById("sneaker-container-user").innerHTML = 'Nothing to show here, try searching your favorite sneakers or you can explore all the database.';
         console.log('Fail')
 
       } else {
         console.log('Sy')
+        userdataCall(res);
         // document.getElementById("version").innerHTML = res;
       }
 
@@ -2505,16 +2507,17 @@ function searchData() {
       var res = JSON.parse(this.responseText);
       // console.log(res);
 
-      document.getElementById("sneaker-container-search").style.opacity = "0.0";
 
-      searchdataCall(res);
-      loadusersearchlite();
 
 
       if (res == 'fail'){
         console.log('Fail')
+        document.getElementById("sneaker-container-search").innerHTML = 'Nothing found :(. Try Some different keywords instead.';
 
       } else {
+        document.getElementById("sneaker-container-search").style.opacity = "0.0";
+        searchdataCall(res);
+        loadusersearchlite();
         console.log('Sy')
         // document.getElementById("version").innerHTML = res;
       }

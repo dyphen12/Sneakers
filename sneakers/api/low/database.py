@@ -57,7 +57,7 @@ def search_query_database(query):
 
     myquery2 = {"$text" : {"$search": query}}
 
-    resultcursor = list(snkcoll.find(myquery2))
+    resultcursor = list(snkcoll.find(myquery2).limit(100))
 
     result = pd.DataFrame(resultcursor)
 
@@ -85,8 +85,6 @@ def get_sneaker_by_sku(sku):
     resultcursor = list(snkcoll.find(q3))
 
     result = pd.DataFrame(resultcursor)
-
-    print(result)
 
     return result
 

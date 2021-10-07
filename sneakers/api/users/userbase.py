@@ -63,6 +63,7 @@ def update_portofolio(ssid, portfolio):
     newvalues = {"$set": {"portfolio": str(portfolio)}}
 
     snkcoll.update_one(myquery, newvalues)
+
     return True
 
 #------------------------

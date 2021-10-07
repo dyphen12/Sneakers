@@ -317,7 +317,11 @@ class userData(Resource):
     def get(self, todo_id):
 
         x = uhd.get_user_sneakers_ryzen(int(todo_id))
-        return x
+
+        if x is False:
+            return 'fail'
+        else:
+            return x
 
 api.add_resource(userData, '/userdata/<string:todo_id>')
 
@@ -357,7 +361,10 @@ class searchData(Resource):
 
         x = builder.build_search_ryzen(todo_id)
 
-        return x
+        if x is False:
+            return 'fail'
+        else:
+            return x
 
 api.add_resource(searchData, '/search/<string:todo_id>')
 

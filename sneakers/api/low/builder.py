@@ -26,7 +26,7 @@ def build_dataset_ryzen():
     parsed = json.loads(result)
     #build = json.dumps(parsed, indent=4)
 
-    print(parsed)
+    #print(parsed)
 
     return parsed
 
@@ -59,32 +59,41 @@ def build_userdataset_ryzen(userdataset):
     datab = userdataset
     #datab.reset_index(drop=True, inplace=True)
 
-    try:
-
-
-        datab = datab.set_index('_id')
-    except KeyError:
+    if datab.empty:
         return False
+    else:
 
-    result = datab.to_json(orient='index')
-    parsed = json.loads(result)
-    build = json.dumps(parsed, indent=4)
+        try:
+            datab = datab.set_index('_id')
+        except KeyError:
+            return False
 
-    return parsed
+        result = datab.to_json(orient='index')
+        parsed = json.loads(result)
+        build = json.dumps(parsed, indent=4)
+
+        return parsed
 
 
 def build_search_ryzen(query):
 
 
     datab = database.search_query_database(query)
+
+    if datab.empty:
+        return False
+
     #datab.reset_index(drop=True, inplace=True)
-    datab = datab.set_index('_id')
+    try:
+        datab = datab.set_index('_id')
 
-    result = datab.to_json(orient='index')
-    parsed = json.loads(result)
-    #build = json.dumps(parsed, indent=4)
+        result = datab.to_json(orient='index')
+        parsed = json.loads(result)
+        # build = json.dumps(parsed, indent=4)
 
-    return parsed
+        return parsed
+    except KeyError as e:
+        return False
 
 def build_dataset_index_ryzen_v2(index):
     datab2 = database.get_page_database_ryzen(index)
