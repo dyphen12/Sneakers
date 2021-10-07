@@ -14,6 +14,5 @@ flask-restful
 beautifulsoup4
 fake_useragent
 IPython
-tensorflow
 matplotlib
 pymongo
