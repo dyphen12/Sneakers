@@ -31,7 +31,7 @@ def load_shoes_dataset_quantity(q):
 
 # Status: Check
 def load_shoes_dataset():
-    shoes = pd.read_csv('sneakers/datasets/sneakerstempdb2.csv', index_col=0, low_memory=False)
+    shoes = pd.read_csv('sneakers/datasets/sneakerstempdb2live.csv', low_memory=False)
     return shoes
 
 
