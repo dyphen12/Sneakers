@@ -1,0 +1,444 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>STOCKDOTSHOP</title>
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_blue.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="../front/images/stocklogo.jpeg">
+    <script type='text/javascript' src='../front/js/scripts.js'></script>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;400&display=swap');
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+
+    body {
+
+    font-family: 'Josefin Sans', sans-serif;
+
+
+
+    }
+
+
+
+    .demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('../front/images/wear.png') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+#saininbots {
+  background-color: hsla(0, 0%, 0%, 0.6);
+  position: fixed;
+  top:0.1%;
+  right: 1%;
+  display: none;
+  width: 100%;
+  height: 100%;
+  align: center;
+
+}
+
+#sainincar {
+  position: relative;
+  top: 17%;
+  margin: auto;
+
+
+}
+
+#loginbots {
+  background-color: hsla(0, 0%, 0%, 0.6);
+  position: fixed;
+  top:0.1%;
+  right: 1%;
+  display: none;
+  width: 100%;
+  height: 100%;
+  align: center;
+
+}
+
+#logincar {
+  position: relative;
+  top: 17%;
+  margin: auto;
+
+
+}
+
+#logincar > .mdl-card__title {
+
+  background: url('../front/images/devices.jpg') center / cover;
+
+
+}
+
+#more-button {
+  display: none;
+
+
+}
+
+#shoe-card{
+  opacity: 0.0;
+
+}
+
+
+
+
+    </style>
+  </head>
+  <body id="bodei" onload="loaduser()">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+      <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+        <div class="mdl-layout__header-row">
+          <span class="android-title mdl-layout-title">
+            <a href="index.html">
+            <img class="android-logo-image" src="../front/images/stock-logo.png">
+              </a>
+          </span>
+          <!-- Add spacer, to align navigation to the right in desktop -->
+          <div class="android-header-spacer mdl-layout-spacer"></div>
+          <div onclick="location.href='search.html';" class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" id="search-field">
+            </div>
+          </div>
+          <!-- Navigation -->
+          <div id="nav-cont" class="android-navigation-container">
+
+            <nav class="android-navigation mdl-navigation">
+
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Sneakers</a>
+
+
+
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" onclick="togglesignup()">Sign Up</a>
+
+
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" onclick="togglelogin()">Log in</a>
+
+            </nav>
+          </div>
+
+          <span class="android-mobile-title mdl-layout-title">
+            <a href="index.html">
+            <img class="android-logo-image" src="../front/images/stock-logo.png">
+              </a>
+          </span>
+
+          <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+            <li disabled class="mdl-menu__item">Profile</li>
+            <li onclick="location.href='user.html';" class="mdl-menu__item">My Sneakers</li>
+            <li disabled class="mdl-menu__item">Settings</li>
+            <li onclick="logout()" class="mdl-menu__item">Log out</li>
+          </ul>
+
+
+
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect" for="more-button2">
+            <li class="mdl-menu__item">5.0 Lollipop</li>
+            <li class="mdl-menu__item">4.4 KitKat</li>
+            <li disabled class="mdl-menu__item">4.3 Jelly Bean</li>
+            <li class="mdl-menu__item">Android History</li>
+          </ul>
+
+
+
+          <div id="saininbots" >
+
+
+
+
+          <div id="sainincar" class="demo-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Sign in</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+
+              <!-- Textfield with Floating Label -->
+
+                    <form id="formasignup" action="#">
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="sample3">
+                        <label class="mdl-textfield__label" for="sample3">Email...</label>
+                      </div>
+
+                    <!-- Numeric Textfield with Floating Label -->
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                        <label class="mdl-textfield__label" for="sample4">Password...</label>
+                      </div>
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                        <label class="mdl-textfield__label" for="sample4">Confirm Password...</label>
+                        <span class="mdl-textfield__error">Password not the same!</span>
+                      </div>
+                    </form>
+
+
+
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a onclick="gosignup()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Sign In
+              </a>
+            </div>
+            <div class="mdl-card__menu">
+              <button onclick="document.getElementById('saininbots').style.display = 'none';" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+          </div>
+
+            </div>
+
+          <div id="loginbots" >
+
+
+
+
+          <div id="logincar" class="demo-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Welcome</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+
+              <!-- Textfield with Floating Label -->
+
+                    <form id="formasignupex" action="#">
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="login-mail">
+                        <label class="mdl-textfield__label" for="sample3">Email...</label>
+                      </div>
+
+                    <!-- Numeric Textfield with Floating Label -->
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" id="loginpass">
+                        <label class="mdl-textfield__label" for="sample4">Password...</label>
+                      </div>
+                    </form>
+
+
+
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a onclick="login()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Log in
+              </a>
+            </div>
+            <div class="mdl-card__menu">
+              <button onclick="document.getElementById('loginbots').style.display = 'none';" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+          </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <div style="background-color: black;" class="android-drawer mdl-layout__drawer">
+        <span style="background-color: black;" class="mdl-layout-title">
+          <img class="android-logo-image" src="images/stock-logo.png">
+        </span>
+        <nav class="mdl-navigation">
+          <a id="draw-signin" class="mdl-navigation__link">Sign In</a>
+          <a id="draw-login" class="mdl-navigation__link" onclick="togglelogin()">Log In</a>
+          <div class="android-drawer-separator"></div>
+          <a class="mdl-navigation__link" href="">Sneakers</a>
+          <a class="mdl-navigation__link" href="">Brands</a>
+          <a class="mdl-navigation__link" href="">Collections</a>
+          <a class="mdl-navigation__link" href="">Markets</a>
+          <a class="mdl-navigation__link" href="">Locations</a>
+          <div class="android-drawer-separator"></div>
+          <span style="color: white;" class="mdl-navigation__link" href="">Versions</span>
+          <a class="mdl-navigation__link" href="">Composer</a>
+          <a class="mdl-navigation__link" href="">Vision</a>
+          <a class="mdl-navigation__link" href="">API</a>
+          <a class="mdl-navigation__link" href="">Dev history</a>
+          <div class="android-drawer-separator"></div>
+          <span style="color: white;" class="mdl-navigation__link" href="">Resources</span>
+          <a class="mdl-navigation__link" href="">Official blog</a>
+          <a class="mdl-navigation__link" href="">Stockdotshop on Google+</a>
+          <a class="mdl-navigation__link" href="">Stockdotshop on Twitter</a>
+          <div class="android-drawer-separator"></div>
+          <span style="color: white;" class="mdl-navigation__link" href="">For developers</span>
+          <a class="mdl-navigation__link" href="">App developer resources</a>
+          <a class="mdl-navigation__link" href="">Prisma Open Source Project</a>
+          <a class="mdl-navigation__link" href="">Prisma SDK</a>
+        </nav>
+      </div>
+
+
+
+
+      <div class="android-content mdl-layout__content">
+        <a name="top"></a>
+        <div style="background-color: white;" class="mdl-typography--text-center">
+          <div class="logo-font android-slogan"><h1 id="hello-user" style="font-family: 'Josefin Sans', sans-serif; background-color: black; color: white;">Hello, User</h1></div>
+          <div style="font-family: 'Josefin Sans', sans-serif; font-style: italic; font-weight:200;" class="logo-font android-sub-slogan"></div>
+
+
+<div id="stockdotshop-content">
+
+              <p>Settings</p>
+
+
+
+
+              </div>
+
+
+         <div id="sneaker-user" class="android-more-section">
+          <div class="android-section-title mdl-typography--display-1-color-contrast"><h3 style="font-family: 'Josefin Sans', sans-serif;">My Sneakers: </h3>  </div>
+
+
+          <div id="sneaker-container-user" class="android-card-container mdl-grid">
+
+
+
+            <div id="shoe-card" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+              <div class="mdl-card__media">
+                <img src="images/more-from-1.png">
+              </div>
+              <div class="mdl-card__title">
+                 <h4 class="mdl-card__title-text">Get going on Android</h4>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Android quick and easy</span>
+              </div>
+              <div class="mdl-card__actions">
+                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
+                   Make the switch
+                   <i class="material-icons">chevron_right</i>
+                 </a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+
+
+
+        </div>
+
+        <footer class="android-footer mdl-mega-footer">
+          <div class="mdl-mega-footer--top-section">
+            <div class="mdl-mega-footer--left-section">
+              <button class="mdl-mega-footer--social-btn"></button>
+              &nbsp;
+              <button class="mdl-mega-footer--social-btn"></button>
+              &nbsp;
+              <button class="mdl-mega-footer--social-btn"></button>
+            </div>
+            <div class="mdl-mega-footer--right-section">
+              <a class="mdl-typography--font-light" href="#top">
+                Back to Top
+                <i class="material-icons">expand_less</i>
+              </a>
+            </div>
+          </div>
+
+          <div class="mdl-mega-footer--middle-section">
+            <p class="mdl-typography--font-light">2021 stockdotshop</p>
+            <p class="mdl-typography--font-light">API Version: <a id="version"></a> Developed by Prisma</p>
+            <p class="mdl-typography--font-light">Some features and devices may not be available in all areas</p>
+          </div>
+
+          <div class="mdl-mega-footer--bottom-section">
+            <a class="android-alt-link android-link-menu mdl-typography--font-light" id="version-dropdown">
+              Versions
+              <i class="material-icons">arrow_drop_up</i>
+            </a>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="version-dropdown">
+              <li class="mdl-menu__item">Business</li>
+              <li class="mdl-menu__item">Products</li>
+              <li class="mdl-menu__item">About</li>
+              <li class="mdl-menu__item">Contact</li>
+            </ul>
+            <a class="android-alt-link android-link-menu mdl-typography--font-light" id="developers-dropdown">
+              For Developers
+              <i class="material-icons">arrow_drop_up</i>
+            </a>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="developers-dropdown">
+              <li class="mdl-menu__item">App developer resources</li>
+              <li class="mdl-menu__item">Development</li>
+              <li class="mdl-menu__item">SDK</li>
+              <li class="mdl-menu__item">Work</li>
+            </ul>
+            <a class="android-alt-link mdl-typography--font-light" href="">Blog</a>
+            <a class="android-alt-link mdl-typography--font-light" href="">Privacy Policy</a>
+          </div>
+
+        </footer>
+
+      </div>
+    </div>
+    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/android-dot-com/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </body>
+</html>
