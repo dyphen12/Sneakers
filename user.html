@@ -41,6 +41,7 @@
       margin-right: 40px;
       margin-bottom: 40px;
       z-index: 900;
+      opacity: 0.0;
     }
 
     body {
@@ -101,6 +102,7 @@
   position: relative;
   top: 17%;
   margin: auto;
+  max-width: 70%;
 
 
 }
@@ -298,14 +300,14 @@
 
 
       <div style="background-color: black;" class="android-drawer mdl-layout__drawer">
-        <span style="background-color: black;" class="mdl-layout-title">
+        <span onclick="location.href='index.html';" style="background-color: black;" class="mdl-layout-title">
           <img class="android-logo-image" src="images/stock-logo.png">
         </span>
         <nav class="mdl-navigation">
-          <a id="draw-signin" class="mdl-navigation__link">Sign In</a>
+          <a id="draw-signin" class="mdl-navigation__link" onclick="location.href='signup.html';">Sign In</a>
           <a id="draw-login" class="mdl-navigation__link" onclick="togglelogin()">Log In</a>
           <div class="android-drawer-separator"></div>
-          <a class="mdl-navigation__link" href="">Sneakers</a>
+          <a onclick="location.href='index.html#sneaker-live';" class="mdl-navigation__link">All Sneakers</a>
           <a class="mdl-navigation__link" href="">Brands</a>
           <a class="mdl-navigation__link" href="">Collections</a>
           <a class="mdl-navigation__link" href="">Markets</a>
@@ -335,7 +337,7 @@
       <div class="android-content mdl-layout__content">
         <a name="top"></a>
         <div style="background-color: white;" class="mdl-typography--text-center">
-          <div class="logo-font android-slogan"><h1 id="hello-user" style="font-family: 'Josefin Sans', sans-serif; background-color: black; color: white;">Hello, User</h1></div>
+          <div class="logo-font android-slogan"><h1 id="hello-user" style="font-family: 'Josefin Sans', sans-serif; background-color: black; color: white;">...</h1></div>
           <div style="font-family: 'Josefin Sans', sans-serif; font-style: italic; font-weight:200;" class="logo-font android-sub-slogan"></div>
 
 

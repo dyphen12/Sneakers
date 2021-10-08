@@ -41,6 +41,7 @@
       margin-right: 40px;
       margin-bottom: 40px;
       z-index: 900;
+      opacity: 0.0;
     }
 
     body {
@@ -101,6 +102,7 @@
   position: relative;
   top: 17%;
   margin: auto;
+  max-width: 70%;
 
 
 }
@@ -119,7 +121,10 @@
 }
 
 
+#shoe-card{
+  opacity: 0.0;
 
+}
 
     </style>
   </head>
@@ -160,7 +165,7 @@
             </nav>
           </div>
 
-          <span class="android-mobile-title mdl-layout-title">
+          <span onclick="location.href='index.html';" class="android-mobile-title mdl-layout-title">
             <img class="android-logo-image" src="./images/stock-logo.png">
           </span>
           <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
@@ -242,14 +247,14 @@
 
 
       <div style="background-color: black;" class="android-drawer mdl-layout__drawer">
-        <span style="background-color: black;" class="mdl-layout-title">
+        <span onclick="location.href='index.html';" style="background-color: black;" class="mdl-layout-title">
           <img class="android-logo-image" src="images/stock-logo.png">
         </span>
         <nav class="mdl-navigation">
           <a id="draw-signin" class="mdl-navigation__link" onclick="togglesignup()">Sign In</a>
           <a id="draw-login" class="mdl-navigation__link" onclick="togglelogin()">Log In</a>
           <div class="android-drawer-separator"></div>
-          <a class="mdl-navigation__link" href="">Sneakers</a>
+          <a onclick="location.href='index.html#sneaker-live';" class="mdl-navigation__link">All Sneakers</a>
           <a class="mdl-navigation__link" href="">Brands</a>
           <a class="mdl-navigation__link" href="">Collections</a>
           <a class="mdl-navigation__link" href="">Markets</a>

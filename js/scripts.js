@@ -1151,7 +1151,7 @@ function HomeDataResolve(res) {
 
           linktofav.innerHTML = 'Save ';
 
-          // linktofav.onclick = function() {saveSneaker(this.id);}
+          linktofav.onclick = function() {togglelogin();}
 
           var ficon = document.createElement("i");
 
@@ -1285,7 +1285,7 @@ function makeloginProcess() {
   return new Promise(resolve => {
     setTimeout(() => {
 
-    var drawSignin = document.getElementById('draw-signin').innerHTML = 'Welcome';
+    var drawSignin = document.getElementById('draw-signin').innerHTML = 'My Sneakers';
     var drawLogin = document.getElementById('draw-login').style.display = 'none';
     document.getElementById('more-button').style.display = 'inline';
 
@@ -1814,6 +1814,7 @@ function markSneakerFav(ide){
 function dummy() {
 
   console.log('I love you!');
+  window.location.replace("user.html")
 
 }
 

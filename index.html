@@ -46,6 +46,7 @@
       margin-right: 40px;
       margin-bottom: 40px;
       z-index: 900;
+      opacity: 0.0;
     }
 
     body {
@@ -106,6 +107,7 @@
   position: relative;
   top: 17%;
   margin: auto;
+  max-width: 70%;
 
 
 }
@@ -123,7 +125,10 @@
 
 }
 
+#shoe-card{
+  opacity: 0.0;
 
+}
 
 
     </style>
@@ -251,18 +256,18 @@
 
 
       <div style="background-color: black;" class="android-drawer mdl-layout__drawer">
-        <span style="background-color: black;" class="mdl-layout-title">
+        <span onclick="location.href='index.html';" style="background-color: black;" class="mdl-layout-title">
           <img class="android-logo-image" src="images/stock-logo.png">
         </span>
         <nav class="mdl-navigation">
           <a id="draw-signin" class="mdl-navigation__link" onclick="location.href='signup.html';">Sign In</a>
           <a id="draw-login" class="mdl-navigation__link" onclick="togglelogin()">Log In</a>
           <div class="android-drawer-separator"></div>
-          <a class="mdl-navigation__link" href="">Sneakers</a>
-          <a class="mdl-navigation__link" href="">Brands</a>
-          <a class="mdl-navigation__link" href="">Collections</a>
-          <a class="mdl-navigation__link" href="">Markets</a>
-          <a class="mdl-navigation__link" href="">Locations</a>
+          <a onclick="location.href='#sneaker-live';" class="mdl-navigation__link">All Sneakers</a>
+          <a disabled class="mdl-navigation__link" href="">Brands </a>
+          <a disabled class="mdl-navigation__link" href="">Collections</a>
+          <a disabled class="mdl-navigation__link" href="">Markets</a>
+          <a disabled class="mdl-navigation__link" href="">Locations</a>
           <div class="android-drawer-separator"></div>
           <span style="color: white;" class="mdl-navigation__link" href="">Versions</span>
           <a class="mdl-navigation__link" href="">Composer</a>
@@ -379,89 +384,7 @@
               </div>
             </div>
 
-            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-              <div class="mdl-card__media">
-                <img src="images/more-from-1.png">
-              </div>
-              <div class="mdl-card__title">
-                 <h4 class="mdl-card__title-text">Get going on Android</h4>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Android quick and easy</span>
-              </div>
-              <div class="mdl-card__actions">
-                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                   Make the switch
-                   <i class="material-icons">chevron_right</i>
-                 </a>
-              </div>
-            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-              <div class="mdl-card__media">
-                <img src="images/more-from-4.png">
-              </div>
-              <div class="mdl-card__title">
-                 <h4 class="mdl-card__title-text">Create your own Android character</h4>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Turn the little green Android mascot into you, your friends, anyone!</span>
-              </div>
-              <div class="mdl-card__actions">
-                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                   androidify.com
-                   <i class="material-icons">chevron_right</i>
-                 </a>
-              </div>
-            </div>
-
-            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-              <div class="mdl-card__media">
-                <img src="images/more-from-2.png">
-              </div>
-              <div class="mdl-card__title">
-                 <h4 class="mdl-card__title-text">Get a clean customisable home screen</h4>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">A clean, simple, customisable home screen that comes with the power of Google Now: Traffic alerts, weather and much more, just a swipe away.</span>
-              </div>
-              <div class="mdl-card__actions">
-                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                   Download now
-                   <i class="material-icons">chevron_right</i>
-                 </a>
-              </div>
-            </div>
-
-            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-              <div class="mdl-card__media">
-                <img src="images/more-from-3.png">
-              </div>
-              <div class="mdl-card__title">
-                 <h4 class="mdl-card__title-text">Millions to choose from</h4>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">Hail a taxi, find a recipe, run through a temple – Google Play has all the apps and games that let you make your Android device uniquely yours.</span>
-              </div>
-              <div class="mdl-card__actions">
-                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
-                   Find apps
-                   <i class="material-icons">chevron_right</i>
-                 </a>
-              </div>
-            </div>
           </div>
         </div>
 
