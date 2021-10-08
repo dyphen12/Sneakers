@@ -25,6 +25,31 @@ from sneakers.api import core
 from sneakers.api import utils
 from sneakers.api import processing
 
+#----------- Internal Database Queries ---------------
+
+def get_shoe_by_sku(sku):
+
+    dataset = utils.load_shoes_dataset()
+
+    x = dataset.loc[dataset['sku'] == sku]
+
+    print(x)
+
+    return 'Tumadre'
+
+
+def get_link_by_sku(sku):
+
+    dataset = utils.load_shoes_dataset()
+
+    x = dataset.loc[dataset['sku'] == sku]
+
+    lean = x['link3']
+
+    link = str(lean.values[0])
+
+    return link
+
 
 #----------- Internal Database Handlers ---------------
 
@@ -36,7 +61,7 @@ def constructor():
 
     # path = 'workout/{ftit}.xlsx'.format(ftit='dummy')
 
-    return ':p'
+    return dataset
 
 def image_deploy():
 

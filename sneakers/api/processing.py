@@ -20,6 +20,7 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as pyImage
 from multiprocessing import Pool
 from sneakers.api import injector
+from sneakers.vision import dataset
 
 
 # Basic XLSX process
@@ -277,54 +278,10 @@ def img_post_multiprocess(images):
 
 def img_post_multiprocess_inj(images, size=50):
 
-    #time.sleep(4)
-
-    #path = images[0][0][2]
-
-    #wb = load_workbook(filename=path)
-
     cyl = injector.cylinder(images, size)
-
-    #print(type(cyl))
 
     cyl.injection()
 
-    #print(x)
-
-    """
-
-    # Progress Bar Object
-    progsq = progressbar
-
-    for i in progsq.progressbar(range(0, len(images))):
-
-        loc = images[i][0][0]
-
-        try:
-            cellname = images[i][0][1]
-        except IndexError:
-            continue
-
-        try:
-
-            imgd = Image.open(loc)
-
-            xImg = pyImage(imgd)
-
-            ws = wb.active
-
-            ws[cellname] = ''
-
-            ws.add_image(xImg, cellname)
-
-        # This Exception is only raised when running local=True
-        except FileNotFoundError:
-
-            continue
-
-        wb.save(path)
-    
-    """
     return True
 
 
@@ -335,6 +292,7 @@ def img_post_multiprocess_inj(images, size=50):
 
 
 #Download Images and Set Processes
+
 def img_multiprocess(processes):
 
     cellName = processes[0]
@@ -473,3 +431,97 @@ def img_processor_inj(process_list, size, local):
 
     return images
 
+# ------------------------ DEV ----------------
+
+def img_pre_multiprocess_training(df, ws, path):
+
+    time.sleep(4)
+
+    # Progress Bar Object
+    #progsc = progressbar
+
+    cellprocess = []
+
+    for i in (range(0, len(df.index))):
+
+        url = df['image'][df.index[i]]
+
+        name = df['name'][df.index[i]]
+
+        npath = path + '/' + name
+
+        dataset.create_training_subfolder(name, path)
+
+        j = i + 2
+
+        cellname = 'S{fnum}'.format(fnum=j)
+
+        cellprocess.append([cellname, url, ws, npath])
+
+
+    return cellprocess
+
+def img_multiprocess_training(processes):
+
+    cellName = processes[0]
+    url = processes[1]
+    path = processes[3]
+
+    post_process_list = []
+
+    try:
+
+        im = Image.open(requests.get(url, stream=True).raw)
+
+        im_100 = im.resize((78, 100))
+
+        loc = "img/Sneaker{}.png".format(cellName)
+
+        nloc = path + '/1.png'
+
+
+        im_100.save(nloc, format="png")
+
+        #img = Image.open(loc)
+
+        #xImg = pyImage(img)
+
+        #ws[cellName] = ''
+
+        #ws.add_image(xImg, cellName)
+
+        post_process_list.append([loc, cellName, path])
+
+        return post_process_list
+
+    except requests.exceptions.MissingSchema:
+
+        return 'The cell {fimg} is MissingSchema :('.format(fimg=cellName)
+
+    except requests.exceptions.ConnectionError:
+
+        return 'The cell {fimg} gives ConnectionError :('.format(fimg=cellName)
+
+def img_downloader_training(df, path):
+
+    ws = 0
+
+    print('Initiating Multi-threading processing...')
+    print('Image Download for Training Only!')
+
+    process_list = img_pre_multiprocess_training(df, ws, path)
+
+    with Pool(5) as p:
+
+        #print(p.map(img_multiprocess, process_list))
+        print('MULTI-THREADING PROCESS STARTED')
+        print('Please wait...')
+        p.map(img_multiprocess_training, process_list)
+
+    # print(images[0][0][2]) # This the Path
+
+    #img_post_multiprocess(images)
+
+    print('MULTI-THREADING PROCESS ENDED')
+
+    return True

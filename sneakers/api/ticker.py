@@ -17,6 +17,7 @@ import json
 
 
 def get_price_silence(url):
+
     try:
         ua = UserAgent()
         # print(ua.chrome)
@@ -28,6 +29,8 @@ def get_price_silence(url):
         r = requests.request("GET", url, headers=headers)
 
         data = r.text
+
+        print(r)
 
         soup = BeautifulSoup(data, features="lxml")
 

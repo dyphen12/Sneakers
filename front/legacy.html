@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<title>Sneakers API Composer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+/* Set the width of the sidebar to 120px */
+.w3-sidebar {width: 120px;background: #222;}
+/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+#main {margin-left: 120px}
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+
+#send-wb-code{
+  opacity: 0;
+}
+#send-wb-button{
+  opacity: 0;
+}
+#send-wb-aco{
+  opacity: 0;
+}
+
+#workbook-info{
+  opacity: 0;
+}
+
+#expansion-status {
+  opacity: 0;
+}
+
+#sapatiko {
+  max-width: 10%;
+  height: auto;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+</style>
+<body onload="apiVersion()" class="w3-black">
+
+<script type='text/javascript' src='../front/js/scripts.js'></script>
+
+<!-- Icon Bar (Sidebar - hidden on small screens) -->
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+  <!-- Avatar image in top left corner -->
+  <a href="../front/index.html" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-file-excel-o w3-xxlarge"></i>
+    <p>XLSX</p>
+  </a>
+  <a href="../front/airtable.html" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-table w3-xxlarge"></i>
+    <p>AIRTABLE</p>
+  </a>
+  <a href="#setup" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-cogs w3-xxlarge"></i>
+    <p>SETUP</p>
+  </a>
+  <a href="#updating" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-history w3-xxlarge"></i>
+    <p>UPDATE</p>
+  </a>
+  <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-envelope w3-xxlarge"></i>
+    <p>CONTACT</p>
+  </a>
+
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+    <a href="#workstart" class="w3-bar-item w3-button" style="width:25% !important">XLSX</a>
+    <a href="#workstart" class="w3-bar-item w3-button" style="width:25% !important">AIRTABLE</a>
+    <a href="#setup" class="w3-bar-item w3-button" style="width:25% !important">SETUP</a>
+    <a href="#updating" class="w3-bar-item w3-button" style="width:25% !important">UPDATE</a>
+    <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
+  </div>
+</div>
+
+<!-- Page Content -->
+<div class="w3-padding-large" id="main">
+  <!-- Header/Home -->
+  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+    <h1 class="w3-jumbo"><span class="w3-hide-small">The</span> Sneakers API.</h1>
+    <p id="version"></p>
+    <p>Composer GUI Access.</p>
+    <img src="../img/SneakerS2.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS3.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS4.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS5.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS6.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS7.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS8.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS9.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS10.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS11.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS12.png" alt="boy" id="sapatiko" class="w3-image">
+    <img src="../img/SneakerS13.png" alt="boy" id="sapatiko" class="w3-image">
+  </header>
+
+  <!-- About Section -->
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <h2 id="workstart" class="w3-text-light-grey">Set your Workbook</h2>
+    <hr style="width:200px" class="w3-opacity">
+    <p>You can use the Sneaker Composer to access the Sneakers API with more than 100,000 models, this system can create an Excel Worksheet, fill it with information with all the Sneakers you want and then process and insert the images.
+
+    </p>
+
+    <p>You can start a new Worksheet or very well load one that you have already created previously in the system.</p>
+
+      <p><input id="init-wb-input" class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
+
+
+
+      <button onclick="initWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+        <i class="fa fa-book"></i> <a>Init Workbook</a>
+    </button>
+    <p id="init-status" ></p>
+
+
+
+    <div id="workbook-info">
+      <h5 class="w3-text-light-grey" >Title: </h5><p id="wb-title">title</p>
+      <h5 class="w3-text-light-grey" >Size: </h5><p id="wb-size">size</p>
+      <h5 class="w3-text-light-grey" >Synced: </h5><p id="wb-sync">sync</p>
+      <h5 class="w3-text-light-grey" >Document name: </h5><p id="wb-docname">doc_name</p>
+    </div>
+
+
+
+
+    <h3 id="setup" class="w3-padding-16 w3-text-light-grey">Control Panel</h3>
+
+    <p class="w3-wide w3-text-white">Expansion</p>
+      <p><input id="new-wb-size" class="w3-input w3-padding-16" type="text" placeholder="New Size" required name="New Size"></p>
+    <p id="expansion-status">Expanding workbook... Please wait!</p>
+    <button onclick="expandWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-plus-square-o"></i> Expand Workbook
+    </button>
+
+    <p class="w3-wide w3-text-white">Imaging</p>
+    <p id="img-status" ></p>
+      <p><input id="imaging-from" class="w3-input w3-padding-16" type="text" placeholder="From" required name="From"></p>
+      <p><input id="imaging-to" class="w3-input w3-padding-16" type="text" placeholder="To" required name="To"></p>
+    <button onclick="imagingWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-picture-o"></i> Load Images
+    </button>
+
+    <p class="w3-wide w3-text-white">Cloud</p>
+      <button onclick="drivecodeWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-cloud-upload"></i> Sync
+    </button><br>
+<p id="sync-result"></p>
+<a id="send-wb-aco" target="_blank" >Auth Link</a>
+<p><input id="send-wb-code" class="w3-input w3-padding-16" type="text" placeholder="Code from Drive" required name="Code from Drive"></p>
+    <button id="send-wb-button" onclick="syncWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-key"></i> Send Code
+    </button>
+
+
+    <!-- Grid for pricing tables -->
+    <h3 id="updating" class="w3-padding-16 w3-text-light-grey">Update workbook.</h3>
+
+    <h6 class="w3-text-red" > WARNING: These functions are going to consume your RapidAPI Tokens</h6>
+
+    <p class="w3-wide">Update prices while connecting to RapidAPI</p>
+    <button onclick="updateWorkbook()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-plus-square-o"></i> Update Prices
+    </button><br>
+    <p id="update-status"></p>
+    <br>
+    <p class="w3-wide">Update entire sneaker setup while connecting to RapidAPI. This is going to give new worksheets with new shoes, so be careful. You may need to start a new Worksheet for the new sneakers.</p>
+    <p class="w3-wide"></p>
+    <button onclick="updateDB()" class="w3-button w3-light-grey w3-padding-large w3-section">
+      <i class="fa fa-plus-square-o"></i> Update Sneaker Setup
+    </button>
+    <p id="updatedb-status"></p>
+
+
+
+    <!-- Footer -->
+  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <p id="contact" class="w3-medium">Powered by <a href="https://adacore.000webhostapp.com/home.html" target="_blank" class="w3-hover-text-green">Prisma Intelligent Systems</a></p>
+    <p class="w3-medium w3-text-white">For assistance email to:</p>
+    <p class="w3-medium">prismasolutions1@gmail.com</p>
+    <p class="w3-medium w3-text-white">Team:</p>
+    <p class="w3-medium">alexiswong10@gmail.com</p>
+    <p class="w3-medium">danielld707@gmail.com</p>
+  <!-- End footer -->
+  </footer>
+
+<!-- END PAGE CONTENT -->
+</div>
+
+</div>
+
+</body>
+</html>
