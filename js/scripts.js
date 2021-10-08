@@ -937,6 +937,49 @@ function loadHome() {
 
 }
 
+function loadHomeLite() {
+
+  // RYZEN: First (R1)
+  console.log('R1 Started')
+
+  // This deletes some item that bothers.
+
+
+  // Loads Sneaker Live Table Routine
+
+
+  // Start SSID
+  let ssid = sessionStorage.getItem('ssid');
+  if (ssid == null) {
+
+  // R1 Fail end
+    //document.getElementById("mySidebar").innerHTML = '';
+    //document.getElementById("pageC").innerHTML = 'Please Login';
+    console.log('Please Login')
+    HomeData();
+
+  }
+  else {
+
+    // RYZEN: Second (R2)
+    console.log('R2 Started')
+
+    // First Message to Console
+
+    console.log(ssid);
+    console.log('Somos los que somos');
+
+    // User's name routines
+
+    // Get user name from index.html (this is a faulty one) needs to be in a future onload for index only.
+    sneakerData();
+
+
+
+  }
+
+}
+
 function HomeData() {
 
     document.getElementById("sneaker-container").innerHTML = 'Loading...';
@@ -988,7 +1031,7 @@ function HomeData() {
 function HomeDataResolve(res) {
   return new Promise(resolve => {
     setTimeout(() => {
-       console.log(res)
+       //console.log(res)
 
        var shoecard = document.getElementById('shoe-card');
        console.log(shoecard);
@@ -997,14 +1040,12 @@ function HomeDataResolve(res) {
 
         var counter = 0;
 
-        console.log(counter)
-
         document.getElementById("sneaker-container").style.opacity = "0.0";
         document.getElementById("sneaker-container").innerHTML = '';
 
         for (sneaker in res) {
 
-          console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(`${sneaker}: ${res[sneaker]}`);
           //console.log(sneaker)
 
 
