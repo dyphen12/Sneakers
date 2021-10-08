@@ -16,3 +16,4 @@ fake_useragent
 IPython
 matplotlib
 pymongo
+pymongo[srv]
