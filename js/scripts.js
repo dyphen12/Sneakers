@@ -1,6 +1,6 @@
 function initWorkbook() {
 
-    var std = "http://127.0.0.1:5000/init/%";
+    var std = "https://sneakers-app-api.herokuapp.com/init/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -43,7 +43,7 @@ function initWorkbook() {
 
 function expandWorkbook() {
 
-    var std = "http://127.0.0.1:5000/expand/%";
+    var std = "https://sneakers-app-api.herokuapp.com/expand/%";
 
     document.getElementById("expansion-status").style.opacity = 10;
     document.getElementById("expansion-status").innerHTML = 'Expanding! Please wait until it finishes...';
@@ -94,7 +94,7 @@ function imagingWorkbook() {
 
     document.getElementById("img-status").innerHTML = 'Inserting images... This could take minutes or several hours.';
 
-    var std = "http://127.0.0.1:5000/imaging/%";
+    var std = "https://sneakers-app-api.herokuapp.com/imaging/%";
 
     var query = '{"results": {"title": "%","from": #,"to": &}}'
 
@@ -138,7 +138,7 @@ function imagingWorkbook() {
 
 function drivecodeWorkbook() {
 
-    var std = "http://127.0.0.1:5000/drive/%";
+    var std = "https://sneakers-app-api.herokuapp.com/drive/%";
 
     var workbooktitle = document.getElementById("init-wb-input").value;
     console.log(workbooktitle);
@@ -190,7 +190,7 @@ function syncWorkbook() {
     document.getElementById("send-wb-code").style.opacity = 0;
     document.getElementById("send-wb-button").style.opacity = 0;
 
-    var std = "http://127.0.0.1:5000/sync/%";
+    var std = "https://sneakers-app-api.herokuapp.com/sync/%";
 
     cryptedcode = acode.replace('/','totona')
 
@@ -233,7 +233,7 @@ function syncWorkbook() {
 
 function infoWorkbook() {
 
-    var std = "http://127.0.0.1:5000/info/%";
+    var std = "https://sneakers-app-api.herokuapp.com/info/%";
 
     document.getElementById("workbook-info").style.opacity = 10;
 
@@ -286,7 +286,7 @@ function infoWorkbook() {
 
 function updateWorkbook() {
 
-    var std = "http://127.0.0.1:5000/update/%";
+    var std = "https://sneakers-app-api.herokuapp.com/update/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -329,7 +329,7 @@ function updateWorkbook() {
 
 function updateDB() {
 
-    var std = "http://127.0.0.1:5000/updatedb/%";
+    var std = "https://sneakers-app-api.herokuapp.com/updatedb/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -375,7 +375,7 @@ function updateDB() {
 
 function initTable() {
 
-    var std = "http://127.0.0.1:5000/inittable/%";
+    var std = "https://sneakers-app-api.herokuapp.com/inittable/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -418,7 +418,7 @@ function initTable() {
 
 function infoTable() {
 
-    var std = "http://127.0.0.1:5000/infotable/%";
+    var std = "https://sneakers-app-api.herokuapp.com/infotable/%";
 
     document.getElementById("workbook-info").style.opacity = 10;
 
@@ -472,7 +472,7 @@ function infoTable() {
 
 function deployTable() {
 
-    var std = "http://127.0.0.1:5000/deploytable/%";
+    var std = "https://sneakers-app-api.herokuapp.com/deploytable/%";
 
     document.getElementById("expansion-status").style.opacity = 10;
     document.getElementById("expansion-status").innerHTML = 'Deploying! Please wait until it finishes...';
@@ -521,7 +521,7 @@ function deployTable() {
 
 function updateTable() {
 
-    var std = "http://127.0.0.1:5000/updatetable/%";
+    var std = "https://sneakers-app-api.herokuapp.com/updatetable/%";
 
 
     var workbooktitle = document.getElementById("init-wb-input").value;
@@ -564,7 +564,7 @@ function updateTable() {
 
 function apiVersion() {
 
-    var std = "http://127.0.0.1:5000/";
+    var std = "https://sneakers-app-api.herokuapp.com/";
 
 
     document.getElementById("version").innerHTML = 'Loading...';
@@ -611,7 +611,7 @@ function apiVersion() {
 
 function getUsername(ssid) {
 
-    var std = "http://127.0.0.1:5000/user/%";
+    var std = "https://sneakers-app-api.herokuapp.com/user/%";
 
 
     var url = std.replace('%', ssid);
@@ -656,7 +656,7 @@ function sneakerData() {
 
     // var std = "http://127.0.0.1:5000/alldata";
 
-    var std = "http://127.0.0.1:5000/alldataindex/%";
+    var std = "https://sneakers-app-api.herokuapp.com/alldataindex/%";
 
     var sneakerLivePage = document.getElementById("sneaker-quantity").value;
 
@@ -945,7 +945,7 @@ function HomeData() {
 
     // var std = "http://127.0.0.1:5000/alldata";
 
-    var std = "http://127.0.0.1:5000/alldataindex/%";
+    var std = "https://sneakers-app-api.herokuapp.com/alldataindex/%";
 
     var sneakerLivePage = document.getElementById("sneaker-quantity").value;
 
@@ -1225,7 +1225,7 @@ function login() {
 
       }
     };
-    xhttp.open("POST", "http://127.0.0.1:5000/auth", true);
+    xhttp.open("POST", "https://sneakers-app-api.herokuapp.com/auth", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(credential);
 
@@ -1396,7 +1396,7 @@ function getCookie(cname) {
 // loaduser():
 function getUsernameprofile(ssid) {
 
-    var std = "http://127.0.0.1:5000/user/%";
+    var std = "https://sneakers-app-api.herokuapp.com/user/%";
 
 
     var url = std.replace('%', ssid);
@@ -1516,7 +1516,7 @@ function userData(ssid) {
     apiVersion();
 
 
-    var std = "http://127.0.0.1:5000/userdata/%";
+    var std = "https://sneakers-app-api.herokuapp.com/userdata/%";
 
 
     var url = std.replace('%', ssid);
@@ -1985,7 +1985,7 @@ function saveSneakerProcess() {
 
 function sneakerSender(ssid, sku) {
 
-    var std = "http://127.0.0.1:5000/savethis/%";
+    var std = "https://sneakers-app-api.herokuapp.com/savethis/%";
 
     console.log(ssid);
     console.log(sku);
@@ -2040,7 +2040,7 @@ function unfavSneakerProcess() {
 
 function sneakerUnfaver(ssid, sku) {
 
-    var std = "http://127.0.0.1:5000/deletethis/%";
+    var std = "https://sneakers-app-api.herokuapp.com/deletethis/%";
 
 
      var query = '{"results": {"ssid": "%","sku": "$"}}'
@@ -2095,7 +2095,7 @@ function loadusersearchlite() {
 
 function usersearchDataLite(ssid) {
 
-    var std = "http://127.0.0.1:5000/userdata/%";
+    var std = "https://sneakers-app-api.herokuapp.com/userdata/%";
     var url = std.replace('%', ssid);
 
     var xhttp = new XMLHttpRequest();
@@ -2174,7 +2174,7 @@ function loaduserlite() {
 
 function userDataLite(ssid) {
 
-    var std = "http://127.0.0.1:5000/userdata/%";
+    var std = "https://sneakers-app-api.herokuapp.com/userdata/%";
     var url = std.replace('%', ssid);
 
     var xhttp = new XMLHttpRequest();
@@ -2257,7 +2257,7 @@ function loadsneakerlite() {
 
 function sneakerDataLite(ssid) {
 
-    var std = "http://127.0.0.1:5000/userdata/%";
+    var std = "https://sneakers-app-api.herokuapp.com/userdata/%";
     var url = std.replace('%', ssid);
 
     var xhttp = new XMLHttpRequest();
@@ -2336,7 +2336,7 @@ function SignUpNow() {
 
     document.getElementById("signup-status").innerHTML = 'Signing up...';
 
-    var std = "http://127.0.0.1:5000/signup/%";
+    var std = "https://sneakers-app-api.herokuapp.com/signup/%";
 
     var query = '{"results": {"name": "%","lastname": "#","email": "&","password": "$"}}'
 
@@ -2493,7 +2493,7 @@ function searchData() {
     apiVersion();
 
 
-    var std = "http://127.0.0.1:5000/search/%";
+    var std = "https://sneakers-app-api.herokuapp.com/search/%";
 
 
     var url = std.replace('%', searchquery);
