@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sneaker Viewer Widget</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_blue.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;400&display=swap');
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+      opacity: 0.0;
+    }
+
+    body {
+
+    font-family: 'Josefin Sans', sans-serif;
+
+
+
+    }
+
+
+
+    .demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('./images/wear.png') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+#saininbots {
+  background-color: hsla(0, 0%, 0%, 0.6);
+  position: fixed;
+  top:0.1%;
+  right: 1%;
+  display: none;
+  width: 100%;
+  height: 100%;
+  align: center;
+
+}
+
+#sainincar {
+  position: relative;
+  top: 17%;
+  margin: auto;
+
+
+}
+
+#loginbots {
+  background-color: hsla(0, 0%, 0%, 0.6);
+  position: fixed;
+  top:0.1%;
+  right: 1%;
+  display: none;
+  width: 100%;
+  height: 100%;
+  align: center;
+
+}
+
+#logincar {
+  position: relative;
+  top: 17%;
+  margin: auto;
+  max-width: 70%;
+
+
+}
+
+#logincar > .mdl-card__title {
+
+  background: url('./images/devices.jpg') center / cover;
+
+
+}
+
+#more-button {
+  display: none;
+
+
+}
+
+#shoe-card{
+  opacity: 0.0;
+
+}
+
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+  margin: 0;
+}
+
+/* Disable ugly boxes around images in IE10 */
+a img{
+  border: 0px;
+}
+
+::-moz-selection {
+  background-color: #6ab344;
+  color: #fff;
+}
+
+::selection {
+  background-color: #6ab344;
+  color: #fff;
+}
+
+.android-search-box .mdl-textfield__input {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.android-header .mdl-menu__container {
+  z-index: 50;
+  margin: 0 !important;
+}
+
+
+.mdl-textfield--expandable {
+  width: auto;
+}
+
+.android-fab {
+  position: absolute;
+  right: 20%;
+  bottom: -26px;
+  z-index: 3;
+  background: #64ffda !important;
+  color: black !important;
+}
+
+.android-mobile-title {
+  display: none !important;
+}
+
+
+.android-logo-image {
+  height: 28px;
+  width: 140px;
+}
+
+
+.android-header {
+  overflow: visible;
+  background-color: white;
+}
+
+  .android-header .material-icons {
+    color: #767777 !important;
+  }
+
+  .android-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: #767777;
+  }
+
+  .android-header .mdl-navigation__link {
+    color: #757575;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .android-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
+    width: 500px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .android-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    width: 800px;
+  }
+
+  .android-search-box.is-focused + .android-navigation-container {
+    opacity: 0;
+    width: 100px;
+  }
+
+
+  .android-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+  }
+
+    .android-navigation .mdl-navigation__link:hover {
+      border-bottom: 4px solid #8bc34a;
+    }
+
+  .android-search-box {
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .android-more-button {
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
+  }
+
+
+.android-drawer {
+  border-right: none;
+}
+
+  .android-drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+  }
+
+  .android-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #757575;
+  }
+
+  .android-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #8bc34a;
+  }
+
+  .android-drawer .mdl-layout-title {
+    position: relative;
+    background: #6ab344;
+    height: 160px;
+  }
+
+    .android-drawer .android-logo-image {
+      position: absolute;
+      bottom: 16px;
+    }
+
+.android-be-together-section {
+  position: relative;
+  height: 800px;
+  width: auto;
+  background-color: #f3f3f3;
+  background: url('images/slide01.jpg') center 30% no-repeat;
+  background-size: cover;
+}
+
+.logo-font {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  color: #767777;
+  font-weight: 500;
+}
+
+.android-slogan {
+  font-size: 60px;
+  padding-top: 160px;
+}
+
+.android-sub-slogan {
+  font-size: 21px;
+  padding-top: 24px;
+}
+
+.android-create-character {
+  font-size: 21px;
+  padding-top: 400px;
+}
+
+  .android-create-character a {
+    text-decoration: none;
+    color: #767777;
+    font-weight: 300;
+  }
+
+.android-screen-section {
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 80px;
+}
+
+.android-screens {
+  text-align: right;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.android-screen {
+  text-align: center;
+}
+
+.android-screen .android-link {
+  margin-top: 16px;
+  display: block;
+  z-index: 2;
+}
+
+.android-image-link {
+  text-decoration: none;
+}
+
+.android-wear {
+  display: inline-block;
+  width: 160px;
+  margin-right: 32px;
+}
+
+  .android-wear .android-screen-image {
+    width: 40%;
+    z-index: 1;
+  }
+
+
+.android-phone {
+  display: inline-block;
+  width: 64px;
+  margin-right: 48px;
+}
+
+  .android-phone .android-screen-image {
+    width: 100%;
+    z-index: 1;
+  }
+
+
+.android-tablet {
+  display: inline-block;
+  width: 110px;
+  margin-right: 64px;
+}
+
+  .android-tablet .android-screen-image {
+    width: 100%;
+    z-index: 1;
+  }
+
+  .android-tablet .android-link {
+    display: block;
+    z-index: 2;
+  }
+
+
+.android-tv {
+  display: inline-block;
+  width: 300px;
+  margin-right: 80px;
+}
+
+  .android-tv .android-screen-image {
+    width: 100%;
+    z-index: 1;
+  }
+
+
+.android-auto {
+  display: inline-block;
+  width: 300px;
+  overflow: hidden;
+}
+
+  .android-auto .android-screen-image {
+    display: block;
+    height: 300px;
+    z-index: 1;
+  }
+
+
+.android-wear-section {
+  position: relative;
+  background: url('images/wear.png') center top no-repeat;
+  background-size: cover;
+  height: 800px;
+}
+
+.android-wear-band {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #37474f;
+}
+
+.android-wear-band-text {
+  max-width: 800px;
+  margin-left: 25%;
+  padding: 24px;
+  text-align: left;
+  color: white;
+}
+
+  .android-wear-band-text p {
+    padding-top: 8px;
+  }
+
+.android-link {
+  text-decoration: none;
+  color: #8bc34a !important;
+}
+
+  .android-link:hover {
+    color: #7cb342 !important;
+  }
+
+  .android-link .material-icons {
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+  }
+
+.android-alt-link {
+  text-decoration: none;
+  color: #64ffda !important;
+  font-size: 16px;
+}
+
+  .android-alt-link:hover {
+    color: #00bfa5 !important;
+  }
+
+  .android-alt-link .material-icons {
+    position: relative;
+    top: 6px;
+  }
+
+.android-customized-section {
+  text-align: center;
+}
+
+.android-customized-section-text {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 80px 16px 0 16px;
+}
+
+  .android-customized-section-text p {
+    padding-top: 16px;
+  }
+
+.android-customized-section-image {
+  background: url('images/devices.jpg') center top no-repeat;
+  background-size: cover;
+  height: 400px;
+}
+
+.android-more-section {
+  padding: 80px 0;
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+  .android-more-section .android-section-title {
+    margin-left: 12px;
+    padding-bottom: 24px;
+  }
+
+.android-card-container {
+}
+
+  .android-card-container .mdl-card__media {
+    overflow: hidden;
+    background: transparent;
+  }
+
+    .android-card-container .mdl-card__media img {
+      width: 100%;
+    }
+
+  .android-card-container .mdl-card__title {
+    background: transparent;
+    height: auto;
+  }
+
+  .android-card-container .mdl-card__title-text {
+    color: black;
+    height: auto;
+  }
+
+  .android-card-container .mdl-card__supporting-text {
+    height: auto;
+    color: black;
+    padding-bottom: 56px;
+  }
+
+  .android-card-container .mdl-card__actions {
+    position: absolute;
+    bottom: 0;
+  }
+
+  .android-card-container .mdl-card__actions a {
+    border-top: none;
+    font-size: 16px;
+  }
+
+.android-footer {
+  background-color: #fafafa;
+  position: relative;
+}
+
+  .android-footer a:hover {
+    color: #8bc34a;
+  }
+
+  .android-footer .mdl-mega-footer--top-section::after {
+    border-bottom: none;
+  }
+
+  .android-footer .mdl-mega-footer--middle-section::after {
+    border-bottom: none;
+  }
+
+  .android-footer .mdl-mega-footer--bottom-section {
+    position: relative;
+  }
+
+  .android-footer .mdl-mega-footer--bottom-section a {
+    margin-right: 2em;
+  }
+
+  .android-footer .mdl-mega-footer--right-section a .material-icons {
+    position: relative;
+    top: 6px;
+  }
+
+
+.android-link-menu:hover {
+  cursor: pointer;
+}
+
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+  .android-navigation-container {
+    display: none;
+  }
+
+  .android-title {
+    display: none !important;
+  }
+
+  .android-mobile-title {
+    display: block !important;
+    position: absolute;
+    left: calc(50% - 70px);
+    top: 12px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
+     consecutive "+" operators in some cases. Therefore, we need to use both
+     here to cover all the bases. */
+  .android.android-search-box.is-focused ~ .android-mobile-title,
+  .android-search-box.is-focused + .android-navigation-container + .android-mobile-title {
+    opacity: 0;
+  }
+
+  .android-more-button {
+    display: none;
+  }
+
+  .android-search-box.is-focused {
+    width: calc(100% - 48px);
+  }
+
+  .android-search-box .mdl-textfield__expandable-holder {
+    width: 100%;
+  }
+
+  .android-be-together-section {
+    height: 350px;
+  }
+
+  .android-slogan {
+    font-size: 26px;
+    margin: 0 16px;
+    padding-top: 24px;
+  }
+
+  .android-sub-slogan {
+    font-size: 16px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+
+  .android-create-character {
+    padding-top: 200px;
+    font-size: 16px;
+  }
+
+  .android-create-character img {
+    height: 12px;
+  }
+
+  .android-fab {
+    display: none;
+  }
+
+  .android-wear-band-text {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  .android-footer .mdl-mega-footer--bottom-section {
+    display: none;
+  }
+}
+
+
+
+    </style>
+</head>
+<body onload="loadHome()">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<div class="android-content mdl-layout__content">
+<div id="sneaker-live" class="android-more-section">
+          <div class="android-section-title mdl-typography--display-1-color-contrast"><h3 style="font-family: 'Josefin Sans', sans-serif;">Sneaker Viewer: </h3><a style="color: red;" id="sneakers-live-amount">25</a>  </div>
+
+          <!-- Slider with Starting Value -->
+          <input onchange="loadHomeLite()" id="sneaker-quantity" class="mdl-slider mdl-js-slider" type="range"
+            min="0" max="999" value="25" tabindex="0">
+
+          <div id="sneaker-container" class="android-card-container mdl-grid">
+
+
+
+            <div id="shoe-card" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+              <div class="mdl-card__media">
+                <img src="images/more-from-1.png">
+              </div>
+              <div class="mdl-card__title">
+                 <h4 class="mdl-card__title-text">Get going on Android</h4>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Android quick and easy</span>
+              </div>
+              <div class="mdl-card__actions">
+                 <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" href="">
+                   Make the switch
+                   <i class="material-icons">chevron_right</i>
+                 </a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+</div>
+</div>
+
+
+<script>
+function loadHome() {
+
+  HomeData();
+
+}
+
+function loadHomeLite() {
+
+  HomeData();
+
+
+}
+
+function HomeData() {
+
+    document.getElementById("sneaker-container").innerHTML = 'Loading...';
+
+    var std = "https://sneakers-app-api.herokuapp.com/alldataindex/%";
+
+    var sneakerLivePage = document.getElementById("sneaker-quantity").value;
+
+
+    var url = std.replace('%', sneakerLivePage);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+      document.getElementById("sneakers-live-amount").innerHTML = sneakerLiveAmount;
+      if (this.readyState == 4 && this.status == 200) {
+
+      var res = JSON.parse(this.responseText);
+      // console.log(res);
+
+
+
+      HomeDataasyncCall(res);
+
+      if (res == 'fail'){
+        console.log('Fail')
+
+      } else {
+        console.log('Sy')
+        // document.getElementById("version").innerHTML = res;
+      }
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+    return true;
+
+}
+
+function HomeDataResolve(res) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+       //console.log(res)
+
+       var shoecard = document.getElementById('shoe-card');
+       console.log(shoecard);
+
+        var sneakerLiveAmount = document.getElementById("sneaker-quantity").value;
+
+        var counter = 0;
+
+        document.getElementById("sneaker-container").style.opacity = "0.0";
+        document.getElementById("sneaker-container").innerHTML = '';
+
+        for (sneaker in res) {
+
+          //console.log(`${sneaker}: ${res[sneaker]}`);
+          //console.log(sneaker)
+
+
+          var snk = res[sneaker];
+
+          //console.log(snk['name'])
+
+          // console.log(snk[prop]);
+          // console.log(`${prop}: ${snk[prop]}`);
+
+          // Object Creation
+
+          //Big Card
+          var card = document.createElement("div");
+
+          card.className = "mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp";
+
+          // Four childs
+
+          // Child 1 - Img
+
+          var cardimg = document.createElement("div");
+
+          cardimg.className = "mdl-card__media";
+
+          var img = document.createElement('img');
+          img.src = snk['thumbnail'];
+
+          cardimg.appendChild(img);
+
+          // Child 2 - Title
+
+          var cardtitle = document.createElement("div");
+
+          cardtitle.id = snk['id'];
+
+          cardtitle.className = "mdl-card__title";
+
+          var title = document.createElement("h4");
+
+          title.innerHTML = snk['name'];
+
+          console.log(snk)
+
+          title.className = "mdl-card__title-text"
+
+          cardtitle.appendChild(title)
+
+          // Child 3 - Supporting Text
+
+          var cardsubtext = document.createElement("div");
+
+          cardsubtext.className = "mdl-card__supporting-text";
+
+          var subtext = document.createElement("span");
+
+
+          subtext.innerHTML = snk['colorway'] + "<br><br>";
+
+          subtext.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          var subtextprice = document.createElement("span");
+
+          subtextprice.innerHTML = snk['NZDvalue'] + "$";
+
+          subtextprice.className = "mdl-typography--font-light mdl-typography--subhead"
+
+          cardsubtext.appendChild(subtext)
+          cardsubtext.appendChild(subtextprice)
+
+          // Child 4 - Button
+
+          var cardaction = document.createElement("div");
+
+          cardaction.className = "mdl-card__actions";
+
+          var linktoaction = document.createElement("a");
+
+          linktoaction.href = snk['link3'];
+
+          linktoaction.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktoaction.innerHTML = 'See';
+
+          var icon = document.createElement("i");
+
+          icon.className = "material-icons";
+
+          icon.innerHTML = "chevron_right"
+
+          linktoaction.appendChild(icon)
+          cardaction.appendChild(linktoaction)
+
+          // Child 5 Fav button
+
+          var linktofav = document.createElement("a");
+
+          linktofav.id = snk['sku'];
+
+          // linktofav.href = snk['link3'];
+
+          linktofav.className = "android-link mdl-button mdl-js-button mdl-typography--text-uppercase";
+
+          linktofav.innerHTML = 'Save ';
+
+          // linktofav.onclick = function() {togglelogin();}
+
+          var ficon = document.createElement("i");
+
+          //var skid = snk['USDvalue'];
+
+          //ficon.id = skid;
+
+          ficon.className = "material-icons";
+
+          ficon.innerHTML = "favorite_border"
+
+
+          linktofav.appendChild(ficon)
+          cardaction.appendChild(linktofav)
+
+
+
+          // Append Childs to Mother
+
+          card.appendChild(cardimg)
+          card.appendChild(cardtitle)
+          card.appendChild(cardsubtext)
+          card.appendChild(cardaction)
+
+          // Append to Sneaker Container
+
+          var sneakercontainer = document.getElementById('sneaker-container');
+
+          sneakercontainer.appendChild(card)
+
+          counter++;
+
+          console.log(counter)
+
+          // checkSneakers(skid);
+
+          if (counter == sneakerLiveAmount) {
+
+          console.log('Hooray!')
+
+          break;
+
+          }
+
+
+          // console.log(card)
+
+
+        }
+
+
+
+      resolve('resolved');
+    }, 2);
+  });
+}
+
+async function HomeDataasyncCall(res) {
+  console.log('calling');
+  const result = await HomeDataResolve(res);
+  console.log(result);
+  document.getElementById("sneaker-container").style.opacity = "1.0";
+
+  // expected output: "resolved"
+}
+
+</script>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+</body>
+</html>
